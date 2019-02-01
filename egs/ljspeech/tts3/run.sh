@@ -45,6 +45,9 @@ atype=forward_ta
 adim=128
 aconv_chans=32
 aconv_filts=15      # resulting in filter_size = aconv_filts * 2 + 1
+aux_adim=128
+aux_aconv_chans=32
+aux_aconv_filts=5      # resulting in filter_size = aconv_filts * 2 + 1
 cumulate_att_w=true # whether to cumulate attetion weight
 use_batch_norm=true # whether to use batch normalization in conv layer
 use_concate=true    # whether to concatenate encoder embedding with decoder lstm outputs
@@ -218,7 +221,7 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ];then
     tr_json=${feat_tr_dir}/data.json
     dt_json=${feat_dt_dir}/data.json
     ${cuda_cmd} --gpu ${ngpu} ${expdir}/train.log \
-        tts_train.py \
+        tts_train_bert.py \
            --backend ${backend} \
            --ngpu ${ngpu} \
            --minibatches ${N} \
@@ -246,6 +249,9 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ];then
            --adim ${adim} \
            --aconv-chans ${aconv_chans} \
            --aconv-filts ${aconv_filts} \
+           --aux_adim ${aux_adim} \
+           --aux_aconv-chans ${aux_aconv_chans} \
+           --aux_aconv-filts ${aux_aconv_filts} \
            --cumulate_att_w ${cumulate_att_w} \
            --use_batch_norm ${use_batch_norm} \
            --use_concate ${use_concate} \
@@ -275,7 +281,7 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ];then
         splitjson.py --parts ${nj} ${outdir}/${name}/data.json
         # decode in parallel
         ${train_cmd} JOB=1:${nj} ${outdir}/${name}/log/decode.JOB.log \
-            tts_decode.py \
+            tts_decode_bert.py \
                 --backend ${backend} \
                 --ngpu 0 \
                 --verbose ${verbose} \
