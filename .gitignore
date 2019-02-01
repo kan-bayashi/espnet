@@ -39,6 +39,7 @@ tools/chainer_ctc*
 tools/warp-ctc*
 tools/sentencepiece/*
 tools/moses
+tools/bert/
 tools/*.done
 
 .idea/
