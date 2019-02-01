@@ -86,7 +86,7 @@ set -e
 set -u
 set -o pipefail
 
-train_set=train
+train_set=train_no_dev
 dev_set=dev
 eval_set=eval
 
@@ -164,6 +164,16 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
          data/${eval_set} ${dict} > ${feat_ev_dir}/data.json
 fi
 
+if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
+    echo "stage 3: BERT feature extraction"
+    bertdir=exp/bert
+    for name in ${train_set} ${dev_set} ${eval_set}; do
+        local/extract_bert_feature.sh --cmd "${cuda_cmd}" --nj 4 \
+            data/$name ${bertdir}
+        local/update_json.sh ${dumpdir}/${name}/data.json \
+            ${bertdir}/${name}/bert_feats.scp
+    done
+fi
 
 if [ -z ${tag} ];then
     expname=${train_set}_${backend}_taco2_r${reduction_factor}_enc${embed_dim}
@@ -203,7 +213,7 @@ else
 fi
 expdir=exp/${expname}
 mkdir -p ${expdir}
-if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ];then
+if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ];then
     echo "stage 3: Text-to-speech model training"
     tr_json=${feat_tr_dir}/data.json
     dt_json=${feat_dt_dir}/data.json
@@ -257,7 +267,7 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ];then
 fi
 
 outdir=${expdir}/outputs_${model}_th${threshold}_mlr${minlenratio}-${maxlenratio}
-if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ];then
+if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ];then
     echo "stage 4: Decoding"
     for name in ${dev_set} ${eval_set};do
         [ ! -e  ${outdir}/${name} ] && mkdir -p ${outdir}/${name}
@@ -282,7 +292,7 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ];then
     done
 fi
 
-if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ];then
+if [ ${stage} -le 6 ] && [ ${stop_stage} -ge 6 ];then
     echo "stage 5: Synthesis"
     for name in ${dev_set} ${eval_set};do
         [ ! -e ${outdir}_denorm/${name} ] && mkdir -p ${outdir}_denorm/${name}
