@@ -66,7 +66,7 @@ sentencepiece.done:
 	touch sentencepiece.done
 
 bert.done:
-	. venv/bin/activate; pip install tensorflow==1.11.0
+	. venv/bin/activate; pip install tensorflow-gpu==1.11.0
 	git clone https://github.com/google-research/bert.git
 	touch bert.done
 
