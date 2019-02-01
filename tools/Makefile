@@ -65,6 +65,11 @@ sentencepiece.done:
 	cd sentencepiece && mkdir build && cd build && (cmake3 .. || cmake ..) && $(MAKE)
 	touch sentencepiece.done
 
+bert.done:
+	. venv/bin/activate; pip install tensorflow-gpu==1.1.0
+	git clone https://github.com/google-research/bert.git
+	touch bert.done
+
 moses:
 	git clone https://github.com/moses-smt/mosesdecoder.git moses
 
