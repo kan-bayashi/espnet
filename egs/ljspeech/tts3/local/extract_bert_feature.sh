@@ -82,3 +82,10 @@ ${cmd} --gpu 0 JOB=1:${nj} ${outdir}/log/convert_from_json_${name}.JOB.log \
 for n in $(seq $nj); do
     cat ${outdir}/bert_feats.${n}.scp || exit 1;
 done > ${outdir}/bert_feats.scp || exit 1
+
+if ${write_utt2num_frames}; then
+    for n in $(seq ${nj}); do
+        cat ${outdir}/utt2num_frames.${n} || exit 1;
+    done > ${outdir}/utt2num_frames || exit 1
+    rm ${outdir}/utt2num_frames.* 2>/dev/null
+fi
