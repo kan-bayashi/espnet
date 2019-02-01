@@ -417,7 +417,7 @@ class Tacotron2(torch.nn.Module):
         else:
             return after_outs, before_outs, logits
 
-    def inference(self, x, inference_args, spemb=None):
+    def inference(self, x, aux, inference_args, spemb=None):
         """Generates the sequence of features given the sequences of characters
 
         :param torch.Tensor x: the sequence of characters (T)
@@ -443,13 +443,13 @@ class Tacotron2(torch.nn.Module):
         if self.spk_embed_dim is not None:
             spemb = F.normalize(spemb, dim=0).unsqueeze(0).expand(h.size(0), -1)
             h = torch.cat([h, spemb], dim=-1)
-        outs, probs, att_ws = self.dec.inference(h, threshold, minlenratio, maxlenratio)
+        outs, probs, att_ws, aux_att_ws = self.dec.inference(h, aux, threshold, minlenratio, maxlenratio)
 
         if self.use_cbhg:
             cbhg_outs = self.cbhg.inference(outs)
-            return cbhg_outs, probs, att_ws
+            return cbhg_outs, probs, att_ws, aux_att_ws
         else:
-            return outs, probs, att_ws
+            return outs, probs, att_ws, aux_att_ws
 
     def calculate_all_attentions(self, xs, ilens, auxs, alens, ys, spembs=None):
         """Tacotron2 forward computation
@@ -846,7 +846,7 @@ class Decoder(torch.nn.Module):
 
         # loop for an output sequence
         idx = 0
-        outs, att_ws, aux_att_ws, probs = [], [], []
+        outs, att_ws, aux_att_ws, probs = [], [], [], []
         while True:
             # updated index
             idx += self.reduction_factor
@@ -855,12 +855,12 @@ class Decoder(torch.nn.Module):
             if self.use_att_extra_inputs:
                 att_c, att_w = self.att(
                     hs, ilens, z_list[0], prev_att_w, prev_out)
-                aux_att_c, aux_att_w = self.att(
+                aux_att_c, aux_att_w = self.aux_att(
                     auxs, alens, z_list[0], prev_aux_att_w, prev_out)
             else:
                 att_c, att_w = self.att(
                     hs, ilens, z_list[0], prev_att_w)
-                aux_att_c, aux_att_w = self.att(
+                aux_att_c, aux_att_w = self.aux_att(
                     auxs, alens, z_list[0], prev_aux_att_w)
             att_ws += [att_w]
             aux_att_ws += [aux_att_w]

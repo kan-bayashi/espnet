@@ -501,8 +501,9 @@ def decode(args):
         os.makedirs(outdir)
 
     load_inputs_and_targets = LoadInputsAndTargets(
-        mode='tts', load_input=False, sort_in_input_length=False,
+        mode='tts', load_input=True, sort_in_input_length=False,
         use_speaker_embedding=train_args.use_speaker_embedding,
+        use_second_target=True,
         preprocess_conf=train_args.preprocess_conf
         if args.preprocess_conf is None else args.preprocess_conf)
 
@@ -512,15 +513,17 @@ def decode(args):
             with using_transform_config({'train': False}):
                 data = load_inputs_and_targets(batch)
             if train_args.use_speaker_embedding:
-                spemb = data[1][0]
+                spemb = data[2][0]
                 spemb = torch.FloatTensor(spemb).to(device)
             else:
                 spemb = None
             x = data[0][0]
             x = torch.LongTensor(x).to(device)
+            aux = data[3][0]
+            aux = torch.FloatTensor(aux).to(device)
 
             # decode and write
-            outs, _, _ = tacotron2.inference(x, args, spemb)
+            outs, _, _, _ = tacotron2.inference(x, aux, args, spemb)
             if outs.size(0) == x.size(0) * args.maxlenratio:
                 logging.warning("output length reaches maximum length (%s)." % utt_id)
             logging.info('(%d/%d) %s (size:%d->%d)' % (
