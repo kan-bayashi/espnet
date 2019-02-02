@@ -407,6 +407,8 @@ class Tacotron2(torch.nn.Module):
         if self.spk_embed_dim is not None:
             spembs = F.normalize(spembs).unsqueeze(1).expand(-1, hs.size(1), -1)
             hs = torch.cat([hs, spembs], dim=-1)
+        # for multi-gpus
+        auxs = auxs[:, :max(alens)]
         after_outs, before_outs, logits = self.dec(hs, hlens, auxs, alens, ys)
 
         if self.use_cbhg:
