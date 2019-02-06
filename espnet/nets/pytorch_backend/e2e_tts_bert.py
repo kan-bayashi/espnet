@@ -14,13 +14,14 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+from numba import jit
 from torch.nn.utils.rnn import pack_padded_sequence
 from torch.nn.utils.rnn import pad_packed_sequence
 
 from espnet.nets.pytorch_backend.attentions import AttForward
 from espnet.nets.pytorch_backend.attentions import AttForwardTA
 from espnet.nets.pytorch_backend.attentions import AttLoc
-
+from espnet.nets.pytorch_backend.nets_utils import pad_list
 from espnet.nets.pytorch_backend.nets_utils import to_device
 
 
@@ -99,19 +100,67 @@ class ZoneOutCell(torch.nn.Module):
             return prob * h + (1 - prob) * next_h
 
 
+class GuidedAttentionLoss(torch.jit.ScriptModule):
+    """Guided attention loss function
+
+    :param float sigma: standard deviation to control how close attention to a diagonal
+    """
+
+    def __init__(self, sigma=0.4):
+        super(GuidedAttentionLoss, self).__init__()
+        self.sigma = sigma
+
+    def forward(self, att_ws, ilens, olens):
+        ilens = list(map(int, ilens))
+        olens = list(map(int, olens))
+        max_ilen = max(ilens)
+        max_olen = max(olens)
+        gs = [torch.from_numpy(self._make_guided_attention_mask(i, max_ilen, j, max_olen))
+              for i, j in zip(ilens, olens)]
+        gs = pad_list(gs, 0)
+
+        return torch.mean(gs * att_ws)
+
+    @jit(forceobj=True)
+    def _make_guided_attention_mask(self, ilen, max_in, olen, max_out):
+        mask = np.zeros((max_in, max_out), dtype=np.float32)
+        for i in np.arange(ilen):
+            for j in np.arange(olen):
+                mask[i, j] = 1 - np.exp(-(i / max_in - j / max_out)**2 / (2 * (self.sigma ** 2)))
+
+        return mask.T
+
+
 class Tacotron2Loss(torch.nn.Module):
     """Tacotron2 loss function
 
     :param torch.nn.Module model: tacotron2 model
     :param bool use_masking: whether to mask padded part in loss calculation
     :param float bce_pos_weight: weight of positive sample of stop token (only for use_masking=True)
+    :param float bce_lambda: lambda value for binary cross entropy
+    :param bool use_guided_att: whether to use guided attention
+    :param float guided_att_lambda: lambda value for guided attention
+    :param float guided_att_sigma: sigma value for guided attention
     """
 
-    def __init__(self, model, use_masking=True, bce_pos_weight=1.0):
+    def __init__(self,
+                 model,
+                 use_masking=True,
+                 bce_pos_weight=1.0,
+                 bce_lambda=1.0,
+                 use_guided_att=True,
+                 guided_att_lambda=1.0,
+                 guided_att_sigma=0.4):
         super(Tacotron2Loss, self).__init__()
         self.model = model
         self.use_masking = use_masking
         self.bce_pos_weight = bce_pos_weight
+        self.bce_lambda = bce_lambda
+        self.use_guided_att = use_guided_att
+        if self.use_guided_att:
+            self.guided_att_lambda = guided_att_lambda
+            self.guided_att_sigma = guided_att_sigma
+            self.guided_att_loss = GuidedAttentionLoss(self.guided_att_sigma)
         if hasattr(model, 'module'):
             self.use_cbhg = model.module.use_cbhg
             self.reduction_factor = model.module.reduction_factor
@@ -137,10 +186,10 @@ class Tacotron2Loss(torch.nn.Module):
         """
         # calcuate outputs
         if self.use_cbhg:
-            cbhg_outs, after_outs, before_outs, logits = self.model(
+            cbhg_outs, after_outs, before_outs, logits, att_ws, aux_att_ws = self.model(
                 xs, ilens, auxs, alens, ys, olens, spembs)
         else:
-            after_outs, before_outs, logits = self.model(
+            after_outs, before_outs, logits, att_ws, aux_att_ws = self.model(
                 xs, ilens, auxs, alens, ys, olens, spembs)
 
         # remove mod part
@@ -170,32 +219,38 @@ class Tacotron2Loss(torch.nn.Module):
                 spcs = spcs.masked_select(mask)
                 cbhg_outs = cbhg_outs.masked_select(mask)
 
-        # calculate loss
+        # calculate main loss
+        loss_reports = []
         l1_loss = F.l1_loss(after_outs, ys) + F.l1_loss(before_outs, ys)
         mse_loss = F.mse_loss(after_outs, ys) + F.mse_loss(before_outs, ys)
-        bce_loss = F.binary_cross_entropy_with_logits(logits, labels, weights)
+        bce_loss = self.bce_lambda * F.binary_cross_entropy_with_logits(logits, labels, weights)
+        loss = l1_loss + mse_loss + bce_loss
+
+        # add reports
+        loss_reports += [
+            {'l1_loss': l1_loss.item()},
+            {'mse_loss': mse_loss.item()},
+            {'bce_loss': bce_loss.item()}
+        ]
+
+        # calculate cbhg loss
         if self.use_cbhg:
-            # calculate chbg loss and then itegrate them
             cbhg_l1_loss = F.l1_loss(cbhg_outs, spcs)
             cbhg_mse_loss = F.mse_loss(cbhg_outs, spcs)
-            loss = l1_loss + mse_loss + bce_loss + cbhg_l1_loss + cbhg_mse_loss
-            # report loss values for logging
-            self.reporter.report([
-                {'l1_loss': l1_loss.item()},
-                {'mse_loss': mse_loss.item()},
-                {'bce_loss': bce_loss.item()},
+            loss += cbhg_l1_loss + cbhg_mse_loss
+            loss_reports += [
                 {'cbhg_l1_loss': cbhg_l1_loss.item()},
-                {'cbhg_mse_loss': cbhg_mse_loss.item()},
-                {'loss': loss.item()}])
-        else:
-            # integrate loss
-            loss = l1_loss + mse_loss + bce_loss
-            # report loss values for logging
-            self.reporter.report([
-                {'l1_loss': l1_loss.item()},
-                {'mse_loss': mse_loss.item()},
-                {'bce_loss': bce_loss.item()},
-                {'loss': loss.item()}])
+                {'cbhg_mse_loss': cbhg_mse_loss.item()}
+            ]
+
+        # calculate guided attention loss
+        if self.use_guided_att:
+            olens = [olen // self.reduction_factor for olen in olens]
+            att_loss = self.guided_att_lambda * self.guided_att_loss(aux_att_ws, alens, olens)
+            loss += att_loss
+            loss_reports += [
+                {'att_loss': att_loss.item()},
+            ]
 
         return loss
 
@@ -396,6 +451,8 @@ class Tacotron2(torch.nn.Module):
         :rtype: torch.Tensor
         :return: attention weights (B, Lmax, Tmax)
         :rtype: torch.Tensor
+        :return: aux attention weights (B, Rmax, Tmax)
+        :rtype: torch.Tensor
         """
         # check ilens type (should be list of int)
         if isinstance(ilens, torch.Tensor) or isinstance(ilens, np.ndarray):
@@ -409,15 +466,15 @@ class Tacotron2(torch.nn.Module):
             hs = torch.cat([hs, spembs], dim=-1)
         # for multi-gpus
         auxs = auxs[:, :max(alens)]
-        after_outs, before_outs, logits = self.dec(hs, hlens, auxs, alens, ys)
+        after_outs, before_outs, logits, att_ws, aux_att_ws = self.dec(hs, hlens, auxs, alens, ys)
 
         if self.use_cbhg:
             if self.reduction_factor > 1:
                 olens = olens.new([olen - olen % self.reduction_factor for olen in olens])
             cbhg_outs, _ = self.cbhg(after_outs, olens)
-            return cbhg_outs, after_outs, before_outs, logits
+            return cbhg_outs, after_outs, before_outs, logits, att_ws, aux_att_ws
         else:
-            return after_outs, before_outs, logits
+            return after_outs, before_outs, logits, att_ws, aux_att_ws
 
     def inference(self, x, aux, inference_args, spemb=None):
         """Generates the sequence of features given the sequences of characters
@@ -736,6 +793,8 @@ class Decoder(torch.nn.Module):
         :rtype: torch.Tensor
         :return: attention weights (B, Lmax, Tmax)
         :rtype: torch.Tensor
+        :return: aux attention weights (B, Rmax, Tmax)
+        :rtype: torch.Tensor
         """
         # thin out frames (B, Lmax, odim) ->  (B, Lmax/r, odim)
         if self.reduction_factor > 1:
@@ -760,7 +819,7 @@ class Decoder(torch.nn.Module):
         self.aux_att.reset()
 
         # loop for an output sequence
-        outs, logits = [], []
+        outs, logits, att_ws, aux_att_ws = [], [], [], []
         for y in ys.transpose(0, 1):
             if self.use_att_extra_inputs:
                 att_c, att_w = self.att(
@@ -781,6 +840,8 @@ class Decoder(torch.nn.Module):
             zcs = torch.cat([z_list[-1], att_c, aux_att_c], dim=1) if self.use_concate else z_list[-1]
             outs += [self.feat_out(zcs).view(hs.size(0), self.odim, -1)]
             logits += [self.prob_out(zcs)]
+            att_ws += [att_w]
+            aux_att_ws += [aux_att_w]
             prev_out = y  # teacher forcing
             if self.cumulate_att_w and prev_att_w is not None:
                 prev_att_w = prev_att_w + att_w  # Note: error when use +=
@@ -791,6 +852,8 @@ class Decoder(torch.nn.Module):
 
         logits = torch.cat(logits, dim=1)  # (B, Lmax)
         before_outs = torch.cat(outs, dim=2)  # (B, odim, Lmax)
+        att_ws = torch.stack(att_ws, dim=1)
+        aux_att_ws = torch.stack(aux_att_ws, dim=1)
 
         if self.reduction_factor > 1:
             before_outs = before_outs.view(before_outs.size(0), self.odim, -1)  # (B, odim, Lmax)
@@ -805,7 +868,7 @@ class Decoder(torch.nn.Module):
             before_outs = self.output_activation_fn(before_outs)
             after_outs = self.output_activation_fn(after_outs)
 
-        return after_outs, before_outs, logits
+        return after_outs, before_outs, logits, att_ws, aux_att_ws
 
     def inference(self, h, aux, threshold=0.5, minlenratio=0.0, maxlenratio=10.0):
         """Generate the sequence of features given the encoder hidden states
@@ -896,6 +959,7 @@ class Decoder(torch.nn.Module):
                 outs = outs.transpose(2, 1).squeeze(0)  # (L, odim)
                 probs = torch.cat(probs, dim=0)
                 att_ws = torch.cat(att_ws, dim=0)
+                aux_att_ws = torch.cat(aux_att_ws, dim=0)
                 break
 
         if self.output_activation_fn is not None:
