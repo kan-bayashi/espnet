@@ -54,6 +54,9 @@ use_concate=true    # whether to concatenate encoder embedding with decoder lstm
 use_residual=false  # whether to use residual connection in encoder convolution
 use_masking=true    # whether to mask the padded part in loss calculation
 bce_pos_weight=1.0  # weight for positive samples of stop token in cross-entropy calculation
+use_guided_att=true
+guided_att_lambda=1.0
+guided_att_sigma=1.0
 reduction_factor=1
 # minibatch related
 batchsize=32
@@ -206,6 +209,9 @@ if [ -z ${tag} ];then
     if ${use_masking};then
         expname=${expname}_msk_pw${bce_pos_weight}
     fi
+    if ${use_guided_att};then
+        expname=${expname}_gatt_l${guided_att_lambda}_s${guided_att_sigma}
+    fi
     expname=${expname}_do${dropout}_zo${zoneout}_lr${lr}_ep${eps}_wd${weight_decay}_bs$((batchsize*ngpu))
     if [ ! ${batch_sort_key} = "shuffle" ];then
         expname=${expname}_sort_by_${batch_sort_key}_mli${maxlen_in}_mlo${maxlen_out}
@@ -258,6 +264,9 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ];then
            --use_residual ${use_residual} \
            --use_masking ${use_masking} \
            --bce_pos_weight ${bce_pos_weight} \
+           --use_guided_att ${use_guided_att} \
+           --guided_att_lambda ${guided_att_lambda} \
+           --guided_att_sigma ${guided_att_sigma} \
            --lr ${lr} \
            --eps ${eps} \
            --dropout ${dropout} \
