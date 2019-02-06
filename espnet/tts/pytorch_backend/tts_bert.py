@@ -443,6 +443,10 @@ def train(args):
                                          'epoch', file_name='mse_loss.png'))
     trainer.extend(extensions.PlotReport(['main/bce_loss', 'validation/main/bce_loss'],
                                          'epoch', file_name='bce_loss.png'))
+    if args.use_guided_att:
+        plot_keys += ['main/att_loss', 'validation/main/att_loss']
+        trainer.extend(extensions.PlotReport(['main/att_loss', 'validation/main/att_loss'],
+                                             'epoch', file_name='att_loss.png'))
     if args.use_cbhg:
         plot_keys += ['main/cbhg_l1_loss', 'validation/main/cbhg_l1_loss',
                       'main/cbhg_mse_loss', 'validation/main/cbhg_mse_loss']
