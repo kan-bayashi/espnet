@@ -118,8 +118,8 @@ class GuidedAttentionLoss(torch.jit.ScriptModule):
               for i, j in zip(ilens, olens)]
         masks = [torch.from_numpy(self._make_mask(i, max_ilen, j, max_olen))
                  for i, j in zip(ilens, olens)]
-        gs = torch.stack(gs)
-        masks = torch.stack(masks)
+        gs = torch.stack(gs).to(att_ws.device)
+        masks = torch.stack(masks).to(att_ws.device)
         gs = gs.masked_select(masks)
         att_ws = att_ws.masked_select(masks)
 
@@ -480,16 +480,23 @@ class Tacotron2(torch.nn.Module):
             hs = torch.cat([hs, spembs], dim=-1)
 
         # check the use of data_parallel
-        if max(ilens) != xs.shape[1]:
+        if xs.shape[1] != max(ilens):
+            n_pad = xs.shape[1] - max(ilens)
+        else:
+            n_pad = 0
+        if auxs.shape[1] != max(alens):
+            aux_n_pad = auxs.shape[1] - max(alens)
             auxs = auxs[:, :max(alens)]
+        else:
+            aux_n_pad = 0
 
         after_outs, before_outs, logits, att_ws, aux_att_ws = self.dec(hs, hlens, auxs, alens, ys)
 
-        # check the use of data_parallel
-        if max(ilens) != xs.shape[1]:
-            n_pad = max(ilens) - xs.shape[1]
+        # pad to concate outputs with data_parallel
+        if n_pad != 0:
             att_ws = F.pad(att_ws, (0, n_pad), "constant", 0)
-            aux_att_ws = F.pad(aux_att_ws, (0, n_pad), "constant", 0)
+        if aux_n_pad != 0:
+            aux_att_ws = F.pad(aux_att_ws, (0, aux_n_pad), "constant", 0)
 
         if self.use_cbhg:
             if self.reduction_factor > 1:
