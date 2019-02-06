@@ -99,7 +99,7 @@ class ZoneOutCell(torch.nn.Module):
             return prob * h + (1 - prob) * next_h
 
 
-class GuidedAttentionLoss(torch.jit.ScriptModule):
+class GuidedAttentionLoss(torch.nn.Module):
     """Guided attention loss function
 
     :param float sigma: standard deviation to control how close attention to a diagonal
@@ -130,7 +130,7 @@ class GuidedAttentionLoss(torch.jit.ScriptModule):
         g = np.zeros((max_in, max_out), dtype=np.float32)
         for i in np.arange(ilen):
             for j in np.arange(olen):
-                g[i, j] = 1 - np.exp(-(i / max_in - j / max_out)**2 / (2 * (self.sigma ** 2)))
+                g[i, j] = 1 - np.exp(-(i / ilen - j / olen)**2 / (2 * (self.sigma ** 2)))
 
         return g.T
 
