@@ -125,10 +125,21 @@ def main(args):
     parser.add_argument('--reduction_factor', default=1, type=int,
                         help='Reduction factor')
     # loss related
-    parser.add_argument('--use_masking', default=False, type=strtobool,
+    parser.add_argument('--use_masking', default=True, type=strtobool,
                         help='Whether to use masking in calculation of loss')
     parser.add_argument('--bce_pos_weight', default=20.0, type=float,
-                        help='Positive sample weight in BCE calculation (only for use_masking=True)')
+                        help='Positive sample weight in binary cross entropy calculation'
+                             '(only for use_masking=True)')
+    parser.add_argument('--bce_lambda', default=1.0, type=float,
+                        help='Lambda value for binary cross entropy')
+    parser.add_argument('--use_guided_att', default=True, type=strtobool,
+                        help='Whether to use guided attention')
+    parser.add_argument('--guided_att_lambda', default=1.0, type=float,
+                        help='Lambda value for guided attention'
+                             '(only for use_guided_att=True)')
+    parser.add_argument('--guided_att_sigma', default=0.4, type=float,
+                        help='Sigma value for guided attention'
+                             '(only for use_guided_att=True)')
     # minibatch related
     parser.add_argument('--batch_sort_key', default='shuffle', type=str,
                         choices=['shuffle', 'output', 'input'], nargs='?',
