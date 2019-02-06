@@ -264,6 +264,9 @@ class Tacotron2Loss(torch.nn.Module):
             ]
 
         # reports
+        loss_reports += [
+            {'loss': loss.item()},
+        ]
         self.reporter.report(loss_reports)
 
         return loss
