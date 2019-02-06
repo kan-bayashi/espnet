@@ -21,7 +21,6 @@ from torch.nn.utils.rnn import pad_packed_sequence
 from espnet.nets.pytorch_backend.attentions import AttForward
 from espnet.nets.pytorch_backend.attentions import AttForwardTA
 from espnet.nets.pytorch_backend.attentions import AttLoc
-from espnet.nets.pytorch_backend.nets_utils import pad_list
 from espnet.nets.pytorch_backend.nets_utils import to_device
 
 
@@ -115,18 +114,30 @@ class GuidedAttentionLoss(torch.jit.ScriptModule):
         olens = list(map(int, olens))
         max_ilen = max(ilens)
         max_olen = max(olens)
-        gs = [torch.from_numpy(self._make_guided_attention_mask(i, max_ilen, j, max_olen))
+        gs = [torch.from_numpy(self._make_guided_attention(i, max_ilen, j, max_olen))
               for i, j in zip(ilens, olens)]
-        gs = pad_list(gs, 0)
+        masks = [torch.from_numpy(self._make_mask(i, max_ilen, j, max_olen))
+                 for i, j in zip(ilens, olens)]
+        gs = torch.stack(gs)
+        masks = torch.stack(masks)
+        gs = gs.masked_select(masks)
+        att_ws = att_ws.masked_select(masks)
 
         return torch.mean(gs * att_ws)
 
     @jit(forceobj=True)
-    def _make_guided_attention_mask(self, ilen, max_in, olen, max_out):
-        mask = np.zeros((max_in, max_out), dtype=np.float32)
+    def _make_guided_attention(self, ilen, max_in, olen, max_out):
+        g = np.zeros((max_in, max_out), dtype=np.float32)
         for i in np.arange(ilen):
             for j in np.arange(olen):
-                mask[i, j] = 1 - np.exp(-(i / max_in - j / max_out)**2 / (2 * (self.sigma ** 2)))
+                g[i, j] = 1 - np.exp(-(i / max_in - j / max_out)**2 / (2 * (self.sigma ** 2)))
+
+        return g.T
+
+    @jit(forceobj=True)
+    def _make_mask(self, ilen, max_in, olen, max_out):
+        mask = np.zeros((max_in, max_out), dtype=np.uint8)
+        mask[:ilen, :olen] = 1
 
         return mask.T
 
@@ -251,6 +262,9 @@ class Tacotron2Loss(torch.nn.Module):
             loss_reports += [
                 {'att_loss': att_loss.item()},
             ]
+
+        # reports
+        self.reporter.report(loss_reports)
 
         return loss
 
@@ -464,9 +478,18 @@ class Tacotron2(torch.nn.Module):
         if self.spk_embed_dim is not None:
             spembs = F.normalize(spembs).unsqueeze(1).expand(-1, hs.size(1), -1)
             hs = torch.cat([hs, spembs], dim=-1)
-        # for multi-gpus
-        auxs = auxs[:, :max(alens)]
+
+        # check the use of data_parallel
+        if max(ilens) != xs.shape[1]:
+            auxs = auxs[:, :max(alens)]
+
         after_outs, before_outs, logits, att_ws, aux_att_ws = self.dec(hs, hlens, auxs, alens, ys)
+
+        # check the use of data_parallel
+        if max(ilens) != xs.shape[1]:
+            n_pad = max(ilens) - xs.shape[1]
+            att_ws = F.pad(att_ws, (0, n_pad), "constant", 0)
+            aux_att_ws = F.pad(aux_att_ws, (0, n_pad), "constant", 0)
 
         if self.use_cbhg:
             if self.reduction_factor > 1:
