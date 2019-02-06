@@ -99,6 +99,32 @@ class ZoneOutCell(torch.nn.Module):
             return prob * h + (1 - prob) * next_h
 
 
+@jit('f4[:, :, :](i8[:], i8[:], f4)', nopython=True)
+def _make_guided_attention(ilens, olens, sigma):
+    n_batch = ilens.shape[0]
+    max_in = np.max(ilens)
+    max_out = np.max(olens)
+    gs = np.zeros((n_batch, max_out, max_in), dtype=np.float32)
+    for b, (ilen, olen) in enumerate(zip(ilens, olens)):
+        for i in range(ilen):
+            for j in range(olen):
+                gs[b, j, i] = 1 - np.exp(-(i / ilen - j / olen)**2 / (2 * (sigma ** 2)))
+
+    return gs
+
+
+@jit('u1[:, :, :](i8[:], i8[:])', nopython=True)
+def _make_mask(ilens, olens):
+    n_batch = ilens.shape[0]
+    max_in = np.max(ilens)
+    max_out = np.max(olens)
+    mask = np.zeros((n_batch, max_out, max_in), dtype=np.uint8)
+    for b, (ilen, olen) in enumerate(zip(ilens, olens)):
+        mask[b, :olen, :ilen] = 1
+
+    return mask
+
+
 class GuidedAttentionLoss(torch.nn.Module):
     """Guided attention loss function
 
@@ -107,39 +133,17 @@ class GuidedAttentionLoss(torch.nn.Module):
 
     def __init__(self, sigma=0.4):
         super(GuidedAttentionLoss, self).__init__()
-        self.sigma = sigma
+        self.sigma = np.float32(sigma)
 
     def forward(self, att_ws, ilens, olens):
-        ilens = list(map(int, ilens))
-        olens = list(map(int, olens))
-        max_ilen = max(ilens)
-        max_olen = max(olens)
-        gs = [torch.from_numpy(self._make_guided_attention(i, max_ilen, j, max_olen))
-              for i, j in zip(ilens, olens)]
-        masks = [torch.from_numpy(self._make_mask(i, max_ilen, j, max_olen))
-                 for i, j in zip(ilens, olens)]
-        gs = torch.stack(gs).to(att_ws.device)
-        masks = torch.stack(masks).to(att_ws.device)
+        ilens = np.array(list(map(int, ilens)), dtype=np.int64)
+        olens = np.array(list(map(int, olens)), dtype=np.int64)
+        gs = torch.from_numpy(_make_guided_attention(ilens, olens, self.sigma)).to(att_ws.device)
+        masks = torch.from_numpy(_make_mask(ilens, olens)).to(att_ws.device)
         gs = gs.masked_select(masks)
         att_ws = att_ws.masked_select(masks)
 
         return torch.mean(gs * att_ws)
-
-    @jit(forceobj=True)
-    def _make_guided_attention(self, ilen, max_in, olen, max_out):
-        g = np.zeros((max_in, max_out), dtype=np.float32)
-        for i in np.arange(ilen):
-            for j in np.arange(olen):
-                g[i, j] = 1 - np.exp(-(i / ilen - j / olen)**2 / (2 * (self.sigma ** 2)))
-
-        return g.T
-
-    @jit(forceobj=True)
-    def _make_mask(self, ilen, max_in, olen, max_out):
-        mask = np.zeros((max_in, max_out), dtype=np.uint8)
-        mask[:ilen, :olen] = 1
-
-        return mask.T
 
 
 class Tacotron2Loss(torch.nn.Module):
