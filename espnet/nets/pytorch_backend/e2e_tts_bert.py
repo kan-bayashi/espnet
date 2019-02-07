@@ -261,9 +261,11 @@ class Tacotron2Loss(torch.nn.Module):
         # calculate guided attention loss
         if self.use_guided_att:
             olens = [olen // self.reduction_factor for olen in olens]
-            att_loss = self.guided_att_lambda * self.guided_att_loss(aux_att_ws, alens, olens)
-            loss += att_loss
+            att_loss = self.guided_att_lambda * self.guided_att_loss(att_ws, ilens, olens)
+            aux_att_loss = self.guided_att_lambda * self.guided_att_loss(aux_att_ws, alens, olens)
+            loss += att_loss + aux_att_loss
             loss_reports += [
+                {'aux_att_loss': aux_att_loss.item()},
                 {'att_loss': att_loss.item()},
             ]
 
