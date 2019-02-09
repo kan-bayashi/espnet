@@ -36,7 +36,7 @@ aconv_chans=10
 aconv_filts=100
 
 # hybrid CTC/attention
-mtlalpha=0.5
+mtlalpha=0.0
 
 # minibatch related
 batchsize=50
@@ -50,15 +50,15 @@ epochs=15
 # decoding parameter
 beam_size=20
 penalty=0.0
-maxlenratio=0.0
-minlenratio=0.0
-ctc_weight=0.3
+maxlenratio=0.8
+minlenratio=0.3
+ctc_weight=0.0
 recog_model=acc.best # set a model to be used for decoding: 'acc.best' or 'loss.best'
 
 # Set this to somewhere where you want to put your data, or where
 # someone else has already put it.  You'll want to change this
 # if you're not on the CLSP grid.
-datadir=/export/a15/vpanayotov/data
+datadir=./downloads
 
 # base url for downloads.
 data_url=www.openslr.org/resources/12

@@ -29,7 +29,7 @@ def main():
                         help='Verbose option')
     # task related
     parser.add_argument('--label', type=str, required=True,
-                        help='Filename of train label data (json)')
+                        help='Filename of decoding json')
     parser.add_argument('--model', type=str, required=True,
                         help='Model file parameters to read')
     parser.add_argument('--model-conf', type=str, required=True,

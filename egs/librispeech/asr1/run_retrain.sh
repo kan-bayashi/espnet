@@ -10,6 +10,10 @@
 stage=5
 # gpu setting
 ngpu=1
+# training setting
+optimizer=adadelta
+lr=1e-4
+momentum=0.9
 batchsize=50
 maxlen_in=400  # if input length  > maxlen_in, batchsize is automatically reduced
 maxlen_out=200 # if output length > maxlen_out, batchsize is automatically reduced
@@ -18,12 +22,12 @@ epochs=15
 do_delta=false
 train_set=train_100
 train_dev=dev
-decode_set="train_360 train_other_500"
+decode_set="train_360"
 verbose=0
 tag=
 nj=32
 # decoder retraining related
-input_layer_idx=-1
+input_layer_idx=8
 flatstart=false
 freeze_attention=false
 # decoding related
@@ -43,15 +47,23 @@ dumpdir=${basedir}/outputs-h${input_layer_idx}
 model=${basedir}/results/model.acc.best
 config=${basedir}/results/model.conf
 dict=data/lang_1char/${train_set}_units.txt
-outdir=./exp/train_100_taco2_states_enc512-3x5x512-1x512_dec2x1024_pre2x256_post5x5x512_att128-15x32_cm_bn_cc_msk_pw20.0_do0.5_zo0.1_lr1e-3_ep1e-6_wd0.0_bs50_sort_by_input_mli150_mlo400/outputs_th0.5_mlr0.0-5.0
+outdir=./exp/train_100_taco2_h8_states_enc512-3x5x512-1x512_dec2x1024_pre2x256_post5x5x512_tanh_att128-15x32_cm_bn_cc_msk_pw1.0_do0.5_zo0.1_lr1e-3_ep1e-6_wd0.0_bs50_sort_by_input_mli150_mlo400/outputs_th0.7_mlr0.0-5.0
 
-retroutdir=$(dirname ${outdir})/re${train_set}_bs${batchsize}_mli${maxlen_in}_mlo${maxlen_out}
+retroutdir=$(dirname ${outdir})/re${train_set}_${optimizer}
+if [ ! ${optimizer} = "adadelta" ];then
+    retroutdir=${retroutdir}_lr${lr}
+fi
+if [ ${optimizer} = "SGD" ];then
+    retroutdir=${retroutdir}_mo${momentum}
+fi
+retroutdir=${retroutdir}_bs${batchsize}_mli${maxlen_in}_mlo${maxlen_out}
 if ${flatstart};then
     retroutdir=${retroutdir}_fs
 fi
 if ${freeze_attention};then
     retroutdir=${retroutdir}_fz_att
 fi
+# retroutdir=${retroutdir}_joint
 if [ ${stage} -le 8 ];then
     echo "stage 8: Re-training decoder"
     if [ ! -e ${retroutdir}/data/train/data.json ];then
@@ -86,6 +98,9 @@ if [ ${stage} -le 8 ];then
             --train-label ${retroutdir}/data/train/data.json \
             --valid-feat scp:dump/${train_dev}/delta${do_delta}/feats.scp \
             --valid-label dump/${train_dev}/delta${do_delta}/data.json \
+            --opt ${optimizer} \
+            --lr ${lr} \
+            --momentum ${momentum} \
             --batch-size ${batchsize} \
             --maxlen-in ${maxlen_out} \
             --maxlen-out ${maxlen_in} \

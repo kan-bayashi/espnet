@@ -173,6 +173,8 @@ def set_forget_bias_to_one(bias):
 class E2E(torch.nn.Module):
     def __init__(self, idim, odim, args):
         super(E2E, self).__init__()
+        self.idim = idim
+        self.odim = odim
         self.etype = args.etype
         self.verbose = args.verbose
         self.char_list = args.char_list
@@ -316,7 +318,10 @@ class E2E(torch.nn.Module):
         # 1. encoder
         xpad = pad_list(hs)
         if self.training:
-            hpad, hlens = self.enc(xpad, ilens, self.input_layer_idx)
+            if xpad.size(2) == self.idim:
+                hpad, hlens = self.enc(xpad, ilens)
+            else:
+                hpad, hlens = self.enc(xpad, ilens, self.input_layer_idx)
         else:
             hpad, hlens = self.enc(xpad, ilens)
 
@@ -1856,6 +1861,10 @@ class Decoder(torch.nn.Module):
 
         nbest_hyps = sorted(
             ended_hyps, key=lambda x: x['score'], reverse=True)[:min(len(ended_hyps), recog_args.nbest)]
+        if len(nbest_hyps) == 0:
+            logging.warn('there is no nbest results, re-decode with less small minlenratio.')
+            recog_args.minlenratio = max(0.0, recog_args.minlenratio - 0.05)
+            return self.recognize_beam(h, lpz, recog_args, char_list, rnnlm)
         logging.info('total log probability: ' + str(nbest_hyps[0]['score']))
         logging.info('normalized log probability: ' + str(nbest_hyps[0]['score'] / len(nbest_hyps[0]['yseq'])))
 
@@ -2018,10 +2027,10 @@ class BLSTMP(torch.nn.Module):
         :return:
         '''
         # check layer index
-        if extract_layer_idx < 0 or extract_layer_idx > self.elayers:
-            raise ValueError("layer index is out of range.")
         if extract_layer_idx == -1:
             extract_layer_idx = self.elayers
+        if extract_layer_idx < 0 or extract_layer_idx > self.elayers:
+            raise ValueError("layer index is out of range.")
         for layer in six.moves.range(self.elayers):
             if layer == extract_layer_idx:
                 break

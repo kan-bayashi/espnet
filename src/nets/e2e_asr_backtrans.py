@@ -54,7 +54,8 @@ def make_mask(lengths, dim=None):
 
 
 class Reporter(chainer.Chain):
-    def report(self, mse_loss, bce_loss, loss):
+    def report(self, l1_loss, mse_loss, bce_loss, loss):
+        chainer.reporter.report({'l1_loss': l1_loss}, self)
         chainer.reporter.report({'mse_loss': mse_loss}, self)
         chainer.reporter.report({'bce_loss': bce_loss}, self)
         chainer.reporter.report({'loss': loss}, self)
@@ -138,17 +139,18 @@ class Tacotron2Loss(torch.nn.Module):
             logits = logits.masked_select(mask[:, :, 0])
             weights = weights.masked_select(mask[:, :, 0]) if weights is not None else None
             # calculate loss
+            l1_loss = F.l1_loss(after_outs, ys) + F.l1_loss(before_outs, ys)
             mse_loss = F.mse_loss(after_outs, ys) + F.mse_loss(before_outs, ys)
             bce_loss = F.binary_cross_entropy_with_logits(logits, labels, weights)
-            loss = mse_loss + bce_loss
+            loss = l1_loss + mse_loss + bce_loss
         else:
             # calculate loss
+            l1_loss = F.l1_loss(after_outs, ys) + F.l1_loss(before_outs, ys)
             mse_loss = F.mse_loss(after_outs, ys) + F.mse_loss(before_outs, ys)
             bce_loss = F.binary_cross_entropy_with_logits(logits, labels)
-            loss = mse_loss + bce_loss
+            loss = l1_loss + mse_loss + bce_loss
 
-        logging.info("loss = %.3e (bce: %.3e, mse: %.3e)" % (loss.item(), bce_loss.item(), mse_loss.item()))
-        self.reporter.report(mse_loss.item(), bce_loss.item(), loss.item())
+        self.reporter.report(l1_loss.item(), mse_loss.item(), bce_loss.item(), loss.item())
 
         return loss
 
@@ -264,6 +266,7 @@ class Tacotron2(torch.nn.Module):
                            postnet_layers=self.postnet_layers,
                            postnet_chans=self.postnet_chans,
                            postnet_filts=self.postnet_filts,
+                           output_activation_fn=self.output_activation_fn,
                            cumulate_att_w=self.cumulate_att_w,
                            use_batch_norm=self.use_batch_norm,
                            use_concate=self.use_concate,
@@ -293,9 +296,6 @@ class Tacotron2(torch.nn.Module):
         """
         hs = self.enc(xs, ilens)
         after_outs, before_outs, logits, att_ws = self.dec(hs, ilens, ys, xs.size(-1))
-        if self.output_activation_fn is not None:
-            before_outs = self.output_activation_fn(before_outs)
-            after_outs = self.output_activation_fn(after_outs)
 
         return after_outs, before_outs, logits, att_ws
 
@@ -312,8 +312,6 @@ class Tacotron2(torch.nn.Module):
         """
         h = self.enc.inference(x)
         outs, probs, att_ws = self.dec.inference(h)
-        if self.output_activation_fn is not None:
-            outs = self.output_activation_fn(outs)
 
         return outs, probs, att_ws
 
@@ -457,6 +455,7 @@ class Decoder(torch.nn.Module):
                  postnet_layers=5,
                  postnet_chans=512,
                  postnet_filts=5,
+                 output_activation_fn=None,
                  cumulate_att_w=True,
                  use_batch_norm=True,
                  use_concate=True,
@@ -477,6 +476,7 @@ class Decoder(torch.nn.Module):
         self.postnet_layers = postnet_layers
         self.postnet_chans = postnet_chans if postnet_layers != 0 else -1
         self.postnet_filts = postnet_filts if postnet_layers != 0 else -1
+        self.output_activation_fn = output_activation_fn
         self.cumulate_att_w = cumulate_att_w
         self.use_batch_norm = use_batch_norm
         self.use_concate = use_concate
@@ -609,6 +609,11 @@ class Decoder(torch.nn.Module):
             att_ws_new[:, :, :att_ws.size(-1)] = att_ws
             att_ws = att_ws_new
 
+        # apply activation function for outputs
+        if self.output_activation_fn is not None:
+            before_outs = self.output_activation_fn(before_outs)
+            after_outs = self.output_activation_fn(after_outs)
+
         return after_outs, before_outs, logits, att_ws
 
     def inference(self, h):
@@ -674,6 +679,10 @@ class Decoder(torch.nn.Module):
                 probs = torch.cat(probs, dim=0)
                 att_ws = torch.cat(att_ws, dim=0)
                 break
+
+        # apply activation function for outputs
+        if self.output_activation_fn is not None:
+            outs = self.output_activation_fn(outs)
 
         return outs, probs, att_ws
 

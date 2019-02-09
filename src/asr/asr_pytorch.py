@@ -480,7 +480,7 @@ def extract(args):
     if ngpu >= 1:
         gpu_id = range(ngpu)
         logging.info('gpu id: ' + str(gpu_id))
-        extractor.cuda()
+        model.cuda()
     else:
         gpu_id = [-1]
 
@@ -587,7 +587,9 @@ def retrain(args):
         optimizer = torch.optim.Adadelta(
             params, rho=0.95, eps=args.eps)
     elif args.opt == 'adam':
-        optimizer = torch.optim.Adam(params)
+        optimizer = torch.optim.Adam(params, lr=args.lr)
+    elif args.opt == 'SGD':
+        optimizer = torch.optim.SGD(params, lr=args.lr, momentum=args.momentum)
 
     # FIXME: TOO DIRTY HACK
     setattr(optimizer, "target", reporter)

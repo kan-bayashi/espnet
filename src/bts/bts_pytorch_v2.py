@@ -34,22 +34,13 @@ MAX_SAVE_ATT_W = 5
 def make_batchset(data, batch_size, max_length_in, max_length_out,
                   num_batches=0, batch_sort_key=None):
     minibatch = []
-    start = 0
-    if batch_sort_key is None:
-        logging.info("use shuffled batch.")
-        shuffled_data = random.sample(data.items(), len(data.items()))
-        logging.info('# utts: ' + str(len(shuffled_data)))
-        while True:
-            end = min(len(shuffled_data), start + batch_size)
-            minibatch.append(shuffled_data[start:end])
-            if end == len(shuffled_data):
-                break
-            start = end
-    elif batch_sort_key == "input":
-        logging.info("use batch sorted by input length and adaptive batch size.")
+    # get feature dict
+    feat_data = list(filter(lambda data: data[1]['idim'] != 320, data.items()))
+    state_data = list(filter(lambda data: data[1]['idim'] == 320, data.items()))
+    for data in [feat_data, state_data]:
+        start = 0
         # sort it by output lengths (long to short)
-        sorted_data = sorted(data.items(), key=lambda data: int(
-            data[1]['olen']), reverse=True)
+        sorted_data = sorted(data, key=lambda d: int(d[1]['olen']), reverse=True)
         logging.info('# utts: ' + str(len(sorted_data)))
         # change batchsize depending on the input and output length
         while True:
@@ -65,28 +56,6 @@ def make_batchset(data, batch_size, max_length_in, max_length_out,
             if end == len(sorted_data):
                 break
             start = end
-    elif batch_sort_key == "output":
-        logging.info("use batch sorted by output length and adaptive batch size.")
-        # sort it by output lengths (long to short)
-        sorted_data = sorted(data.items(), key=lambda data: int(
-            data[1]['ilen']), reverse=True)
-        logging.info('# utts: ' + str(len(sorted_data)))
-        # change batchsize depending on the input and output length
-        while True:
-            ilen = int(sorted_data[start][1]['olen'])  # reverse
-            olen = int(sorted_data[start][1]['ilen'])  # reverse
-            factor = max(int(ilen / max_length_in), int(olen / max_length_out))
-            # if ilen = 1000 and max_length_in = 800
-            # then b = batchsize / 2
-            # and max(1, .) avoids batchsize = 0
-            b = max(1, int(batch_size / (1 + factor)))
-            end = min(len(sorted_data), start + b)
-            minibatch.append(sorted_data[start:end])
-            if end == len(sorted_data):
-                break
-            start = end
-    else:
-        ValueError("batch_sort_key should be selected from None, input, and output.")
 
     # for debugging
     if num_batches > 0:
@@ -388,12 +357,9 @@ def train(args):
 
     # Make a plot for training and validation values
     trainer.extend(extensions.PlotReport(['main/loss', 'validation/main/loss',
-                                          'main/l1_loss', 'validation/main/l1_loss',
                                           'main/mse_loss', 'validation/main/mse_loss',
                                           'main/bce_loss', 'validation/main/bce_loss'],
                                          'epoch', file_name='loss.png'))
-    trainer.extend(extensions.PlotReport(['main/l1_loss', 'validation/main/l1_loss'],
-                                         'epoch', file_name='l1_loss.png'))
     trainer.extend(extensions.PlotReport(['main/mse_loss', 'validation/main/mse_loss'],
                                          'epoch', file_name='mse_loss.png'))
     trainer.extend(extensions.PlotReport(['main/bce_loss', 'validation/main/bce_loss'],
@@ -413,10 +379,8 @@ def train(args):
 
     # Write a log of evaluation statistics for each epoch
     trainer.extend(extensions.LogReport(trigger=(100, 'iteration')))
-    report_keys = ['epoch', 'iteration', 'elapsed_time', 'main/loss',
-                   'main/l1_loss', 'main/mse_loss', 'main/bce_loss',
-                   'validation/main/loss', 'validation/main/l1_loss',
-                   'validation/main/mse_loss', 'validation/main/bce_loss']
+    report_keys = ['epoch', 'iteration', 'elapsed_time', 'main/loss', 'main/mse_loss', 'main/bce_loss',
+                   'validation/main/loss', 'validation/main/mse_loss', 'validation/main/bce_loss']
     trainer.extend(extensions.PrintReport(report_keys), trigger=(100, 'iteration'))
     trainer.extend(extensions.ProgressBar())
 

@@ -68,8 +68,12 @@ def main():
     parser.add_argument('--input-layer-idx', type=int, default=-1,
                         help='Index of hidden layer of the input states')
     parser.add_argument('--opt', default='adadelta', type=str,
-                        choices=['adadelta', 'adam'],
+                        choices=['adadelta', 'adam', 'SGD'],
                         help='Optimizer')
+    parser.add_argument('--lr', default=1e-3, type=float,
+                        help='Learning rate for optimizer')
+    parser.add_argument('--momentum', default=0.9, type=float,
+                        help='Momentum for SGD optimizer')
     parser.add_argument('--eps', default=1e-8, type=float,
                         help='Epsilon constant for optimizer')
     parser.add_argument('--eps-decay', default=0.01, type=float,
@@ -139,7 +143,7 @@ def main():
     # train
     logging.info('backend = ' + args.backend)
     if args.backend == "pytorch":
-        from asr_pytorch import retrain
+        from asr_pytorch_v2 import retrain
         retrain(args)
     else:
         raise ValueError("pytorch is only supported.")

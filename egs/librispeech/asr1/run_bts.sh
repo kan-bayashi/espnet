@@ -37,7 +37,7 @@ use_batch_norm=true # whether to use batch normalization in conv layer
 use_concate=true    # whether to concatenate encoder embedding with decoder lstm outputs
 use_residual=false  # whether to concatenate encoder embedding with decoder lstm outputs
 use_masking=true    # whether to mask the padded part in loss calculation
-bce_pos_weight=20.0
+bce_pos_weight=1.0
 # minibatch related
 batch_sort_key=input
 batchsize=50
@@ -53,22 +53,22 @@ zoneout=0.1
 # other
 do_delta=false
 target=states # feats or states
-train_set=train_360
+train_set=train_100
 train_dev=dev
-decode_set="train_100 train_other_500"
+decode_set="train_360"
 verbose=0
 resume=
 tag=
 # decoding related
-threshold=0.5
+threshold=0.7
 maxlenratio=5.0
 minlenratio=0.0
-nj=32
+nj=4
 
 . utils/parse_options.sh
 set -e
 
-basedir=exp/${train_set}_blstmp_e8_subsample1_2_2_1_1_unit320_proj320_d1_unit300_location_aconvc10_aconvf100_mtlalpha0.0_adadelta_bs50_mli800_mlo150
+basedir=exp/train_100_blstmp_e8_subsample1_2_2_1_1_unit320_proj320_d1_unit300_location_aconvc10_aconvf100_mtlalpha0.0_adadelta_bs50_mli800_mlo150
 dumpdir=${basedir}/outputs-h${extract_layer_idx}
 model=${basedir}/results/model.acc.best
 config=${basedir}/results/model.conf
@@ -76,7 +76,7 @@ dict=data/lang_1char/${train_set}_units.txt
 
 if [ ${stage} -le 5 ];then
     echo "stage 5: Encoder state extraction"
-    for sets in ${train_set} ${train_dev};do
+    for sets in ${train_set};do
         [ ! -e ${dumpdir}/${sets}/log ] && mkdir -p ${dumpdir}/${sets}/log
         # split scp file
         scp=dump/${sets}/delta${do_delta}/feats.scp
@@ -86,10 +86,10 @@ if [ ${stage} -le 5 ];then
         done
         utils/split_scp.pl $scp $split_scps || exit 1;
         # decode
-        ${train_cmd} JOB=1:$nj ${dumpdir}/${sets}/log/extract.JOB.log \
+        ${train_cmd} --gpu 1 JOB=1:$nj ${dumpdir}/${sets}/log/extract.JOB.log \
             asr_extract.py \
                 --backend pytorch \
-                --ngpu 0 \
+                --ngpu 1 \
                 --verbose ${verbose} \
                 --out ${dumpdir}/${sets}/feats.JOB \
                 --feat ${dumpdir}/${sets}/log/feats.JOB.scp \
@@ -217,11 +217,11 @@ if [ ${stage} -le 7 ];then
         data2json.sh data/${sets} ${dict} > ${outdir}/${sets}/data.json
         splitjson.py -n $nj ${outdir}/${sets}/data.json
         # decode in parallel
-        ${train_cmd} JOB=1:$nj ${outdir}/${sets}/log/decode.JOB.log \
+        ${train_cmd} --gpu 1 JOB=1:$nj ${outdir}/${sets}/log/decode.JOB.log \
             bts_decode.py \
                 --backend pytorch \
-                --ngpu 0 \
-                --verbose ${verbose} \
+                --ngpu 1 \
+                --verbose 1 \
                 --out ${outdir}/${sets}/feats.JOB \
                 --label ${outdir}/${sets}/data.JOB.json \
                 --model ${expdir}/results/model.loss.best \
