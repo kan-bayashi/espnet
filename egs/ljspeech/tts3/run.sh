@@ -45,6 +45,7 @@ atype=forward_ta
 adim=128
 aconv_chans=32
 aconv_filts=15      # resulting in filter_size = aconv_filts * 2 + 1
+aux_proj_dim=512
 aux_adim=128
 aux_aconv_chans=32
 aux_aconv_filts=5      # resulting in filter_size = aconv_filts * 2 + 1
@@ -56,7 +57,7 @@ use_masking=true    # whether to mask the padded part in loss calculation
 bce_pos_weight=1.0  # weight for positive samples of stop token in cross-entropy calculation
 use_guided_att=true
 guided_att_lambda=1.0
-guided_att_sigma=1.0
+guided_att_sigma=0.4
 reduction_factor=1
 # minibatch related
 batchsize=32
@@ -212,6 +213,9 @@ if [ -z ${tag} ];then
     if ${use_guided_att};then
         expname=${expname}_gatt_l${guided_att_lambda}_s${guided_att_sigma}
     fi
+    if [ ! -z ${aux_proj_dim} ];then
+        expname=${expname}_ap${aux_proj_dim}
+    fi
     expname=${expname}_do${dropout}_zo${zoneout}_lr${lr}_ep${eps}_wd${weight_decay}_bs$((batchsize*ngpu))
     if [ ! ${batch_sort_key} = "shuffle" ];then
         expname=${expname}_sort_by_${batch_sort_key}_mli${maxlen_in}_mlo${maxlen_out}
@@ -255,6 +259,7 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ];then
            --adim ${adim} \
            --aconv-chans ${aconv_chans} \
            --aconv-filts ${aconv_filts} \
+           --aux_proj_dim ${aux_proj_dim} \
            --aux_adim ${aux_adim} \
            --aux_aconv-chans ${aux_aconv_chans} \
            --aux_aconv-filts ${aux_aconv_filts} \

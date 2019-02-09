@@ -67,6 +67,8 @@ def main(args):
                         help='Number of attention convolution channels')
     parser.add_argument('--aconv-filts', default=15, type=int,
                         help='Filter size of attention convolution')
+    parser.add_argument('--aux_proj_dim', default=None, type=int, nargs="?",
+                        help='Number of projection dimensions')
     parser.add_argument('--aux_adim', default=512, type=int,
                         help='Number of attention transformation dimensions')
     parser.add_argument('--aux_aconv-chans', default=32, type=int,

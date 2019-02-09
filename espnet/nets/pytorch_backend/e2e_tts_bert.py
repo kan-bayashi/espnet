@@ -150,31 +150,25 @@ class Tacotron2Loss(torch.nn.Module):
     """Tacotron2 loss function
 
     :param torch.nn.Module model: tacotron2 model
-    :param bool use_masking: whether to mask padded part in loss calculation
-    :param float bce_pos_weight: weight of positive sample of stop token (only for use_masking=True)
-    :param float bce_lambda: lambda value for binary cross entropy
-    :param bool use_guided_att: whether to use guided attention
-    :param float guided_att_lambda: lambda value for guided attention
-    :param float guided_att_sigma: sigma value for guided attention
+    :param Namespace args: argments containing following attributes
+        (bool) use_masking: whether to mask padded part in loss calculation
+        (float) bce_pos_weight: weight of positive sample of stop token (only for use_masking=True)
+        (float) bce_lambda: lambda value for binary cross entropy
+        (bool) use_guided_att: whether to use guided attention
+        (float) guided_att_lambda: lambda value for guided attention
+        (float) guided_att_sigma: sigma value for guided attention
     """
 
-    def __init__(self,
-                 model,
-                 use_masking=True,
-                 bce_pos_weight=1.0,
-                 bce_lambda=1.0,
-                 use_guided_att=True,
-                 guided_att_lambda=1.0,
-                 guided_att_sigma=0.4):
+    def __init__(self, model, args):
         super(Tacotron2Loss, self).__init__()
         self.model = model
-        self.use_masking = use_masking
-        self.bce_pos_weight = bce_pos_weight
-        self.bce_lambda = bce_lambda
-        self.use_guided_att = use_guided_att
+        self.use_masking = args.use_masking
+        self.bce_pos_weight = args.bce_pos_weight
+        self.bce_lambda = args.bce_lambda
+        self.use_guided_att = args.use_guided_att
         if self.use_guided_att:
-            self.guided_att_lambda = guided_att_lambda
-            self.guided_att_sigma = guided_att_sigma
+            self.guided_att_lambda = args.guided_att_lambda
+            self.guided_att_sigma = args.guided_att_sigma
             self.guided_att_loss = GuidedAttentionLoss(self.guided_att_sigma)
         if hasattr(model, 'module'):
             self.use_cbhg = model.module.use_cbhg
@@ -342,6 +336,7 @@ class Tacotron2(torch.nn.Module):
         self.aconv_filts = args.aconv_filts
         self.aconv_chans = args.aconv_chans
         self.aux_dim = args.aux_dim
+        self.aux_proj_dim = args.aux_proj_dim if hasattr(args, "aux_proj_dim") else None
         self.aux_adim = args.aux_adim
         self.aux_aconv_filts = args.aux_aconv_filts
         self.aux_aconv_chans = args.aux_aconv_chans
@@ -379,6 +374,8 @@ class Tacotron2(torch.nn.Module):
                            econv_filts=self.econv_filts,
                            use_batch_norm=self.use_batch_norm,
                            dropout=self.dropout)
+        if self.aux_proj_dim is not None:
+            self.aux_proj = torch.nn.Linear(self.aux_dim, self.aux_proj_dim)
         dec_idim = self.eunits if self.spk_embed_dim is None else self.eunits + self.spk_embed_dim
         if self.atype == "location":
             att = AttLoc(dec_idim,
@@ -386,7 +383,7 @@ class Tacotron2(torch.nn.Module):
                          self.adim,
                          self.aconv_chans,
                          self.aconv_filts)
-            aux_att = AttLoc(self.aux_dim,
+            aux_att = AttLoc(self.aux_proj_dim if self.aux_proj_dim is not None else self.aux_dim,
                              self.dunits,
                              self.aux_adim,
                              self.aux_aconv_chans,
@@ -397,7 +394,7 @@ class Tacotron2(torch.nn.Module):
                              self.adim,
                              self.aconv_chans,
                              self.aconv_filts)
-            aux_att = AttForward(self.aux_dim,
+            aux_att = AttForward(self.aux_proj_dim if self.aux_proj_dim is not None else self.aux_dim,
                                  self.dunits,
                                  self.aux_adim,
                                  self.aux_aconv_chans,
@@ -412,7 +409,7 @@ class Tacotron2(torch.nn.Module):
                                self.aconv_chans,
                                self.aconv_filts,
                                self.odim)
-            aux_att = AttForwardTA(self.aux_dim,
+            aux_att = AttForwardTA(self.aux_proj_dim if self.aux_proj_dim is not None else self.aux_dim,
                                    self.dunits,
                                    self.aux_adim,
                                    self.aux_aconv_chans,
@@ -423,7 +420,8 @@ class Tacotron2(torch.nn.Module):
                 self.cumulate_att_w = False
         else:
             raise NotImplementedError("Support only location or forward")
-        self.dec = Decoder(idim=dec_idim + self.aux_dim,
+        dec_idim = dec_idim + self.aux_proj_dim if self.aux_proj_dim is not None else dec_idim + self.aux_dim
+        self.dec = Decoder(idim=dec_idim,
                            odim=self.odim,
                            att=att,
                            aux_att=aux_att,
@@ -488,6 +486,9 @@ class Tacotron2(torch.nn.Module):
             spembs = F.normalize(spembs).unsqueeze(1).expand(-1, hs.size(1), -1)
             hs = torch.cat([hs, spembs], dim=-1)
 
+        if self.aux_proj_dim is not None:
+            auxs = self.aux_proj(auxs)
+
         # check the use of data_parallel
         if xs.shape[1] != max(ilens):
             n_pad = xs.shape[1] - max(ilens)
@@ -538,6 +539,8 @@ class Tacotron2(torch.nn.Module):
 
         # inference
         h = self.enc.inference(x)
+        if self.aux_proj_dim is not None:
+            aux = self.aux_proj(aux)
         if self.spk_embed_dim is not None:
             spemb = F.normalize(spemb, dim=0).unsqueeze(0).expand(h.size(0), -1)
             h = torch.cat([h, spemb], dim=-1)
