@@ -665,7 +665,10 @@ class Decoder(torch.nn.Module):
             zcs = torch.cat([z_list[-1], att_c], dim=1) if self.use_concate else z_list[-1]
             outs += [self.feat_out(zcs)]
             probs += [F.sigmoid(self.prob_out(zcs))[0]]
-            prev_out = outs[-1]
+            if self.output_activation_fn is not None:
+                prev_out = self.output_activation_fn(outs[-1])
+            else:
+                prev_out = outs[-1]
             if self.cumulate_att_w and prev_att_w is not None:
                 prev_att_w = prev_att_w + att_w  # Note: error when use +=
             else:
