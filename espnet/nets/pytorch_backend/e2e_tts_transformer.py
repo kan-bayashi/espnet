@@ -58,14 +58,19 @@ class TransformerLoss(torch.nn.Module):
         if self.use_masking:
             mask = make_non_pad_mask(olens).unsqueeze(-1).to(ys.device)
             ys = ys.masked_select(mask)
-            after_outs = after_outs.masked_select(mask)
+            if after_outs is not None:
+                after_outs = after_outs.masked_select(mask)
             before_outs = before_outs.masked_select(mask)
             labels = labels.masked_select(mask[:, :, 0])
             logits = logits.masked_select(mask[:, :, 0])
 
         # calculate loss
-        l1_loss = F.l1_loss(after_outs, ys) + F.l1_loss(before_outs, ys)
-        l2_loss = F.mse_loss(after_outs, ys) + F.mse_loss(before_outs, ys)
+        if after_outs is None:
+            l1_loss = F.l1_loss(before_outs, ys)
+            l2_loss = F.mse_loss(before_outs, ys)
+        else:
+            l1_loss = F.l1_loss(after_outs, ys) + F.l1_loss(before_outs, ys)
+            l2_loss = F.mse_loss(after_outs, ys) + F.mse_loss(before_outs, ys)
         bce_loss = F.binary_cross_entropy_with_logits(
             logits, labels, pos_weight=torch.tensor(self.bce_pos_weight, device=ys.device))
 
@@ -314,10 +319,13 @@ class Transformer(TTSInterface, torch.nn.Module):
                 ),
                 torch.nn.Linear(self.dprenet_units, self.adim)
             )
+            linear_idim = None
         else:
             decoder_input_layer = "linear"
+            linear_idim = self.odim
         self.decoder = Decoder(
             odim=-1,
+            linear_idim=linear_idim,
             attention_dim=self.adim,
             attention_heads=self.aheads,
             linear_units=self.dunits,
@@ -336,15 +344,18 @@ class Transformer(TTSInterface, torch.nn.Module):
         self.prob_out = torch.nn.Linear(self.adim, self.reduction_factor)
 
         # define postnet
-        self.postnet = Postnet(
-            idim=self.idim,
-            odim=self.odim,
-            n_layers=self.postnet_layers,
-            n_chans=self.postnet_chans,
-            n_filts=self.postnet_filts,
-            use_batch_norm=self.use_batch_norm,
-            dropout_rate=self.postnet_dropout_rate
-        )
+        if self.postnet_layers == 0:
+            self.postnet = None
+        else:
+            self.postnet = Postnet(
+                idim=self.idim,
+                odim=self.odim,
+                n_layers=self.postnet_layers,
+                n_chans=self.postnet_chans,
+                n_filts=self.postnet_filts,
+                use_batch_norm=self.use_batch_norm,
+                dropout_rate=self.postnet_dropout_rate
+            )
 
         # define loss function
         self.criterion = TransformerLoss(args)
@@ -428,7 +439,10 @@ class Transformer(TTSInterface, torch.nn.Module):
         logits = self.prob_out(zs).view(zs.size(0), -1)
 
         # postnet
-        after_outs = before_outs + self.postnet(before_outs.transpose(1, 2)).transpose(1, 2)
+        if self.postnet is None:
+            after_outs = None
+        else:
+            after_outs = before_outs + self.postnet(before_outs.transpose(1, 2)).transpose(1, 2)
 
         # modifiy mod part of groundtruth
         if self.reduction_factor > 1:
@@ -545,7 +559,8 @@ class Transformer(TTSInterface, torch.nn.Module):
             # (B, Lmax//r * r, odim) -> (B, Lmax//r, odim * r)
             before_outs = self.feat_out(zs).view(zs.size(0), -1, self.odim)
             # postnet
-            after_outs = before_outs + self.postnet(before_outs.transpose(1, 2)).transpose(1, 2)
+            if self.postnet is not None:
+                after_outs = before_outs + self.postnet(before_outs.transpose(1, 2)).transpose(1, 2)
 
         att_ws_dict = dict()
         for name, m in self.named_modules():
@@ -565,7 +580,8 @@ class Transformer(TTSInterface, torch.nn.Module):
                 att_ws_dict[name] = attn
 
         att_ws_dict["before_postnet_fbank"] = [m[:l].T for m, l in zip(before_outs.cpu().numpy(), olens.tolist())]
-        att_ws_dict["after_postnet_fbank"] = [m[:l].T for m, l in zip(after_outs.cpu().numpy(), olens.tolist())]
+        if self.postnet is not None:
+            att_ws_dict["after_postnet_fbank"] = [m[:l].T for m, l in zip(after_outs.cpu().numpy(), olens.tolist())]
         return att_ws_dict
 
     def _target_mask(self, olens):

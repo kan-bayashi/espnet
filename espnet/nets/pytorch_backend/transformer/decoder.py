@@ -38,7 +38,8 @@ class Decoder(torch.nn.Module):
                  use_output_layer=True,
                  pos_enc_class=PositionalEncoding,
                  normalize_before=True,
-                 concate_after=False):
+                 concate_after=False,
+                 linear_idim=None):
         super(Decoder, self).__init__()
         if input_layer == "embed":
             self.embed = torch.nn.Sequential(
@@ -47,7 +48,7 @@ class Decoder(torch.nn.Module):
             )
         elif input_layer == "linear":
             self.embed = torch.nn.Sequential(
-                torch.nn.Linear(odim, attention_dim),
+                torch.nn.Linear(linear_idim, attention_dim),
                 torch.nn.LayerNorm(attention_dim),
                 torch.nn.Dropout(dropout_rate),
                 torch.nn.ReLU(),
