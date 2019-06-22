@@ -1,0 +1,597 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>espnet.utils.cli_utils &mdash; ESPnet 0.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ESPnet
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Outline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html#execution-of-example-scripts">Execution of example scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html#demonstration-using-pretrained-models">Demonstration using pretrained models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html#installation-using-docker">Installation using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html#references">References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Package Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-asr.html">espnet.asr package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-lm.html">espnet.lm package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-nets.html">espnet.nets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-transform.html">espnet.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-tts.html">espnet.tts package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-utils.html">espnet.utils package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tool Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apis/espnet_bin.html">core tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apis/utils_py.html">python utility tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apis/utils_sh.html">bash utility tools</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ESPnet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>espnet.utils.cli_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for espnet.utils.cli_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">distutils.util</span> <span class="k">import</span> <span class="n">strtobool</span> <span class="k">as</span> <span class="n">dist_strtobool</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">kaldiio</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">soundfile</span>
+
+<span class="kn">from</span> <span class="nn">espnet.utils.io_utils</span> <span class="k">import</span> <span class="n">SoundHDF5File</span>
+
+<span class="n">PY2</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+
+<span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Sequence</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># The ABCs from &#39;collections&#39; will stop working in 3.8</span>
+    <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="k">import</span> <span class="n">Sequence</span>
+
+
+<div class="viewcode-block" id="strtobool"><a class="viewcode-back" href="../../../_gen/espnet-utils.html#espnet.utils.cli_utils.strtobool">[docs]</a><span class="k">def</span> <span class="nf">strtobool</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1"># distutils.util.strtobool returns integer, but it&#39;s confusing,</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">dist_strtobool</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="get_commandline_args"><a class="viewcode-back" href="../../../_gen/espnet-utils.html#espnet.utils.cli_utils.get_commandline_args">[docs]</a><span class="k">def</span> <span class="nf">get_commandline_args</span><span class="p">():</span>
+    <span class="n">extra_chars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="s1">&#39;$&#39;</span><span class="p">,</span> <span class="s1">&#39;`&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;!&#39;</span><span class="p">,</span> <span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="s1">&#39;}&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Escape the extra characters for shell</span>
+    <span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="n">arg</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&#39;\\\&#39;\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">arg</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">extra_chars</span><span class="p">)</span>
+            <span class="k">else</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">arg</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\&#39;\\\&#39;\&#39;</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span>
+            <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">executable</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="is_scipy_wav_style"><a class="viewcode-back" href="../../../_gen/espnet-utils.html#espnet.utils.cli_utils.is_scipy_wav_style">[docs]</a><span class="k">def</span> <span class="nf">is_scipy_wav_style</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="c1"># If Tuple[int, numpy.ndarray] or not</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="assert_scipy_wav_style"><a class="viewcode-back" href="../../../_gen/espnet-utils.html#espnet.utils.cli_utils.assert_scipy_wav_style">[docs]</a><span class="k">def</span> <span class="nf">assert_scipy_wav_style</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">is_scipy_wav_style</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> \
+        <span class="s1">&#39;Must be Tuple[int, numpy.ndarray], but got </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)</span>
+            <span class="k">else</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">[</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+                                 <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="FileReaderWrapper"><a class="viewcode-back" href="../../../_gen/espnet-utils.html#espnet.utils.cli_utils.FileReaderWrapper">[docs]</a><span class="k">class</span> <span class="nc">FileReaderWrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read uttid and array in kaldi style</span>
+
+<span class="sd">    :param str rspecifier: Give as &quot;ark:feats.ark&quot; or &quot;scp:feats.scp&quot;</span>
+<span class="sd">    :param str filetype: &quot;mat&quot; is kaldi-martix, &quot;hdf5&quot;: HDF5</span>
+<span class="sd">    :param bool return_shape: Return the shape of the matrix,</span>
+<span class="sd">        instead of the matrix. This can reduce IO cost for HDF5.</span>
+<span class="sd">    :rtype: Generator[Tuple[str, np.ndarray], None, None]</span>
+
+<span class="sd">    Read from kaldi-matrix ark file:</span>
+
+<span class="sd">    &gt;&gt;&gt; for u, array in FileReaderWrapper(&#39;ark:feats.ark&#39;, &#39;mat&#39;):</span>
+<span class="sd">    ...     array</span>
+
+<span class="sd">    Read from HDF5 file:</span>
+
+<span class="sd">    &gt;&gt;&gt; for u, array in FileReaderWrapper(&#39;ark:feats.h5&#39;, &#39;hdf5&#39;):</span>
+<span class="sd">    ...     array</span>
+
+<span class="sd">    This might be a bit confusing as &quot;ark&quot; is used for HDF5 to imitate kaldi.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rspecifier</span><span class="p">,</span> <span class="n">filetype</span><span class="o">=</span><span class="s1">&#39;mat&#39;</span><span class="p">,</span> <span class="n">return_shape</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">segments</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">segments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">filetype</span> <span class="o">!=</span> <span class="s1">&#39;mat&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Not supporting segments if filetype=</span><span class="si">{}</span><span class="s1">&#39;</span>
+                             <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filetype</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rspecifier</span> <span class="o">=</span> <span class="n">rspecifier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">=</span> <span class="n">filetype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">return_shape</span> <span class="o">=</span> <span class="n">return_shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segments</span> <span class="o">=</span> <span class="n">segments</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;mat&#39;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">kaldiio</span><span class="o">.</span><span class="n">ReadHelper</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">rspecifier</span><span class="p">,</span> <span class="n">segments</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">array</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_shape</span><span class="p">:</span>
+                        <span class="n">array</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span>
+                    <span class="k">yield</span> <span class="n">key</span><span class="p">,</span> <span class="n">array</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;sound&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;:&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rspecifier</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Give &quot;rspecifier&quot; such as &quot;scp:some.scp: </span><span class="si">{}</span><span class="s1">&quot;&#39;</span>
+                                 <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rspecifier</span><span class="p">))</span>
+            <span class="n">ark_or_scp</span><span class="p">,</span> <span class="n">filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rspecifier</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ark_or_scp</span> <span class="o">!=</span> <span class="s1">&#39;scp&#39;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Only supporting &quot;scp&quot; for sound file: </span><span class="si">{}</span><span class="s1">&#39;</span>
+                                 <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ark_or_scp</span><span class="p">))</span>
+            <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">key</span><span class="p">,</span> <span class="n">sound_file_path</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="c1"># Assume PCM16</span>
+                    <span class="n">array</span><span class="p">,</span> <span class="n">rate</span> <span class="o">=</span> <span class="n">soundfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">sound_file_path</span><span class="p">,</span>
+                                                 <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>
+                    <span class="c1"># Change Tuple[ndarray, int] -&gt; Tuple[int, ndarray]</span>
+                    <span class="c1"># (soundfile style -&gt; scipy style)</span>
+
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_shape</span><span class="p">:</span>
+                        <span class="n">array</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span>
+                    <span class="k">yield</span> <span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">rate</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;hdf5&#39;</span><span class="p">,</span> <span class="s1">&#39;sound.hdf5&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="s1">&#39;:&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rspecifier</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Give &quot;rspecifier&quot; such as &quot;ark:some.ark: </span><span class="si">{}</span><span class="s1">&quot;&#39;</span>
+                                 <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rspecifier</span><span class="p">))</span>
+            <span class="n">ark_or_scp</span><span class="p">,</span> <span class="n">filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rspecifier</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ark_or_scp</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ark&#39;</span><span class="p">,</span> <span class="s1">&#39;scp&#39;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Must be scp or ark: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ark_or_scp</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">ark_or_scp</span> <span class="o">==</span> <span class="s1">&#39;scp&#39;</span><span class="p">:</span>
+                <span class="n">hdf5_dict</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+                        <span class="k">if</span> <span class="s1">&#39;:&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                                <span class="s1">&#39;scp file for hdf5 should be like: &#39;</span>
+                                <span class="s1">&#39;&quot;uttid filepath.h5:key&quot;: </span><span class="si">{}</span><span class="s1">(</span><span class="si">{}</span><span class="s1">)&#39;</span>
+                                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">filepath</span><span class="p">))</span>
+                        <span class="n">path</span><span class="p">,</span> <span class="n">h5_key</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+                        <span class="n">hdf5_file</span> <span class="o">=</span> <span class="n">hdf5_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">hdf5_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="k">try</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;sound.hdf5&#39;</span><span class="p">:</span>
+                                    <span class="n">hdf5_file</span> <span class="o">=</span> <span class="n">SoundHDF5File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="n">hdf5_file</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                                    <span class="s1">&#39;Error when loading </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+                                <span class="k">raise</span>
+                            <span class="n">hdf5_dict</span><span class="p">[</span><span class="n">path</span><span class="p">]</span> <span class="o">=</span> <span class="n">hdf5_file</span>
+
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">data</span> <span class="o">=</span> <span class="n">hdf5_file</span><span class="p">[</span><span class="n">h5_key</span><span class="p">]</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error when loading </span><span class="si">{}</span><span class="s1"> with key=</span><span class="si">{}</span><span class="s1">&#39;</span>
+                                          <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">h5_key</span><span class="p">))</span>
+                            <span class="k">raise</span>
+
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;sound.hdf5&#39;</span><span class="p">:</span>
+                            <span class="c1"># Change Tuple[ndarray, int] -&gt; Tuple[int, ndarray]</span>
+                            <span class="c1"># (soundfile style -&gt; scipy style)</span>
+                            <span class="n">array</span><span class="p">,</span> <span class="n">rate</span> <span class="o">=</span> <span class="n">data</span>
+
+                            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_shape</span><span class="p">:</span>
+                                <span class="n">array</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span>
+                            <span class="k">yield</span> <span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">rate</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_shape</span><span class="p">:</span>
+                                <span class="k">yield</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="k">yield</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">[()]</span>
+
+                <span class="c1"># Closing all files</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">hdf5_dict</span><span class="p">:</span>
+                    <span class="n">hdf5_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">filepath</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                    <span class="c1"># Required h5py&gt;=2.9</span>
+                    <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
+                        <span class="n">filepath</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">filepath</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;sound.hdf5&#39;</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="ow">in</span> <span class="n">SoundHDF5File</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_shape</span><span class="p">:</span>
+                            <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span>
+                        <span class="k">yield</span> <span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_shape</span><span class="p">:</span>
+                                <span class="k">yield</span> <span class="n">key</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="k">yield</span> <span class="n">key</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="n">key</span><span class="p">][()]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;Not supporting: filetype=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filetype</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="FileWriterWrapper"><a class="viewcode-back" href="../../../_gen/espnet-utils.html#espnet.utils.cli_utils.FileWriterWrapper">[docs]</a><span class="k">class</span> <span class="nc">FileWriterWrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write matrices in kaldi style</span>
+
+<span class="sd">    :param str wspecifier:</span>
+<span class="sd">    :param str filetype: &quot;mat&quot; is kaldi-martix, &quot;hdf5&quot;: HDF5</span>
+<span class="sd">    :param str write_num_frames: e.g. &#39;ark,t:num_frames.txt&#39;</span>
+<span class="sd">    :param bool compress: Compress or not</span>
+<span class="sd">    :param int compression_method: Specify compression level</span>
+
+<span class="sd">    Write in kaldi-matrix-ark with &quot;kaldi-scp&quot; file:</span>
+
+<span class="sd">    &gt;&gt;&gt; with FileWriterWrapper(&#39;ark,scp:out.ark,out.scp&#39;) as f:</span>
+<span class="sd">    &gt;&gt;&gt;     f[&#39;uttid&#39;] = array</span>
+
+<span class="sd">    This &quot;scp&quot; has the following format:</span>
+
+<span class="sd">        uttidA out.ark:1234</span>
+<span class="sd">        uttidB out.ark:2222</span>
+
+<span class="sd">    where, 1234 and 2222 points the strating byte address of the matrix.</span>
+<span class="sd">    (For detail, see official documentation of Kaldi)</span>
+
+<span class="sd">    Write in HDF5 with &quot;scp&quot; file:</span>
+
+<span class="sd">    &gt;&gt;&gt; with FileWriterWrapper(&#39;ark,scp:out.h5,out.scp&#39;, &#39;hdf5&#39;) as f:</span>
+<span class="sd">    &gt;&gt;&gt;     f[&#39;uttid&#39;] = array</span>
+
+<span class="sd">    This &quot;scp&quot; file is created as:</span>
+
+<span class="sd">        uttidA out.h5:uttidA</span>
+<span class="sd">        uttidB out.h5:uttidB</span>
+
+<span class="sd">    HDF5 can be, unlike &quot;kaldi-ark&quot;, accessed to any keys,</span>
+<span class="sd">    so originally &quot;scp&quot; is not required for random-reading.</span>
+<span class="sd">    Nevertheless we create &quot;scp&quot; for HDF5 because it is useful</span>
+<span class="sd">    for some use-case. e.g. Concatenation, Splitting.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wspecifier</span><span class="p">,</span> <span class="n">filetype</span><span class="o">=</span><span class="s1">&#39;mat&#39;</span><span class="p">,</span>
+                 <span class="n">write_num_frames</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">compression_method</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                 <span class="n">pcm_format</span><span class="o">=</span><span class="s1">&#39;wav&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writer_scp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Used for writing scp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">=</span> <span class="n">filetype</span>
+        <span class="c1"># Used for filetype=&#39;sound&#39; or &#39;sound.hdf5&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pcm_format</span> <span class="o">=</span> <span class="n">pcm_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;mat&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">compress</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">kaldiio</span><span class="o">.</span><span class="n">WriteHelper</span><span class="p">(</span>
+                    <span class="n">wspecifier</span><span class="p">,</span> <span class="n">compression_method</span><span class="o">=</span><span class="n">compression_method</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">kaldiio</span><span class="o">.</span><span class="n">WriteHelper</span><span class="p">(</span><span class="n">wspecifier</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">filetype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;hdf5&#39;</span><span class="p">,</span> <span class="s1">&#39;sound.hdf5&#39;</span><span class="p">,</span> <span class="s1">&#39;sound&#39;</span><span class="p">]:</span>
+            <span class="c1"># 1. Create spec_dict</span>
+
+            <span class="c1"># e.g.</span>
+            <span class="c1">#   ark,scp:out.ark,out.scp -&gt; {&#39;ark&#39;: &#39;out.ark&#39;, &#39;scp&#39;: &#39;out.scp&#39;}</span>
+            <span class="n">ark_scp</span><span class="p">,</span> <span class="n">filepath</span> <span class="o">=</span> <span class="n">wspecifier</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ark_scp</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ark&#39;</span><span class="p">,</span> <span class="s1">&#39;scp,ark&#39;</span><span class="p">,</span> <span class="s1">&#39;ark,scp&#39;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> is not allowed: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ark_scp</span><span class="p">,</span> <span class="n">wspecifier</span><span class="p">))</span>
+            <span class="n">ark_scps</span> <span class="o">=</span> <span class="n">ark_scp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="n">filepaths</span> <span class="o">=</span> <span class="n">filepath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ark_scps</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">filepaths</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;Mismatch: </span><span class="si">{}</span><span class="s1"> and </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ark_scp</span><span class="p">,</span> <span class="n">filepath</span><span class="p">))</span>
+            <span class="n">spec_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ark_scps</span><span class="p">,</span> <span class="n">filepaths</span><span class="p">))</span>
+
+            <span class="c1"># 2. Set writer</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">spec_dict</span><span class="p">[</span><span class="s1">&#39;ark&#39;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;sound.hdf5&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">SoundHDF5File</span><span class="p">(</span><span class="n">spec_dict</span><span class="p">[</span><span class="s1">&#39;ark&#39;</span><span class="p">],</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                                            <span class="nb">format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pcm_format</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;hdf5&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">spec_dict</span><span class="p">[</span><span class="s1">&#39;ark&#39;</span><span class="p">],</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;sound&#39;</span><span class="p">:</span>
+                <span class="c1"># Use &quot;ark&quot; value as directory to save wav files</span>
+                <span class="c1"># e.g. ark,scp:dirname,wav.scp</span>
+                <span class="c1"># -&gt; The wave files are found in dirname/*.wav</span>
+                <span class="n">wavdir</span> <span class="o">=</span> <span class="n">spec_dict</span><span class="p">[</span><span class="s1">&#39;ark&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">wavdir</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">wavdir</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Cannot reach</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+            <span class="c1"># 3. Set writer_scp</span>
+            <span class="k">if</span> <span class="s1">&#39;scp&#39;</span> <span class="ow">in</span> <span class="n">spec_dict</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writer_scp</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+                    <span class="n">spec_dict</span><span class="p">[</span><span class="s1">&#39;scp&#39;</span><span class="p">],</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Not supporting: filetype=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filetype</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">write_num_frames</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;:&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">write_num_frames</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Must include &quot;:&quot;, write_num_frames=</span><span class="si">{}</span><span class="s1">&#39;</span>
+                                 <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">write_num_frames</span><span class="p">))</span>
+
+            <span class="n">nframes_type</span><span class="p">,</span> <span class="n">nframes_file</span> <span class="o">=</span> <span class="n">write_num_frames</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">nframes_type</span> <span class="o">!=</span> <span class="s1">&#39;ark,t&#39;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;Only supporting text mode. &#39;</span>
+                    <span class="s1">&#39;e.g. --write-num-frames=ark,t:foo.txt :&#39;</span>
+                    <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nframes_type</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer_nframe</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">nframes_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer_nframe</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;mat&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;hdf5&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;sound.hdf5&#39;</span><span class="p">:</span>
+            <span class="n">assert_scipy_wav_style</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="c1"># Change Tuple[int, ndarray] -&gt; Tuple[ndarray, int]</span>
+            <span class="c1"># (scipy style -&gt; soundfile style)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;sound&#39;</span><span class="p">:</span>
+            <span class="n">assert_scipy_wav_style</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">rate</span><span class="p">,</span> <span class="n">signal</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="n">wavfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcm_format</span><span class="p">)</span>
+            <span class="n">soundfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">wavfile</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">int16</span><span class="p">),</span> <span class="n">rate</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Cannot reach</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">writer_scp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;hdf5&#39;</span><span class="p">,</span> <span class="s1">&#39;sound.hdf5&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writer_scp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">:</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="ow">in</span> <span class="s1">&#39;sound&#39;</span><span class="p">:</span>
+                <span class="n">wavfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcm_format</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writer_scp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">wavfile</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Cannot reach</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">writer_nframe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer_nframe</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FileWriterWrapper.close"><a class="viewcode-back" href="../../../_gen/espnet-utils.html#espnet.utils.cli_utils.FileWriterWrapper.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">writer_scp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writer_scp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">writer_nframe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">writer_nframe</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Shinji Watanabe
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

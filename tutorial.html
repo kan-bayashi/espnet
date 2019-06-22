@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Outline &mdash; ESPnet 1.0 documentation</title>
+  <title>Outline &mdash; ESPnet 0.4.0 documentation</title>
   
 
   
@@ -17,42 +17,37 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="ESPnet 1.0 documentation" href="index.html"/>
-        <link rel="next" title="espnet nets package" href="apis/nets.html"/>
-        <link rel="prev" title="espnet: end-to-end speech processing toolkit" href="index.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="espnet.asr package" href="_gen/espnet-asr.html" />
+    <link rel="prev" title="ESPnet: end-to-end speech processing toolkit" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -66,7 +61,7 @@
             
             
               <div class="version">
-                1.0
+                0.4.0
               </div>
             
           
@@ -99,12 +94,24 @@
 <li class="toctree-l2"><a class="reference internal" href="#setup-in-your-cluster">Setup in your cluster</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#demonstration-using-pretrained-models">Demonstration using pretrained models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#installation-using-docker">Installation using Docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#references">References</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Reference Manual:</span></p>
+<p class="caption"><span class="caption-text">Package Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="apis/nets.html">espnet nets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-asr.html">espnet.asr package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-lm.html">espnet.lm package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-nets.html">espnet.nets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-transform.html">espnet.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-tts.html">espnet.tts package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-utils.html">espnet.utils package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tool Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="apis/espnet_bin.html">core tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apis/utils_py.html">python utility tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apis/utils_sh.html">bash utility tools</a></li>
 </ul>
 
             
@@ -116,7 +123,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">ESPnet</a>
@@ -124,9 +131,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -169,20 +177,20 @@
            <div itemprop="articleBody">
             
   <div class="section" id="outline">
-<span id="outline"></span><h1>Outline<a class="headerlink" href="#outline" title="Permalink to this headline">¶</a></h1>
+<h1>Outline<a class="headerlink" href="#outline" title="Permalink to this headline">¶</a></h1>
 <p>ESPnet is an end-to-end speech processing toolkit.
 ESPnet uses <a class="reference external" href="https://chainer.org/">chainer</a> as a main deep learning engine,
 and also follows <a class="reference external" href="http://kaldi-asr.org/">Kaldi</a> style data processing, feature extraction/format, and recipes to provide a complete setup for speech recognition and other speech processing experiments.</p>
 </div>
 <div class="section" id="installation">
-<span id="installation"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>Install Kaldi, Python libraries and other required tools</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> tools
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> tools
 $ make -j
 </pre></div>
 </div>
-<p>To use cuda (and cudnn), make sure to set paths in your <code class="docutils literal"><span class="pre">.bashrc</span></code> or <code class="docutils literal"><span class="pre">.bash_profile</span></code> appropriately.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>CUDAROOT=/path/to/cuda
+<p>To use cuda (and cudnn), make sure to set paths in your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> or <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> appropriately.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CUDAROOT=/path/to/cuda
 
 export PATH=$CUDAROOT/bin:$PATH
 export LD_LIBRARY_PATH=$CUDAROOT/lib64:$LD_LIBRARY_PATH
@@ -192,47 +200,64 @@ export CUDA_PATH=$CUDAROOT
 </div>
 </div>
 <div class="section" id="execution-of-example-scripts">
-<span id="execution-of-example-scripts"></span><h1>Execution of example scripts<a class="headerlink" href="#execution-of-example-scripts" title="Permalink to this headline">¶</a></h1>
-<p>Move to an example directory under the <code class="docutils literal"><span class="pre">egs</span></code> directory.
+<h1>Execution of example scripts<a class="headerlink" href="#execution-of-example-scripts" title="Permalink to this headline">¶</a></h1>
+<p>Move to an example directory under the <code class="docutils literal notranslate"><span class="pre">egs</span></code> directory.
 We prepare several major ASR benchmarks including WSJ, CHiME-4, and TED.
 The following directory is an example of performing ASR experiment with the VoxForge Italian Corpus.</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> egs/voxforge/asr1
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> egs/voxforge/asr1
 </pre></div>
 </div>
 <p>Once move to the directory, then, execute the following main script:</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>$ ./run.sh
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./run.sh
 </pre></div>
 </div>
 <p>With this main script, you can perform a full procedure of ASR experiments including</p>
 <ul class="simple">
-<li>Data download</li>
-<li>Data preparation (Kaldi style, see http://kaldi-asr.org/doc/data_prep.html)</li>
-<li>Feature extraction (Kaldi style, see http://kaldi-asr.org/doc/feat.html)</li>
-<li>Dictionary and JSON format data preparation</li>
-<li>Training based on <a class="reference external" href="https://chainer.org/">chainer</a>.</li>
-<li>Recognition and scoring</li>
+<li><p>Data download</p></li>
+<li><p>Data preparation (Kaldi style, see http://kaldi-asr.org/doc/data_prep.html)</p></li>
+<li><p>Feature extraction (Kaldi style, see http://kaldi-asr.org/doc/feat.html)</p></li>
+<li><p>Dictionary and JSON format data preparation</p></li>
+<li><p>Training based on <a class="reference external" href="https://chainer.org/">chainer</a>.</p></li>
+<li><p>Recognition and scoring</p></li>
 </ul>
 <div class="section" id="use-of-gpu">
-<span id="use-of-gpu"></span><h2>Use of GPU<a class="headerlink" href="#use-of-gpu" title="Permalink to this headline">¶</a></h2>
-<p>If you use GPU in your experiment, set <code class="docutils literal"><span class="pre">--gpu</span></code> option in <code class="docutils literal"><span class="pre">run.sh</span></code> appropriately, e.g.,</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>$ ./run.sh --gpu <span class="m">0</span>
+<h2>Use of GPU<a class="headerlink" href="#use-of-gpu" title="Permalink to this headline">¶</a></h2>
+<p>If you use GPU in your experiment, set <code class="docutils literal notranslate"><span class="pre">--gpu</span></code> option in <code class="docutils literal notranslate"><span class="pre">run.sh</span></code> appropriately, e.g.,</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./run.sh --gpu <span class="m">0</span>
 </pre></div>
 </div>
-<p>Default setup uses CPU (<code class="docutils literal"><span class="pre">--gpu</span> <span class="pre">-1</span></code>).</p>
+<p>Default setup uses CPU (<code class="docutils literal notranslate"><span class="pre">--gpu</span> <span class="pre">-1</span></code>).</p>
 </div>
 <div class="section" id="setup-in-your-cluster">
-<span id="setup-in-your-cluster"></span><h2>Setup in your cluster<a class="headerlink" href="#setup-in-your-cluster" title="Permalink to this headline">¶</a></h2>
-<p>Change <code class="docutils literal"><span class="pre">cmd.sh</span></code> according to your cluster setup.
-If you run experiments with your local machine, you don't have to change it.
-For more information about <code class="docutils literal"><span class="pre">cmd.sh</span></code> see http://kaldi-asr.org/doc/queue.html.
-It supports Grid Engine (<code class="docutils literal"><span class="pre">queue.pl</span></code>), SLURM (<code class="docutils literal"><span class="pre">slurm.pl</span></code>), etc.</p>
+<h2>Setup in your cluster<a class="headerlink" href="#setup-in-your-cluster" title="Permalink to this headline">¶</a></h2>
+<p>Change <code class="docutils literal notranslate"><span class="pre">cmd.sh</span></code> according to your cluster setup.
+If you run experiments with your local machine, you don’t have to change it.
+For more information about <code class="docutils literal notranslate"><span class="pre">cmd.sh</span></code> see http://kaldi-asr.org/doc/queue.html.
+It supports Grid Engine (<code class="docutils literal notranslate"><span class="pre">queue.pl</span></code>), SLURM (<code class="docutils literal notranslate"><span class="pre">slurm.pl</span></code>), etc.</p>
 </div>
+</div>
+<div class="section" id="demonstration-using-pretrained-models">
+<h1>Demonstration using pretrained models<a class="headerlink" href="#demonstration-using-pretrained-models" title="Permalink to this headline">¶</a></h1>
+<p>ESPnet provides some pretrained models.
+You can easily perform speech recognition using them through a demo script. For example,</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> egs/tedlium/asr1
+../../../utils/recog_wav.sh --models tedlium.demo foo.wav
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">foo.wav</span></code> is a WAV file that contains speech to be recognized and <code class="docutils literal notranslate"><span class="pre">tedlium.demo</span></code> is a model name.</p>
+<p>You can also perform speech synthesis as follows:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> egs/libritts/tts1
+../../../utils/synth_wav.sh --models libritts.v1 --input_wav bar.wav foo.txt
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">foo.txt</span></code> is a TXT file that contains text to be synthesized and <code class="docutils literal notranslate"><span class="pre">bar.wav</span></code> is a WAV file for controlling meta information such as speaker characteristics of synthesized speech.
+The name list of available pretrained models will be summarized.</p>
 </div>
 <div class="section" id="installation-using-docker">
-<span id="installation-using-docker"></span><h1>Installation using Docker<a class="headerlink" href="#installation-using-docker" title="Permalink to this headline">¶</a></h1>
+<h1>Installation using Docker<a class="headerlink" href="#installation-using-docker" title="Permalink to this headline">¶</a></h1>
 <p>For GPU support nvidia-docker should be installed.</p>
 <p>For Execution use the command</p>
-<div class="highlight-sh"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> egs/voxforge/asr1
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> egs/voxforge/asr1
 $ ./run_in_docker.sh --gpu GPUID
 </pre></div>
 </div>
@@ -241,28 +266,26 @@ $ ./run_in_docker.sh --gpu GPUID
 <p>To downgrade or use a private devel file, modify the name inside run_in_docker.sh</p>
 </div>
 <div class="section" id="references">
-<span id="references"></span><h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
 <p>Please cite the following articles.</p>
 <ol class="simple">
-<li>Suyoun Kim, Takaaki Hori, and Shinji Watanabe, &quot;Joint CTC-attention based end-to-end speech recognition using multi-task learning,&quot; <em>Proc. ICASSP'17</em>, pp. 4835--4839 (2017)</li>
-<li>Shinji Watanabe, Takaaki Hori, Suyoun Kim, John R. Hershey and Tomoki Hayashi, &quot;Hybrid CTC/Attention Architecture for End-to-End Speech Recognition,&quot; <em>IEEE Journal of Selected Topics in Signal Processing</em>, vol. 11, no. 8, pp. 1240-1253, Dec. 2017</li>
+<li><p>Suyoun Kim, Takaaki Hori, and Shinji Watanabe, “Joint CTC-attention based end-to-end speech recognition using multi-task learning,” <em>Proc. ICASSP’17</em>, pp. 4835–4839 (2017)</p></li>
+<li><p>Shinji Watanabe, Takaaki Hori, Suyoun Kim, John R. Hershey and Tomoki Hayashi, “Hybrid CTC/Attention Architecture for End-to-End Speech Recognition,” <em>IEEE Journal of Selected Topics in Signal Processing</em>, vol. 11, no. 8, pp. 1240-1253, Dec. 2017</p></li>
 </ol>
 </div>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="apis/nets.html" class="btn btn-neutral float-right" title="espnet nets package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="_gen/espnet-asr.html" class="btn btn-neutral float-right" title="espnet.asr package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="espnet: end-to-end speech processing toolkit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="ESPnet: end-to-end speech processing toolkit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -271,11 +294,11 @@ $ ./run_in_docker.sh --gpu GPUID
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Shinji Watanabe.
+        &copy; Copyright 2017, Shinji Watanabe
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -288,36 +311,15 @@ $ ./run_in_docker.sh --gpu GPUID
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'1.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

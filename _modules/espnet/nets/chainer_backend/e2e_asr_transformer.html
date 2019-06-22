@@ -1,0 +1,572 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>espnet.nets.chainer_backend.e2e_asr_transformer &mdash; ESPnet 0.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> ESPnet
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Outline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html#execution-of-example-scripts">Execution of example scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html#demonstration-using-pretrained-models">Demonstration using pretrained models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html#installation-using-docker">Installation using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html#references">References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Package Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_gen/espnet-asr.html">espnet.asr package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_gen/espnet-lm.html">espnet.lm package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_gen/espnet-nets.html">espnet.nets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_gen/espnet-transform.html">espnet.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_gen/espnet-tts.html">espnet.tts package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_gen/espnet-utils.html">espnet.utils package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tool Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../apis/espnet_bin.html">core tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../apis/utils_py.html">python utility tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../apis/utils_sh.html">bash utility tools</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">ESPnet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>espnet.nets.chainer_backend.e2e_asr_transformer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for espnet.nets.chainer_backend.e2e_asr_transformer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+<span class="kn">from</span> <span class="nn">distutils.util</span> <span class="k">import</span> <span class="n">strtobool</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">chainer</span>
+<span class="kn">from</span> <span class="nn">chainer</span> <span class="k">import</span> <span class="n">reporter</span>
+
+<span class="kn">import</span> <span class="nn">chainer.functions</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">chainer.training</span> <span class="k">import</span> <span class="n">extension</span>
+
+<span class="kn">from</span> <span class="nn">espnet.asr</span> <span class="k">import</span> <span class="n">asr_utils</span>
+<span class="kn">from</span> <span class="nn">espnet.nets.asr_interface</span> <span class="k">import</span> <span class="n">ASRInterface</span>
+<span class="kn">from</span> <span class="nn">espnet.nets.chainer_backend.attentions_transformer</span> <span class="k">import</span> <span class="n">MultiHeadAttention</span>
+<span class="kn">from</span> <span class="nn">espnet.nets.chainer_backend.decoders_transformer</span> <span class="k">import</span> <span class="n">Decoder</span>
+<span class="kn">from</span> <span class="nn">espnet.nets.chainer_backend.encoders_transformer</span> <span class="k">import</span> <span class="n">Encoder</span>
+<span class="kn">from</span> <span class="nn">espnet.nets.chainer_backend.nets_utils_transformer</span> <span class="k">import</span> <span class="n">plot_multi_head_attention</span>
+
+<span class="n">MAX_DECODER_OUTPUT</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">MIN_VALUE</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="VaswaniRule"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.VaswaniRule">[docs]</a><span class="k">class</span> <span class="nc">VaswaniRule</span><span class="p">(</span><span class="n">extension</span><span class="o">.</span><span class="n">Extension</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Trainer extension to shift an optimizer attribute magically by Vaswani.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        attr (str): Name of the attribute to shift.</span>
+<span class="sd">        rate (float): Rate of the exponential shift. This value is multiplied</span>
+<span class="sd">            to the attribute at each call.</span>
+<span class="sd">        init (float): Initial value of the attribute. If it is ``None``, the</span>
+<span class="sd">            extension extracts the attribute at the first call and uses it as</span>
+<span class="sd">            the initial value.</span>
+<span class="sd">        target (float): Target value of the attribute. If the attribute reaches</span>
+<span class="sd">            this value, the shift stops.</span>
+<span class="sd">        optimizer (~chainer.Optimizer): Target optimizer to adjust the</span>
+<span class="sd">            attribute. If it is ``None``, the main optimizer of the updater is</span>
+<span class="sd">            used.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">warmup_steps</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span>
+                 <span class="n">init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">scale</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span> <span class="o">=</span> <span class="n">attr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_d_inv05</span> <span class="o">=</span> <span class="n">d</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warmup_steps_inv15</span> <span class="o">=</span> <span class="n">warmup_steps</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init</span> <span class="o">=</span> <span class="n">init</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_t</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="VaswaniRule.initialize"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.VaswaniRule.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">):</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_optimizer</span><span class="p">(</span><span class="n">trainer</span><span class="p">)</span>
+        <span class="c1"># ensure that _init is set</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d_inv05</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_warmup_steps_inv15</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># resuming from a snapshot</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_value</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_value</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_t</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_optimizer</span><span class="p">(</span><span class="n">trainer</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d_inv05</span> <span class="o">*</span> \
+            <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_t</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_t</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_warmup_steps_inv15</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_value</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="VaswaniRule.serialize"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.VaswaniRule.serialize">[docs]</a>    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serializer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_t</span> <span class="o">=</span> <span class="n">serializer</span><span class="p">(</span><span class="s1">&#39;_t&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_t</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="n">serializer</span><span class="p">(</span><span class="s1">&#39;_last_value&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span> <span class="ow">or</span> <span class="n">trainer</span><span class="o">.</span><span class="n">updater</span><span class="o">.</span><span class="n">get_optimizer</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_value</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="E2E"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.E2E">[docs]</a><span class="k">class</span> <span class="nc">E2E</span><span class="p">(</span><span class="n">ASRInterface</span><span class="p">,</span> <span class="n">chainer</span><span class="o">.</span><span class="n">Chain</span><span class="p">):</span>
+<div class="viewcode-block" id="E2E.add_arguments"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.E2E.add_arguments">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s2">&quot;transformer model setting&quot;</span><span class="p">)</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--transformer-init&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;pytorch&quot;</span><span class="p">,</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;how to initialize transformer parameters&#39;</span><span class="p">)</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--transformer-input-layer&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;conv2d&quot;</span><span class="p">,</span>
+                           <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;conv2d&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="s2">&quot;embed&quot;</span><span class="p">],</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;transformer input layer type&#39;</span><span class="p">)</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--transformer-attn-dropout-rate&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;dropout in transformer attention. use --dropout-rate if None is set&#39;</span><span class="p">)</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--transformer-lr&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Initial value of learning rate&#39;</span><span class="p">)</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--transformer-warmup-steps&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">25000</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;optimizer warmup steps&#39;</span><span class="p">)</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--transformer-length-normalized-loss&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">strtobool</span><span class="p">,</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;normalize loss by length&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">parser</span></div>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idim</span><span class="p">,</span> <span class="n">odim</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">ignore_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">flag_return</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">chainer</span><span class="o">.</span><span class="n">Chain</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mtlalpha</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">mtlalpha</span>
+        <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtlalpha</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;mtlalpha must be [0,1]&quot;</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">transformer_attn_dropout_rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">dropout_rate</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">transformer_attn_dropout_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_target_vocab</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">char_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_label_smoothing</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char_list</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">char_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale_emb</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">adim</span> <span class="o">**</span> <span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sos</span> <span class="o">=</span> <span class="n">odim</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eos</span> <span class="o">=</span> <span class="n">odim</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsample</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s1">&#39;verbose&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_id</span> <span class="o">=</span> <span class="n">ignore_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_parameters</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_scope</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">Encoder</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">transformer_input_layer</span><span class="p">,</span> <span class="n">idim</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">elayers</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">adim</span><span class="p">,</span>
+                                   <span class="n">d_units</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">eunits</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">aheads</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">,</span>
+                                   <span class="n">initialW</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">initialW</span><span class="p">,</span> <span class="n">initial_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">initialB</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">Decoder</span><span class="p">(</span><span class="n">odim</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">dlayers</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">adim</span><span class="p">,</span> <span class="n">d_units</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">dunits</span><span class="p">,</span>
+                                   <span class="n">h</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">aheads</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">,</span>
+                                   <span class="n">initialW</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">initialW</span><span class="p">,</span> <span class="n">initial_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">initialB</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">mtlalpha</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Joint CTC/Att training. WIP&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize_length</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">transformer_length_normalized_loss</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dims</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">adim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">odim</span> <span class="o">=</span> <span class="n">odim</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">lsm_weight</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Use label smoothing&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_label_smoothing</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lsm_weight</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">lsm_weight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flag_return</span> <span class="o">=</span> <span class="n">flag_return</span>
+
+<div class="viewcode-block" id="E2E.reset_parameters"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.E2E.reset_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">reset_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="n">type_init</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">transformer_init</span>
+        <span class="k">if</span> <span class="n">type_init</span> <span class="o">==</span> <span class="s1">&#39;lecun_uniform&#39;</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Using LeCunUniform as Parameter initializer&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialW</span> <span class="o">=</span> <span class="n">chainer</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">LeCunUniform</span>
+        <span class="k">elif</span> <span class="n">type_init</span> <span class="o">==</span> <span class="s1">&#39;lecun_normal&#39;</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Using LeCunNormal as Parameter initializer&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialW</span> <span class="o">=</span> <span class="n">chainer</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">LeCunNormal</span>
+        <span class="k">elif</span> <span class="n">type_init</span> <span class="o">==</span> <span class="s1">&#39;gorot_uniform&#39;</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Using GlorotUniform as Parameter initializer&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialW</span> <span class="o">=</span> <span class="n">chainer</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">GlorotUniform</span>
+        <span class="k">elif</span> <span class="n">type_init</span> <span class="o">==</span> <span class="s1">&#39;gorot_normal&#39;</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Using GlorotNormal as Parameter initializer&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialW</span> <span class="o">=</span> <span class="n">chainer</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">GlorotNormal</span>
+        <span class="k">elif</span> <span class="n">type_init</span> <span class="o">==</span> <span class="s1">&#39;he_uniform&#39;</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Using HeUniform as Parameter initializer&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialW</span> <span class="o">=</span> <span class="n">chainer</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">HeUniform</span>
+        <span class="k">elif</span> <span class="n">type_init</span> <span class="o">==</span> <span class="s1">&#39;he_normal&#39;</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Using HeNormal as Parameter initializer&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialW</span> <span class="o">=</span> <span class="n">chainer</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">HeNormal</span>
+        <span class="k">elif</span> <span class="n">type_init</span> <span class="o">==</span> <span class="s1">&#39;pytorch&#39;</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Using Pytorch initializer&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialW</span> <span class="o">=</span> <span class="n">chainer</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">Uniform</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Using Chainer default as Parameter initializer&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initialW</span> <span class="o">=</span> <span class="n">chainer</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">Uniform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialB</span> <span class="o">=</span> <span class="n">chainer</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">Uniform</span></div>
+
+<div class="viewcode-block" id="E2E.make_attention_mask"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.E2E.make_attention_mask">[docs]</a>    <span class="k">def</span> <span class="nf">make_attention_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_block</span><span class="p">,</span> <span class="n">target_block</span><span class="p">):</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">target_block</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> \
+            <span class="p">(</span><span class="n">source_block</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># (batch, source_length, target_length)</span>
+        <span class="k">return</span> <span class="n">mask</span></div>
+
+<div class="viewcode-block" id="E2E.make_history_mask"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.E2E.make_history_mask">[docs]</a>    <span class="k">def</span> <span class="nf">make_history_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+        <span class="n">batch</span><span class="p">,</span> <span class="n">length</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">arange</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+        <span class="n">history_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">arange</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">]</span> <span class="o">&lt;=</span> <span class="n">arange</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])[</span><span class="kc">None</span><span class="p">,</span> <span class="p">]</span>
+        <span class="n">history_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span>
+            <span class="n">history_mask</span><span class="p">,</span> <span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">history_mask</span></div>
+
+<div class="viewcode-block" id="E2E.output_and_loss"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.E2E.output_and_loss">[docs]</a>    <span class="k">def</span> <span class="nf">output_and_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">concat_logit_block</span><span class="p">,</span> <span class="n">t_block</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+        <span class="c1"># Output (all together at once for efficiency)</span>
+        <span class="n">rebatch</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">concat_logit_block</span><span class="o">.</span><span class="n">shape</span>
+        <span class="c1"># Make target</span>
+        <span class="n">concat_t_block</span> <span class="o">=</span> <span class="n">t_block</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">rebatch</span><span class="p">))</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">ignore_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">concat_t_block</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">n_token</span> <span class="o">=</span> <span class="n">ignore_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">normalizer</span> <span class="o">=</span> <span class="n">n_token</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_length</span> <span class="k">else</span> <span class="n">batch</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_label_smoothing</span><span class="p">:</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax_cross_entropy</span><span class="p">(</span><span class="n">concat_logit_block</span><span class="p">,</span> <span class="n">concat_t_block</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">*</span> <span class="n">n_token</span> <span class="o">/</span> <span class="n">normalizer</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p_lsm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsm_weight</span>
+            <span class="n">p_loss</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">p_lsm</span>
+            <span class="n">log_prob</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">concat_logit_block</span><span class="p">)</span>
+            <span class="n">broad_ignore_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span>
+                <span class="n">ignore_mask</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span>
+                <span class="n">concat_logit_block</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">pre_loss</span> <span class="o">=</span> <span class="n">ignore_mask</span> <span class="o">*</span> \
+                <span class="n">log_prob</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">rebatch</span><span class="p">),</span> <span class="n">concat_t_block</span><span class="p">]</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span> <span class="n">F</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pre_loss</span><span class="p">)</span> <span class="o">/</span> <span class="n">normalizer</span>
+            <span class="n">label_smoothing</span> <span class="o">=</span> <span class="n">broad_ignore_mask</span> <span class="o">*</span> \
+                <span class="o">-</span> <span class="mf">1.</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_target_vocab</span> <span class="o">*</span> <span class="n">log_prob</span>
+            <span class="n">label_smoothing</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">label_smoothing</span><span class="p">)</span> <span class="o">/</span> <span class="n">normalizer</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">p_loss</span> <span class="o">*</span> <span class="n">loss</span> <span class="o">+</span> <span class="n">p_lsm</span> <span class="o">*</span> <span class="n">label_smoothing</span>
+        <span class="n">accuracy</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span>
+            <span class="n">concat_logit_block</span><span class="p">,</span> <span class="n">concat_t_block</span><span class="p">,</span> <span class="n">ignore_label</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">char_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">chainer</span><span class="o">.</span><span class="n">no_backprop_mode</span><span class="p">():</span>
+                <span class="n">rc_block</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">concat_logit_block</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">batch</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">rc_block</span><span class="o">.</span><span class="n">to_cpu</span><span class="p">()</span>
+                <span class="n">t_block</span><span class="o">.</span><span class="n">to_cpu</span><span class="p">()</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">y_hat_</span><span class="p">),</span> <span class="n">y_true_</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">rc_block</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">t_block</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">MAX_DECODER_OUTPUT</span><span class="p">:</span>
+                        <span class="k">break</span>
+                    <span class="n">idx_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_hat_</span><span class="p">[:,</span> <span class="n">y_true_</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">idx_true</span> <span class="o">=</span> <span class="n">y_true_</span><span class="p">[</span><span class="n">y_true_</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">eos_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y_true_</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">eos</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">seq_hat</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">char_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">idx</span><span class="p">)]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idx_hat</span><span class="p">]</span>
+                    <span class="n">seq_true</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">char_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">idx</span><span class="p">)]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idx_true</span><span class="p">[:</span> <span class="n">eos_true</span><span class="p">]]</span>
+                    <span class="n">seq_hat</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq_hat</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;space&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+                    <span class="n">seq_true</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">seq_true</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;space&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;groundtruth[</span><span class="si">%d</span><span class="s2">]: &quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="o">+</span> <span class="n">seq_true</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;prediction [</span><span class="si">%d</span><span class="s2">]: &quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="o">+</span> <span class="n">seq_hat</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">accuracy</span></div>
+
+<div class="viewcode-block" id="E2E.forward"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.E2E.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ilens</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">calculate_attentions</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">xp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span>
+        <span class="n">ilens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ilens</span><span class="p">])</span>
+
+        <span class="k">with</span> <span class="n">chainer</span><span class="o">.</span><span class="n">no_backprop_mode</span><span class="p">():</span>
+            <span class="n">eos</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">eos</span><span class="p">],</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
+            <span class="n">sos</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">sos</span><span class="p">],</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
+            <span class="n">ys_out</span> <span class="o">=</span> <span class="p">[</span><span class="n">F</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">y</span><span class="p">,</span> <span class="n">eos</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">ys</span><span class="p">]</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="n">F</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">sos</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">ys</span><span class="p">]</span>
+            <span class="c1"># Labels int32 is not supported</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">pad_sequence</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eos</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+            <span class="n">xs</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">pad_sequence</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">padding</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">xs</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+                           <span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">xs</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                           <span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">ys_out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">pad_sequence</span><span class="p">(</span><span class="n">ys_out</span><span class="p">,</span> <span class="n">padding</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39; input lengths: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ilens</span><span class="p">))</span>
+        <span class="c1"># Encode Sources</span>
+        <span class="c1"># xs: utt x frame x dim</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Init size: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">xs</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Out size: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ys</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="c1"># Dims along enconder and decoder: batchsize * length x dims</span>
+        <span class="n">xs</span><span class="p">,</span> <span class="n">x_mask</span><span class="p">,</span> <span class="n">ilens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ilens</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39; input lengths: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ilens</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39; output lengths: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">ys_out</span><span class="p">])))</span>
+        <span class="n">xy_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_attention_mask</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">xp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_mask</span><span class="p">))</span>
+        <span class="n">yy_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_attention_mask</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+        <span class="n">yy_mask</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_history_mask</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+        <span class="n">batch</span><span class="p">,</span> <span class="n">length</span> <span class="o">=</span> <span class="n">ys</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">ys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">yy_mask</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">xy_mask</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">calculate_attentions</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">xs</span>
+        <span class="n">loss_att</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_and_loss</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">ys_out</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtlalpha</span>
+        <span class="n">loss_ctc</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">alpha</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss_att</span>
+        <span class="k">elif</span> <span class="n">alpha</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># WIP</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">loss_ctc</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">loss_att</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+            <span class="n">reporter</span><span class="o">.</span><span class="n">report</span><span class="p">({</span><span class="s1">&#39;loss_ctc&#39;</span><span class="p">:</span> <span class="n">loss_ctc</span><span class="p">},</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">reporter</span><span class="o">.</span><span class="n">report</span><span class="p">({</span><span class="s1">&#39;loss_att&#39;</span><span class="p">:</span> <span class="n">loss_att</span><span class="p">},</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">reporter</span><span class="o">.</span><span class="n">report</span><span class="p">({</span><span class="s1">&#39;acc&#39;</span><span class="p">:</span> <span class="n">acc</span><span class="p">},</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;mtl loss:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+            <span class="n">reporter</span><span class="o">.</span><span class="n">report</span><span class="p">({</span><span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">},</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;loss (=</span><span class="si">%f</span><span class="s1">) is not correct&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flag_return</span><span class="p">:</span>
+            <span class="n">loss_ctc</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_ctc</span><span class="p">,</span> <span class="n">loss_att</span><span class="p">,</span> <span class="n">acc</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span></div>
+
+<div class="viewcode-block" id="E2E.recognize"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.E2E.recognize">[docs]</a>    <span class="k">def</span> <span class="nf">recognize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_block</span><span class="p">,</span> <span class="n">recog_args</span><span class="p">,</span> <span class="n">char_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rnnlm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;E2E beam search</span>
+
+<span class="sd">        :param ndarray x: input acouctic feature (B, T, D) or (T, D)</span>
+<span class="sd">        :param namespace recog_args: argment namespace contraining options</span>
+<span class="sd">        :param list char_list: list of characters</span>
+<span class="sd">        :param torch.nn.Module rnnlm: language model module</span>
+<span class="sd">        :return: N-best decoding results</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">xp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span>
+        <span class="k">with</span> <span class="n">chainer</span><span class="o">.</span><span class="n">no_backprop_mode</span><span class="p">(),</span> <span class="n">chainer</span><span class="o">.</span><span class="n">using_config</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">ilens</span> <span class="o">=</span> <span class="p">[</span><span class="n">x_block</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="n">batch</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ilens</span><span class="p">)</span>
+            <span class="n">xs</span><span class="p">,</span> <span class="n">x_mask</span><span class="p">,</span> <span class="n">ilens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x_block</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">ilens</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Encoder size: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">xs</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">recog_args</span><span class="o">.</span><span class="n">ctc_weight</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;use joint ctc/tranformer decoding. WIP&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">recog_args</span><span class="o">.</span><span class="n">beam_size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Use greedy search implementation&#39;</span><span class="p">)</span>
+                <span class="n">ys</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sos</span><span class="p">)</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="n">xp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">maxlen</span> <span class="o">=</span> <span class="n">xs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maxlen</span><span class="p">):</span>
+                    <span class="n">yy_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_attention_mask</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+                    <span class="n">yy_mask</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_history_mask</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+                    <span class="n">xy_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_attention_mask</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">xp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_mask</span><span class="p">))</span>
+                    <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">yy_mask</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">xy_mask</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">odim</span><span class="p">)</span>
+                    <span class="n">prob</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">out</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">max_prob</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">next_id</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+                    <span class="n">score</span> <span class="o">+=</span> <span class="n">max_prob</span>
+                    <span class="k">if</span> <span class="n">step</span> <span class="o">==</span> <span class="n">maxlen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">next_id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eos</span>
+                    <span class="n">ys</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">ys</span><span class="p">,</span> <span class="n">next_id</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+                    <span class="k">if</span> <span class="n">next_id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">eos</span><span class="p">:</span>
+                        <span class="k">break</span>
+                <span class="n">nbest_hyps</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span> <span class="s2">&quot;yseq&quot;</span><span class="p">:</span> <span class="n">ys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()}]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;use beam search implementation. WIP&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">nbest_hyps</span></div>
+
+<div class="viewcode-block" id="E2E.calculate_all_attentions"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.E2E.calculate_all_attentions">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_all_attentions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ilens</span><span class="p">,</span> <span class="n">ys</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;E2E attention calculation</span>
+
+<span class="sd">        :param list xs_pad: list of padded input sequences [(T1, idim), (T2, idim), ...]</span>
+<span class="sd">        :param ndarray ilens: batch of lengths of input sequences (B)</span>
+<span class="sd">        :param list ys: list of character id sequence tensor [(L1), (L2), (L3), ...]</span>
+<span class="sd">        :return: attention weights (B, Lmax, Tmax)</span>
+<span class="sd">        :rtype: float ndarray</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="n">chainer</span><span class="o">.</span><span class="n">no_backprop_mode</span><span class="p">():</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ilens</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">calculate_attentions</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># NOQA</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">namedlinks</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">MultiHeadAttention</span><span class="p">):</span>
+                <span class="n">var</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">attn</span>
+                <span class="n">var</span><span class="o">.</span><span class="n">to_cpu</span><span class="p">()</span>
+                <span class="n">_name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+                <span class="n">ret</span><span class="p">[</span><span class="n">_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">attention_plot_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">PlotAttentionReport</span></div>
+
+
+<div class="viewcode-block" id="PlotAttentionReport"><a class="viewcode-back" href="../../../../_gen/espnet-nets.html#espnet.nets.chainer_backend.e2e_asr_transformer.PlotAttentionReport">[docs]</a><span class="k">class</span> <span class="nc">PlotAttentionReport</span><span class="p">(</span><span class="n">asr_utils</span><span class="o">.</span><span class="n">PlotAttentionReport</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">):</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">converter</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)],</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">attn_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">att_vis_fn</span><span class="p">(</span><span class="o">*</span><span class="n">batch</span><span class="p">)</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;ep.{.updater.epoch}.png&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">trainer</span><span class="p">)</span>
+        <span class="n">plot_multi_head_attention</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">attn_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outdir</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Shinji Watanabe
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

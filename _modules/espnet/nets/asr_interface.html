@@ -1,0 +1,264 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>espnet.nets.asr_interface &mdash; ESPnet 0.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ESPnet
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Outline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html#execution-of-example-scripts">Execution of example scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html#demonstration-using-pretrained-models">Demonstration using pretrained models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html#installation-using-docker">Installation using Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html#references">References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Package Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-asr.html">espnet.asr package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-lm.html">espnet.lm package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-nets.html">espnet.nets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-transform.html">espnet.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-tts.html">espnet.tts package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_gen/espnet-utils.html">espnet.utils package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tool Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../apis/espnet_bin.html">core tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apis/utils_py.html">python utility tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apis/utils_sh.html">bash utility tools</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ESPnet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>espnet.nets.asr_interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for espnet.nets.asr_interface</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="ASRInterface"><a class="viewcode-back" href="../../../_gen/espnet-nets.html#espnet.nets.asr_interface.ASRInterface">[docs]</a><span></span><span class="k">class</span> <span class="nc">ASRInterface</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;ASR Interface for ESPnet model implementation&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ASRInterface.add_arguments"><a class="viewcode-back" href="../../../_gen/espnet-nets.html#espnet.nets.asr_interface.ASRInterface.add_arguments">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">parser</span></div>
+
+<div class="viewcode-block" id="ASRInterface.forward"><a class="viewcode-back" href="../../../_gen/espnet-nets.html#espnet.nets.asr_interface.ASRInterface.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ilens</span><span class="p">,</span> <span class="n">ys</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;compute loss for training</span>
+
+<span class="sd">        :param xs:</span>
+<span class="sd">            For pytorch, batch of padded source sequences torch.Tensor (B, Tmax, idim)</span>
+<span class="sd">            For chainer, list of source sequences chainer.Variable</span>
+<span class="sd">        :param ilens: batch of lengths of source sequences (B)</span>
+<span class="sd">            For pytorch, torch.Tensor</span>
+<span class="sd">            For chainer, list of int</span>
+<span class="sd">        :param ys:</span>
+<span class="sd">            For pytorch, batch of padded source sequences torch.Tensor (B, Lmax)</span>
+<span class="sd">            For chainer, list of source sequences chainer.Variable</span>
+<span class="sd">        :return: loss value</span>
+<span class="sd">        :rtype: torch.Tensor for pytorch, chainer.Variable for chainer</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;forward method is not implemented&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ASRInterface.recognize"><a class="viewcode-back" href="../../../_gen/espnet-nets.html#espnet.nets.asr_interface.ASRInterface.recognize">[docs]</a>    <span class="k">def</span> <span class="nf">recognize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">recog_args</span><span class="p">,</span> <span class="n">char_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rnnlm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;recognize x for evaluation</span>
+
+<span class="sd">        :param ndarray x: input acouctic feature (B, T, D) or (T, D)</span>
+<span class="sd">        :param namespace recog_args: argment namespace contraining options</span>
+<span class="sd">        :param list char_list: list of characters</span>
+<span class="sd">        :param torch.nn.Module rnnlm: language model module</span>
+<span class="sd">        :return: N-best decoding results</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;recognize method is not implemented&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ASRInterface.calculate_all_attentions"><a class="viewcode-back" href="../../../_gen/espnet-nets.html#espnet.nets.asr_interface.ASRInterface.calculate_all_attentions">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_all_attentions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ilens</span><span class="p">,</span> <span class="n">ys</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;attention calculation</span>
+
+<span class="sd">        :param list xs_pad: list of padded input sequences [(T1, idim), (T2, idim), ...]</span>
+<span class="sd">        :param ndarray ilens: batch of lengths of input sequences (B)</span>
+<span class="sd">        :param list ys: list of character id sequence tensor [(L1), (L2), (L3), ...]</span>
+<span class="sd">        :return: attention weights (B, Lmax, Tmax)</span>
+<span class="sd">        :rtype: float ndarray</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;calculate_all_attentions method is not implemented&quot;</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">attention_plot_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">espnet.asr.asr_utils</span> <span class="k">import</span> <span class="n">PlotAttentionReport</span>
+        <span class="k">return</span> <span class="n">PlotAttentionReport</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Shinji Watanabe
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
