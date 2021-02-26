@@ -39,7 +39,9 @@ egs*/*/*/mfcc
 egs*/*/*/stft
 egs*/*/*/tensorboard
 egs*/*/*/wav*
-
+egs*/chime6/asr1_multich/CHiME6
+egs*/chime6/asr1_multich/chime6*
+egs*/chime6/asr1_multich/*.ipynb*
 # tools related
 tools/bin
 tools/include
