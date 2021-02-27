@@ -10,7 +10,7 @@
 backend=pytorch
 stage=0        # start from 0 if you need to start from data preparation
 stop_stage=100
-ngpu=3         # number of gpus ("0" uses cpu, otherwise use gpu)
+ngpu=4         # number of gpus ("0" uses cpu, otherwise use gpu)
 debugmode=1
 N=0            # number of minibatches to be used (mainly for debugging). "0" uses all minibatches.
 verbose=0      # verbose option
@@ -59,11 +59,7 @@ if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     ## Task dependent. You have to make the following data preparation part by yourself.
     # But you can utilize Kaldi recipes in most cases
     echo "stage 0: Data preparation"
-    local/prepare_chime6_data.sh --chime5_corpus ${chime5_corpus} --nj 31
-
-    # Additionally use WSJ clean data. Otherwise the encoder decoder is not well trained
-    # local/wsj_data_prep.sh ${wsj0}/??-{?,??}.? ${wsj1}/??-{?,??}.?
-    # local/wsj_format_data.sh
+    local/prepare_chime6_data.sh --chime5_corpus ${chime5_corpus} --nj 32
 fi
 
 train_combset=train_multi_4ch
@@ -86,7 +82,6 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
         rm -f data/${setname}_multich/wav_ch*.scp
     done
 
-    which dump_pcm.sh
     # Note that data/train_multi_4ch_multich has multi-channel wav data, while data/train_worn has 1ch only
     dump_pcm.sh --nj 32 --cmd "${train_cmd}" --filetype "sound.hdf5" --format flac data/train_worn
     for setname in ${train_combset} ${recog_set}; do
@@ -121,7 +116,7 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     mkdir -p data/lang_1char/
 
     echo "make a non-linguistic symbol list"
-    cut -f 2- data/${train_set}/text | tr " " "\n" | sort | uniq | grep "<" > ${nlsyms}
+    cut -f 2- data/${train_set}/text | tr " " "\n" | sort | uniq | grep "\[" > ${nlsyms}
     cat ${nlsyms}
 
     echo "make a dictionary"
@@ -134,7 +129,7 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     # i.e. A minibatch always consists of the samples in either one of these categories.
 
     echo "make json files"
-    for setname in tr05_multi_noisy_multich ${train_dev} ${recog_set}; do
+    for setname in ${train_combset}_multich ${train_dev} ${recog_set}; do
         data2json.sh --cmd "${train_cmd}" --nj 30 \
             --category "multichannel" \
             --preprocess-conf ${preprocess_config} --filetype sound.hdf5 \
@@ -142,15 +137,16 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
             --out data/${setname}/data.json data/${setname} ${dict}
     done
 
-    setname=train_si284
+    setname=train_worn
     data2json.sh --cmd "${train_cmd}" --nj 30 \
         --category "singlechannel" \
         --preprocess-conf ${preprocess_config} --filetype sound.hdf5 \
         --feat data/${setname}/feats.scp --nlsyms ${nlsyms} \
         --out data/${setname}/data.json data/${setname} ${dict}
 
+    echo "make training dataset"
     mkdir -p data/${train_set}
-    concatjson.py data/tr05_multi_noisy_multich/data.json data/train_si284/data.json > data/${train_set}/data.json
+    concatjson.py data/${train_combset}_multich/data.json data/train_worn/data.json > data/${train_set}/data.json
 fi
 
 # It takes a few days. If you just want to end-to-end ASR without LM,
@@ -173,7 +169,7 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
         mkdir -p ${lmdatadir}
         cut -f 2- -d" " data/${train_set}/text > ${lmdatadir}/train_trans.txt
         zcat ${wsj1}/13-32.1/wsj1/doc/lng_modl/lm_train/np_data/{87,88,89}/*.z \
-                | grep -v "<" | tr "[:lower:]" "[:upper:]" > ${lmdatadir}/train_others.txt
+                | grep -v "\[" | tr "[:lower:]" "[:upper:]" > ${lmdatadir}/train_others.txt
         cut -f 2- -d" " data/${train_dev}/text > ${lmdatadir}/valid.txt
         cat ${lmdatadir}/train_trans.txt ${lmdatadir}/train_others.txt > ${lmdatadir}/train.txt
         text2vocabulary.py -s ${lm_vocabsize} -o ${lmdict} ${lmdatadir}/train.txt
@@ -184,7 +180,7 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
         text2token.py -s 1 -n 1 -l ${nlsyms} data/${train_set}/text \
             | cut -f 2- -d" " > ${lmdatadir}/train_trans.txt
         zcat ${wsj1}/13-32.1/wsj1/doc/lng_modl/lm_train/np_data/{87,88,89}/*.z \
-            | grep -v "<" | tr "[:lower:]" "[:upper:]" \
+            | grep -v "\[" | tr "[:lower:]" "[:upper:]" \
             | text2token.py -n 1 | cut -f 2- -d" " > ${lmdatadir}/train_others.txt
         text2token.py -s 1 -n 1 -l ${nlsyms} data/${train_dev}/text \
             | cut -f 2- -d" " > ${lmdatadir}/valid.txt

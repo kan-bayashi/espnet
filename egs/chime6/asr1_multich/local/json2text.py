@@ -43,7 +43,7 @@ if __name__ == "__main__":
         j = json.load(f)
 
     for x in j:
-        if "[redacted]" not in x["words"]:
+        if len(x["words"]) != 0 and "[redacted]" not in x["words"]:
             session_id = x["session_id"]
             speaker_id = x["speaker"]
             if args.mictype == "ref":

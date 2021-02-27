@@ -95,22 +95,4 @@ if [ $stage -le 1 ]; then
   done
 fi
 
-
-if [ $stage -le 2 ]; then
-  echo "$0:  prepare utterances..."
-  # skip u03 and u04 as they are missing
-  for dataset in train; do
-    for mictype in worn u01 u02 u05 u06; do
-      ./local/segment2utt.py data/${dataset}_${mictype};
-      echo "made utterances for data/${dataset}_${mictype}"
-    done
-  done
-  for dataset in dev; do
-    for mictype in worn ref; do
-      ./local/segment2utt.py data/${dataset}_${mictype};
-      echo "made utterances for data/${dataset}_${mictype}"
-    done
-  done
-fi
-
 exit 0;

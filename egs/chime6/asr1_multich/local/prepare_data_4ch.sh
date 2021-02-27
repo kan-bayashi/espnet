@@ -140,6 +140,18 @@ elif [ $mictype != "gss" ]; then
     sed -e 's/ P.._/ /' > $dir/segments
 fi
 
+#=======================================================
+# extract utterances from the generated segments\
+# update wav.scp and remove segments file
+./local/segment2utt.py $dir
+echo "made utterances for $dir"
+
+# convert non-language symbols from [*] to <*>
+# < $dir/text sed -r "s/\[inaudible\]/<inaudible>/g" | \
+#             sed -r "s/\[noise\]/<noise>/g" | \
+#             sed -r "s/\[laughs\]/<laughs>/g" > $dir/text
+#=======================================================
+
 cut -f 1 -d ' ' $dir/text | \
   perl -ne 'chomp;$utt=$_;s/_.*//;print "$utt $_\n";' > $dir/utt2spk
 
