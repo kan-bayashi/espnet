@@ -74,24 +74,11 @@ train_dev=eval_clotho
 test_set=                                             # test_clotho
 recog_set="${train_dev}"
 
-audiocaps_train_urlid="1-QO73Elfdhtx8Jo918eJlksZKvTAoidx"
-audiocaps_annotations_urlid="1Fn-dBl6SCKVukq1gMId4LTGBfrE3DJ-r"
-
 
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     ### Task dependent. You have to make data the following preparation part by yourself.
     ### But you can utilize Kaldi recipes in most cases 
     
-    ### ---- uncomment below lines for preparing audiocaps dataset ----
-    mkdir -p tmp
-    wget "https://drive.google.com/uc?export=download&id=${audiocaps_annotations_urlid}" -O "tmp/annotations.tar.gz"
-    tar -xzf "tmp/annotations.tar.gz" -C ./
-    ./local/download_large_drive_file.sh ${audiocaps_train_urlid} "tmp/audiocaps_data_train_tmp.tar.gz"
-    tar -xzf "tmp/audiocaps_data_train.tar.gz" -C ./
-    python local/data_prep_audiocaps.py audiocaps_data/train audiocaps_data/annotations/train dev_audiocaps
-    utils/combine_data.sh data/${train_set}_audiocaps data/${train_set} data/dev_audiocaps
-    train_set=${train_set}_audiocaps
-
     ### ---- uncomment below lines for speed perturbation ----
     # utils/perturb_data_dir_speed.sh 0.9 data/${train_set} data/temp1
     # utils/perturb_data_dir_speed.sh 1.0 data/${train_set} data/temp2
@@ -101,7 +88,6 @@ if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     echo "data prep success"
 fi
 
-train_set=${train_set}_audiocaps
 feat_tr_dir=${dumpdir}/${train_set}/delta${do_delta}; mkdir -p ${feat_tr_dir}
 feat_dt_dir=${dumpdir}/${train_dev}/delta${do_delta}; mkdir -p ${feat_dt_dir}
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
@@ -111,7 +97,7 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     fbankdir=fbank/${lang}
     # Generate the fbank features; by default 80-dimensional fbanks with pitch on each frame
     for x in ${train_set} ${recog_set}; do
-        steps/make_fbank_pitch.sh --cmd "$train_cmd" --nj 16 --write_utt2num_frames true \
+        steps/make_fbank_pitch.sh --cmd "$train_cmd" --nj 4 --write_utt2num_frames true \
                                   data/${x} exp/make_fbank/${x} ${fbankdir}
         utils/fix_data_dir.sh data/${x}
     done
@@ -126,13 +112,13 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     # compute global CMVN
     compute-cmvn-stats scp:data/${train_set}/feats.scp data/${train_set}/cmvn.ark
 
-    dump.sh --cmd "$train_cmd" --nj 16 --do_delta ${do_delta} \
+    dump.sh --cmd "$train_cmd" --nj 4 --do_delta ${do_delta} \
             data/${train_set}/feats.scp data/${train_set}/cmvn.ark exp/dump_feats/train ${feat_tr_dir}
-    dump.sh --cmd "$train_cmd" --nj 16 --do_delta ${do_delta} \
+    dump.sh --cmd "$train_cmd" --nj 4 --do_delta ${do_delta} \
             data/${train_dev}/feats.scp data/${train_set}/cmvn.ark exp/dump_feats/dev ${feat_dt_dir} 
     for rtask in ${recog_set}; do
         feat_recog_dir=${dumpdir}/${rtask}/delta${do_delta}; mkdir -p ${feat_recog_dir}
-        # dump.sh --cmd "$train_cmd" --nj 16 --do_delta ${do_delta} \
+        # dump.sh --cmd "$train_cmd" --nj 4 --do_delta ${do_delta} \
         #         data/${rtask}/feats.scp data/${train_set}/cmvn.ark exp/dump_feats/recog/${rtask} \
         #         ${feat_recog_dir}
     done
@@ -226,7 +212,7 @@ fi
 
 if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     echo "stage 5: Decoding"
-    nj=24
+    nj=4
     if [[ $(get_yaml.py ${train_config} model-module) = *transformer* ]] || \
            [[ $(get_yaml.py ${train_config} model-module) = *conformer* ]] || \
            [[ $(get_yaml.py ${train_config} etype) = custom ]] || \
@@ -252,8 +238,7 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     pids=() # initialize pids
     for rtask in ${recog_set}; do
     (
-        beam_size=6
-        decode_dir=decode_${rtask}_$(basename ${decode_config%.*})_${lmtag}_noctcdecode_bm${beam_size}
+        decode_dir=decode_${rtask}_$(basename ${decode_config%.*})_${lmtag}
         feat_recog_dir=${dumpdir}/${rtask}/delta${do_delta}
 
         # split data
@@ -266,7 +251,6 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
             asr_recog.py \
             --config ${decode_config} \
             --ngpu ${ngpu} \
-            --beam-size ${beam_size} \
             --backend ${backend} \
             --batchsize 0 \
             --recog-json ${feat_recog_dir}/split${nj}utt/data_${bpemode}${nbpe}.JOB.json \
