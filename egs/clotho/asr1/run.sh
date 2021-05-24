@@ -74,11 +74,24 @@ train_dev=eval_clotho
 test_set=                                             # test_clotho
 recog_set="${train_dev}"
 
+audiocaps_train_urlid="1-QO73Elfdhtx8Jo918eJlksZKvTAoidx"
+audiocaps_annotations_urlid="1Fn-dBl6SCKVukq1gMId4LTGBfrE3DJ-r"
+
 
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     ### Task dependent. You have to make data the following preparation part by yourself.
     ### But you can utilize Kaldi recipes in most cases 
     
+    ### ---- uncomment below lines for preparing audiocaps dataset ----
+    mkdir -p tmp
+    wget "https://drive.google.com/uc?export=download&id=${audiocaps_annotations_urlid}" -O "tmp/annotations.tar.gz"
+    tar -xzf "tmp/annotations.tar.gz" -C ./
+    ./local/download_large_drive_file.sh ${audiocaps_train_urlid} "tmp/audiocaps_data_train_tmp.tar.gz"
+    tar -xzf "tmp/audiocaps_data_train.tar.gz" -C ./
+    python local/data_prep_audiocaps.py audiocaps_data/train audiocaps_data/annotations/train dev_audiocaps
+    utils/combine_data.sh data/${train_set}_audiocaps data/${train_set} data/dev_audiocaps
+    train_set=${train_set}_audiocaps
+
     ### ---- uncomment below lines for speed perturbation ----
     # utils/perturb_data_dir_speed.sh 0.9 data/${train_set} data/temp1
     # utils/perturb_data_dir_speed.sh 1.0 data/${train_set} data/temp2
@@ -88,6 +101,7 @@ if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     echo "data prep success"
 fi
 
+train_set=${train_set}_audiocaps
 feat_tr_dir=${dumpdir}/${train_set}/delta${do_delta}; mkdir -p ${feat_tr_dir}
 feat_dt_dir=${dumpdir}/${train_dev}/delta${do_delta}; mkdir -p ${feat_dt_dir}
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
