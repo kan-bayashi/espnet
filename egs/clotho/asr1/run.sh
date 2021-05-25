@@ -86,7 +86,7 @@ if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     mkdir -p tmp
     wget "https://drive.google.com/uc?export=download&id=${audiocaps_annotations_urlid}" -O "tmp/annotations.tar.gz"
     tar -xzf "tmp/annotations.tar.gz" -C ./
-    ./local/download_large_drive_file.sh ${audiocaps_train_urlid} "tmp/audiocaps_data_train_tmp.tar.gz"
+    ./local/download_large_drive_file.sh ${audiocaps_train_urlid} "tmp/audiocaps_data_train.tar.gz"
     tar -xzf "tmp/audiocaps_data_train.tar.gz" -C ./
     python local/data_prep_audiocaps.py audiocaps_data/train audiocaps_data/annotations/train dev_audiocaps
     utils/combine_data.sh data/${train_set}_audiocaps data/${train_set} data/dev_audiocaps
