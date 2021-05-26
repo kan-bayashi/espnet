@@ -5,6 +5,8 @@
 import argparse
 import logging
 
+import editdistance
+
 from textblob import TextBlob
 
 
@@ -13,6 +15,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--tgt_lang", type=str, default="en")
     parser.add_argument("--inter_lang", type=str, default="es")
+    parser.add_argument("--edit_distance_threshold", type=int, default=-1)
     parser.add_argument("--verbose", type=int, default=1)
     parser.add_argument("in_text")
     parser.add_argument("out_text")
@@ -34,9 +37,13 @@ def main():
             blob = blob.translate(to=args.inter_lang)
             blob = blob.translate(to=args.tgt_lang)
             new_txt = str(blob).upper()
-            f.write(f"{utt_id}_{args.inter_lang}_to_{args.tgt_lang} {new_txt}\n")
             logging.info(f"original  : {txt}")
             logging.info(f"translated: {new_txt}")
+            if args.edit_distance_threshold > 0:
+                distance = editdistance.eval(txt, new_txt)
+                if distance > args.edit_distance_threshold:
+                    continue
+            f.write(f"{utt_id}_{args.inter_lang}_to_{args.tgt_lang} {new_txt}\n")
 
 
 if __name__ == "__main__":
