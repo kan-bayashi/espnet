@@ -39,10 +39,10 @@ def main():
             blob = TextBlob(txt.lower())
             # NOTE(kan-bayashi): Sleep to avoid too many request
             time.sleep(len(txt) * DELAY_ALPHA)
-            blob = blob.translate(to=args.inter_lang)
+            blob = blob.translate(to=args.inter_lang, from_lang=args.tgt_lang)
             # NOTE(kan-bayashi): Sleep to avoid too many request
             time.sleep(len(txt) * DELAY_ALPHA)
-            blob = blob.translate(to=args.tgt_lang)
+            blob = blob.translate(to=args.tgt_lang, from_lang=args.inter_lang)
             new_txt = str(blob).upper()
             logging.info(f"original  : {txt}")
             logging.info(f"translated: {new_txt}")
