@@ -4,10 +4,13 @@
 
 import argparse
 import logging
+import time
 
 import editdistance
 
 from textblob import TextBlob
+
+DELAY_ALPHA = 0.01
 
 
 def main():
@@ -34,7 +37,11 @@ def main():
     with open(args.out_text, "w") as f:
         for utt_id, txt in text.items():
             blob = TextBlob(txt.lower())
+            # NOTE(kan-bayashi): Sleep to avoid too many request
+            time.sleep(len(txt) * DELAY_ALPHA)
             blob = blob.translate(to=args.inter_lang)
+            # NOTE(kan-bayashi): Sleep to avoid too many request
+            time.sleep(len(txt) * DELAY_ALPHA)
             blob = blob.translate(to=args.tgt_lang)
             new_txt = str(blob).upper()
             logging.info(f"original  : {txt}")
