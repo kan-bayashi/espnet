@@ -31,5 +31,6 @@ local/back_translate_text.py \
     --edit_distance_threshold "${edit_distance_threshold}" \
     "${src_data_dir}/text" \
     "${src_data_dir}_${inter_lang}2${tgt_lang}/text"
+utils/fix_data_dir.sh "${src_data_dir}_${inter_lang}2${tgt_lang}"
 
 echo "Sucessfully finished back-tranlation."
