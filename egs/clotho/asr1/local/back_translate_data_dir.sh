@@ -27,6 +27,6 @@ local/back_translate_text.py \
     --tgt_lang "${tgt_lang}" \
     --inter_lang "${inter_lang}" \
     "${src_data_dir}/text" \
-   "${src_data_dir}_${inter_lang}2${tgt_lang}/text"
+    "${src_data_dir}_${inter_lang}2${tgt_lang}/text"
 
 echo "Sucessfully finished back-tranlation."
