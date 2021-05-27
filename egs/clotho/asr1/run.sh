@@ -49,6 +49,19 @@ bpemode=unigram
 # exp tag
 tag="" # tag for managing experiments.
 
+# flags for clotho-v2 dataset
+download_clothov2=false
+
+# flags for audiocaps dataset
+download_audiocaps=false
+augment_audiocaps=false
+
+# flag for performing speed perturbation augmentation
+augment_speedperturbation=false
+
+# flag for setting caption evaluation tools
+download_evalmetrics=false
+
 . utils/parse_options.sh || exit 1;
 
 # Set bash to 'debug' mode, it will exit on :
@@ -69,10 +82,17 @@ if [ -z ${nbpe} ]; then
   fi
 fi
 
-train_set=dev_clotho
-train_dev=eval_clotho
-test_set=                                             # test_clotho
-recog_set="${train_dev}"
+train_set=dev_clothov2
+train_dev=val_clothov2
+test_set=                                             # test_clothov2
+recog_set="recog_val_clothov2 recog_eval_clothov2"
+if ${augment_audiocaps} || ${download_audiocaps}; then
+    train_set_without_audiocaps=${train_set}
+    train_set=${train_set}_audiocaps
+fi
+
+clothov2_data_urlid="1-0s5SVN-SagFHDql95JAcfdn1GW4V7o9"
+clothov2_kaldidata_urlid="1XE9ZKqW2sSMfA3xpdKl6ZyG2CFsIbbBQ"
 
 audiocaps_train_urlid="1-QO73Elfdhtx8Jo918eJlksZKvTAoidx"
 audiocaps_annotations_urlid="1Fn-dBl6SCKVukq1gMId4LTGBfrE3DJ-r"
@@ -81,26 +101,53 @@ audiocaps_annotations_urlid="1Fn-dBl6SCKVukq1gMId4LTGBfrE3DJ-r"
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
     ### Task dependent. You have to make data the following preparation part by yourself.
     ### But you can utilize Kaldi recipes in most cases 
-    
-    ### ---- uncomment below lines for preparing audiocaps dataset ----
-    mkdir -p tmp
-    wget "https://drive.google.com/uc?export=download&id=${audiocaps_annotations_urlid}" -O "tmp/annotations.tar.gz"
-    tar -xzf "tmp/annotations.tar.gz" -C ./
-    ./local/download_large_drive_file.sh ${audiocaps_train_urlid} "tmp/audiocaps_data_train.tar.gz"
-    tar -xzf "tmp/audiocaps_data_train.tar.gz" -C ./
-    python local/data_prep_audiocaps.py audiocaps_data/train audiocaps_data/annotations/train dev_audiocaps
-    utils/combine_data.sh data/${train_set}_audiocaps data/${train_set} data/dev_audiocaps
 
-    ### ---- uncomment below lines for speed perturbation ----
-    # utils/perturb_data_dir_speed.sh 0.9 data/${train_set} data/temp1
-    # utils/perturb_data_dir_speed.sh 1.0 data/${train_set} data/temp2
-    # utils/perturb_data_dir_speed.sh 1.1 data/${train_set} data/temp3
-    # utils/combine_data.sh --extra-files utt2uniq data/${train_set} data/temp1 data/temp2 data/temp3
-    # rm -r data/temp1 data/temp2 data/temp3
-    echo "data prep success"
+    ### ---- below lines are for preparing clotho-v2 dataset ----
+    if ${download_clothov2}; then
+        echo "Downloading and Preparing Clotho-V2 Dataset"
+        mkdir -p tmp
+        wget "https://drive.google.com/uc?export=download&id=${clothov2_kaldidata_urlid}" -O "tmp/clothov2_kaldidata.tar.gz"
+        tar -xzf "tmp/clothov2_kaldidata.tar.gz" -C ./
+        ./local/download_large_drive_file.sh ${clothov2_data_urlid} "tmp/clothov2_data.tar.gz"
+        tar -xzf "tmp/clothov2_data.tar.gz" -C ./
+    fi
+
+    ### ---- below lines are for preparing audiocaps dataset ----
+    if ${download_audiocaps}; then
+        echo "Downloading and Preparing AudioCaps Dataset"
+        mkdir -p tmp
+        wget "https://drive.google.com/uc?export=download&id=${audiocaps_annotations_urlid}" -O "tmp/annotations.tar.gz"
+        tar -xzf "tmp/annotations.tar.gz" -C ./
+        ./local/download_large_drive_file.sh ${audiocaps_train_urlid} "tmp/audiocaps_data_train.tar.gz"
+        tar -xzf "tmp/audiocaps_data_train.tar.gz" -C ./
+        python local/data_prep_audiocaps.py audiocaps_data/train audiocaps_data/annotations/train dev_audiocaps
+        utils/combine_data.sh data/${train_set} data/${train_set_without_audiocaps} data/dev_audiocaps
+    fi
+
+    ### ---- below lines are for speed perturbation based augmentation ----
+    if ${augment_speedperturbation}; then
+        utils/perturb_data_dir_speed.sh 0.9 data/${train_set} data/temp1
+        utils/perturb_data_dir_speed.sh 1.0 data/${train_set} data/temp2
+        utils/perturb_data_dir_speed.sh 1.1 data/${train_set} data/temp3
+        utils/combine_data.sh --extra-files utt2uniq data/${train_set} data/temp1 data/temp2 data/temp3
+        rm -r data/temp1 data/temp2 data/temp3
+    fi
+    
+    ### ---- below lines are for preparing caption evaluation tools ----
+    if ${download_evalmetrics}; then
+        echo "Download and Prepare Evaluation Metrics"
+        mkdir -p tmp
+        pip3 install scikit-image
+        git clone https://github.com/audio-captioning/dcase-2020-baseline.git tmp/dcase_baseline
+        cp -r tmp/dcase_baseline/coco_caption ./local/
+        cp tmp/dcase_baseline/eval_metrics.py ./local/
+        chmod -R 755 tmp/dcase_baseline
+        rm -r tmp/dcase_baseline
+        ./local/coco_caption/get_stanford_models.sh
+    fi
+    echo "Data Preparation Successful"
 fi
 
-train_set=${train_set}_audiocaps
 feat_tr_dir=${dumpdir}/${train_set}/delta${do_delta}; mkdir -p ${feat_tr_dir}
 feat_dt_dir=${dumpdir}/${train_dev}/delta${do_delta}; mkdir -p ${feat_dt_dir}
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
@@ -109,17 +156,20 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     echo "stage 1: Feature Generation"
     fbankdir=fbank/${lang}
     # Generate the fbank features; by default 80-dimensional fbanks with pitch on each frame
-    for x in ${train_set} ${recog_set}; do
+    for x in ${train_set} ${train_dev} ${recog_set}; do
         steps/make_fbank_pitch.sh --cmd "$train_cmd" --nj 4 --write_utt2num_frames true \
                                   data/${x} exp/make_fbank/${x} ${fbankdir}
         utils/fix_data_dir.sh data/${x}
     done
 
-    for x in ${train_set} ${recog_set}; do
-      # Remove features with too long frames in training data
-      max_len=3000
-      remove_longshortdata.sh  --maxframes $max_len data/${x} data/${x}_temp
-      mv data/${x}_temp data/${x}
+    for x in ${train_set} ${train_dev} ${recog_set}; do
+        # Remove features with too long frames in training data
+        max_len=3000
+        if [ -d "data/${x}/${x}_temp" ]; then
+            rm -r data/${x}/${x}_temp
+        fi
+        remove_longshortdata.sh --maxframes $max_len data/${x} data/${x}_temp
+        mv data/${x}_temp data/${x}
     done
 
     # compute global CMVN
@@ -131,10 +181,11 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
             data/${train_dev}/feats.scp data/${train_set}/cmvn.ark exp/dump_feats/dev ${feat_dt_dir} 
     for rtask in ${recog_set}; do
         feat_recog_dir=${dumpdir}/${rtask}/delta${do_delta}; mkdir -p ${feat_recog_dir}
-        # dump.sh --cmd "$train_cmd" --nj 4 --do_delta ${do_delta} \
-        #         data/${rtask}/feats.scp data/${train_set}/cmvn.ark exp/dump_feats/recog/${rtask} \
-        #         ${feat_recog_dir}
+        dump.sh --cmd "$train_cmd" --nj 4 --do_delta ${do_delta} \
+                data/${rtask}/feats.scp data/${train_set}/cmvn.ark exp/dump_feats/recog/${rtask} \
+                ${feat_recog_dir}
     done
+    echo "Feature Generation Successful"
 fi
 
 dict=data/${lang}_lang_char/${train_set}_${bpemode}${nbpe}_units.txt
@@ -158,9 +209,10 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
                  data/${train_dev} ${dict} > ${feat_dt_dir}/data_${bpemode}${nbpe}.json
     for rtask in ${recog_set}; do
         feat_recog_dir=${dumpdir}/${rtask}/delta${do_delta}
-        # data2json.sh --feat ${feat_recog_dir}/feats.scp --bpecode ${bpemodel}.model \
-        #              data/${rtask} ${dict} > ${feat_recog_dir}/data_${bpemode}${nbpe}.json
+        data2json.sh --feat ${feat_recog_dir}/feats.scp --bpecode ${bpemodel}.model \
+                     data/${rtask} ${dict} > ${feat_recog_dir}/data_${bpemode}${nbpe}.json
     done
+    echo "Dictionary and Json Data Preparation Successful"
 fi
 
 # you can skip this and remove --rnnlm option in the recognition (stage 5)
@@ -225,7 +277,7 @@ fi
 
 if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     echo "stage 5: Decoding"
-    nj=4
+    nj=2
     if [[ $(get_yaml.py ${train_config} model-module) = *transformer* ]] || \
            [[ $(get_yaml.py ${train_config} model-module) = *conformer* ]] || \
            [[ $(get_yaml.py ${train_config} etype) = custom ]] || \
@@ -251,7 +303,11 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
     pids=() # initialize pids
     for rtask in ${recog_set}; do
     (
-        decode_dir=decode_${rtask}_$(basename ${decode_config%.*})_${lmtag}
+        if ${use_valbest_average}; then
+            decode_dir=decode_${rtask}_$(basename ${decode_config%.*})_${lmtag}_val${n_average}
+        else
+            decode_dir=decode_${rtask}_$(basename ${decode_config%.*})_${lmtag}_last${n_average}
+        fi
         feat_recog_dir=${dumpdir}/${rtask}/delta${do_delta}
 
         # split data
@@ -272,6 +328,8 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
             --rnnlm ${lmexpdir}/rnnlm.model.best
 
         score_sclite.sh --bpe ${nbpe} --bpemodel ${bpemodel}.model --wer true ${expdir}/${decode_dir} ${dict}
+        python local/evaluate_decoded_captions.py ${expdir}/${decode_dir}/data.json data/${rtask}/groundtruth_captions.txt
+        echo "Evaluation metrics results are saved to: ${expdir}/${decode_dir}/caption_evaluation_results.txt"
 
     ) &
     pids+=($!) # store background pids
