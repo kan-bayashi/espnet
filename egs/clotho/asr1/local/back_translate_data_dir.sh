@@ -24,7 +24,9 @@ fi
 
 set -euo pipefail
 
-utils/copy_data_dir.sh "${src_data_dir}" "${src_data_dir}_${inter_lang}2${tgt_lang}"
+utils/copy_data_dir.sh \
+    --utt-suffix "_${inter_lang}2${tgt_lang}" \
+    "${src_data_dir}" "${src_data_dir}_${inter_lang}2${tgt_lang}"
 local/back_translate_text.py \
     --tgt_lang "${tgt_lang}" \
     --inter_lang "${inter_lang}" \

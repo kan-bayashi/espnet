@@ -50,7 +50,7 @@ def main():
                 distance = editdistance.eval(txt, new_txt)
                 if distance > args.edit_distance_threshold:
                     continue
-            f.write(f"{utt_id}_{args.inter_lang}_to_{args.tgt_lang} {new_txt}\n")
+            f.write(f"{utt_id}_{args.inter_lang}2{args.tgt_lang} {new_txt}\n")
 
 
 if __name__ == "__main__":
