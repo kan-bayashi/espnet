@@ -8,7 +8,8 @@
            --download_clothov2 true  \
            --download_audiocaps false \
            --augment_audiocaps false  \
-           --augment_speedperturbation false
+           --augment_speedperturbation false \
+           --download_evalmetrics false
   ```
 
 #### Setting up Clotho-V2 dataset
