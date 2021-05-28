@@ -49,7 +49,7 @@ def main():
     caption_evalpath = os.path.join(decode_dirpath,'caption_evaluation_results.txt')
     with open(caption_evalpath, 'w') as f:
         f.write(f'|{dashes}|\n')
-        f.write(f'|{tabled_row(headers)}|\n)
+        f.write(f'|{tabled_row(headers)}|\n')
         f.write(f'|{dashes}|\n')
         metrics_summary = ['overall']+[round(metrics[metric]['score'],3) for metric in metrics]
         f.write(f'|{tabled_row(metrics_summary)}|\n')
