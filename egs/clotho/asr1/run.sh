@@ -328,8 +328,10 @@ if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
             --rnnlm ${lmexpdir}/rnnlm.model.best
 
         score_sclite.sh --bpe ${nbpe} --bpemodel ${bpemodel}.model --wer true ${expdir}/${decode_dir} ${dict}
-        python local/evaluate_decoded_captions.py ${expdir}/${decode_dir}/data.json data/${rtask}/groundtruth_captions.txt
-        echo "Evaluation metrics results are saved to: ${expdir}/${decode_dir}/caption_evaluation_results.txt"
+        python local/evaluate_decoded_captions.py ${expdir}/${decode_dir}/data.json \
+            data/${rtask}/groundtruth_captions.txt > "${expdir}/${decode_dir}/caption_evaluation_summary.txt"
+        echo "Evaluation metrics summary is saved to: ${expdir}/${decode_dir}/caption_evaluation_summary.txt"
+        echo "Evaluation metrics individual results are saved to: ${expdir}/${decode_dir}/caption_evaluation_results.txt"
 
     ) &
     pids+=($!) # store background pids
