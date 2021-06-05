@@ -26,7 +26,7 @@ def add_arguments_transformer_common(group):
         "--transformer-input-layer",
         type=str,
         default="conv2d",
-        choices=["conv2d", "linear", "embed"],
+        choices=["conv2d", "conv2d1", "conv2d2", "linear", "embed"],
         help="transformer input layer type",
     )
     group.add_argument(

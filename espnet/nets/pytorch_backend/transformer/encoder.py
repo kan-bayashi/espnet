@@ -23,6 +23,8 @@ from espnet.nets.pytorch_backend.transformer.positionwise_feed_forward import (
 )
 from espnet.nets.pytorch_backend.transformer.repeat import repeat
 from espnet.nets.pytorch_backend.transformer.subsampling import Conv2dSubsampling
+from espnet.nets.pytorch_backend.transformer.subsampling import Conv2dSubsampling1
+from espnet.nets.pytorch_backend.transformer.subsampling import Conv2dSubsampling2
 from espnet.nets.pytorch_backend.transformer.subsampling import Conv2dSubsampling6
 from espnet.nets.pytorch_backend.transformer.subsampling import Conv2dSubsampling8
 
@@ -103,6 +105,12 @@ class Encoder(torch.nn.Module):
                 torch.nn.ReLU(),
                 pos_enc_class(attention_dim, positional_dropout_rate),
             )
+        elif input_layer == "conv2d1":
+            self.embed = Conv2dSubsampling1(idim, attention_dim, dropout_rate)
+            self.conv_subsampling_factor = 1
+        elif input_layer == "conv2d2":
+            self.embed = Conv2dSubsampling2(idim, attention_dim, dropout_rate)
+            self.conv_subsampling_factor = 2
         elif input_layer == "conv2d":
             self.embed = Conv2dSubsampling(idim, attention_dim, dropout_rate)
             self.conv_subsampling_factor = 4
@@ -292,7 +300,7 @@ class Encoder(torch.nn.Module):
         """
         if isinstance(
             self.embed,
-            (Conv2dSubsampling, Conv2dSubsampling6, Conv2dSubsampling8, VGG2L),
+            (Conv2dSubsampling1, Conv2dSubsampling2, Conv2dSubsampling, Conv2dSubsampling6, Conv2dSubsampling8, VGG2L),
         ):
             xs, masks = self.embed(xs, masks)
         else:
@@ -316,7 +324,7 @@ class Encoder(torch.nn.Module):
             List[torch.Tensor]: List of new cache tensors.
 
         """
-        if isinstance(self.embed, Conv2dSubsampling):
+        if isinstance(self.embed, Conv2dSubsampling1, Conv2dSubsampling2, Conv2dSubsampling):
             xs, masks = self.embed(xs, masks)
         else:
             xs = self.embed(xs)
