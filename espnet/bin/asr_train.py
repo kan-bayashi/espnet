@@ -211,6 +211,12 @@ def get_parser(parser=None, required=True):
         "The default (auto) will find how to count by args.",
     )
     parser.add_argument(
+        "--batch-sort-key",
+        default="input",
+        choices=["input", "output", "shuffle"],
+        help="Sort key in batchfying."
+    )
+    parser.add_argument(
         "--batch-size",
         "--batch-seqs",
         "-b",
