@@ -1,7 +1,7 @@
 # Clotho Recipe
 
 ## Data preparation
-* Data preparation during `stage 0` can be performed by appropriately setting the boolean variables in below command. By default, all variables are set to `false`. Description of each variable is also detailed below.
+* Data preparation during `stage 0` can be performed by appropriately setting the boolean variables in below command. By default, all variables are set to `false` except for `--augment_audiocaps` which is set to `true`. Description of each variable is also detailed below.
   
   ```bash
   ./run.sh --stage 0 --stop_stage 0  \
