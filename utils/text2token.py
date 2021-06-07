@@ -54,13 +54,15 @@ def get_parser():
         "-t",
         type=str,
         default="char",
-        choices=["char", "phn"],
-        help="""Transcript type. char/phn. e.g., for TIMIT FADG0_SI1279 -
+        choices=["char", "phn", "word"],
+        help="""Transcript type. char/phn/word. e.g., for TIMIT FADG0_SI1279 -
                         If trans_type is char,
                         read from SI1279.WRD file -> "bricks are an alternative"
                         Else if trans_type is phn,
                         read from SI1279.PHN file -> "sil b r ih sil k s aa r er n aa l
-                        sil t er n ih sil t ih v sil" """,
+                        sil t er n ih sil t ih v sil"
+                        If trans_type is word,
+                        read from SI1279.WRD file -> "bricks are an alternative" """,
     )
     return parser
 
@@ -104,6 +106,8 @@ def main():
 
         if args.trans_type == "phn":
             a = a.split(" ")
+        elif args.trans_type == "word":
+            a = a.split()
         else:
             if len(match_pos) > 0:
                 chars = []
@@ -127,6 +131,12 @@ def main():
         a_chars = [z.replace(" ", args.space) for z in a_flat]
         if args.trans_type == "phn":
             a_chars = [z.replace("sil", args.space) for z in a_chars]
+        elif args.trans_type == "word":
+            a_chars = f" ".join(a_chars)
+            a_chars = a_chars.replace(",", " , ")
+            a_chars = f" ▁".join([""]+a_chars.split())
+            a_chars = a_chars.replace("▁,", ",")
+            a_chars = a_chars.split()
         print(" ".join(a_chars))
         line = f.readline()
 
