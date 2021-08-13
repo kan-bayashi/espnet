@@ -1,23 +1,32 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Search &mdash; ESPnet 0.4.0 documentation</title>
+  <title>Search &mdash; ESPnet 0.10.2a1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
   
 
   
   
-  
+
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+    
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -25,16 +34,15 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="_static/searchtools.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/searchtools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="#" /> 
 </head>
@@ -60,7 +68,7 @@
             
             
               <div class="version">
-                0.4.0
+                0.10.2a1
               </div>
             
           
@@ -77,6 +85,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -86,25 +95,57 @@
             
               <p class="caption"><span class="caption-text">Tutorial:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Outline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html#installation">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html#execution-of-example-scripts">Execution of example scripts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html#demonstration-using-pretrained-models">Demonstration using pretrained models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html#installation-using-docker">Installation using Docker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html#references">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelization.html">Using Job scheduling system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Docker</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ESPnet2:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="espnet2_tutorial.html">ESPnet2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="espnet2_tutorial.html#instruction-for-run-sh">Instruction for run.sh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="espnet2_training_option.html">Change the configuration for training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="espnet2_task.html">Task class and data input system for training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="espnet2_distributed.html">Distributed training</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Package Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-asr.html">espnet.asr package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-lm.html">espnet.lm package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-nets.html">espnet.nets package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-transform.html">espnet.transform package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-tts.html">espnet.tts package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_gen/espnet-utils.html">espnet.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.asr.html">espnet.asr package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.mt.html">espnet.mt package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.scheduler.html">espnet.scheduler package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.tts.html">espnet.tts package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.vc.html">espnet.vc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.utils.html">espnet.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.bin.html">espnet.bin package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.optimizer.html">espnet.optimizer package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.transform.html">espnet.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.lm.html">espnet.lm package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.st.html">espnet.st package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet.nets.html">espnet.nets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.asr.html">espnet2.asr package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.samplers.html">espnet2.samplers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.text.html">espnet2.text package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.train.html">espnet2.train package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.diar.html">espnet2.diar package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.tts.html">espnet2.tts package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.fileio.html">espnet2.fileio package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.utils.html">espnet2.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.bin.html">espnet2.bin package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.layers.html">espnet2.layers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.main_funcs.html">espnet2.main_funcs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.iterators.html">espnet2.iterators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.lm.html">espnet2.lm package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.schedulers.html">espnet2.schedulers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.torch_utils.html">espnet2.torch_utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.enh.html">espnet2.enh package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.optimizers.html">espnet2.optimizers package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_gen/espnet2.tasks.html">espnet2.tasks package</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Tool Reference:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="apis/espnet_bin.html">core tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apis/espnet2_bin.html">core tools (espnet2)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="apis/utils_py.html">python utility tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="apis/utils_sh.html">bash utility tools</a></li>
 </ul>
@@ -112,6 +153,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -146,18 +188,18 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Search</li>
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -172,8 +214,7 @@
   <noscript>
   <div id="fallback" class="admonition warning">
     <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
+      Please activate JavaScript to enable the search functionality.
     </p>
   </div>
   </noscript>
@@ -187,20 +228,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Shinji Watanabe
+        &#169; Copyright 2017, Shinji Watanabe.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -208,7 +254,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
