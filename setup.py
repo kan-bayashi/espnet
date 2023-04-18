@@ -25,8 +25,6 @@ requirements = {
         "torch_complex",
         "nltk>=3.4.5",
         "numpy",
-        # https://github.com/espnet/espnet/runs/6646737793?check_suite_focus=true#step:8:7651
-        "protobuf<=3.20.1",
         "hydra-core",
         "opt-einsum",
         # ASR
