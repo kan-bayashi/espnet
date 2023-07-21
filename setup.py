@@ -31,7 +31,9 @@ requirements = {
         "sentencepiece==0.1.97",
         "ctc-segmentation>=1.6.6",
         # TTS
-        "pyworld>=0.2.10",
+        # NOTE(kan-bayashi): Should update after pyworld new release:
+        #   https://github.com/JeremyCCHsu/Python-Wrapper-for-World-Vocoder/pull/90
+        "pyworld>=0.3.1",  # noqa: E501
         "pypinyin<=0.44.0",
         "espnet_tts_frontend",
         # ENH
@@ -48,8 +50,8 @@ requirements = {
     # train: The modules invoked when training only.
     "train": [
         "matplotlib",
-        "pillow>=6.1.0",
-        "editdistance==0.5.2",
+        "pillow<=9.5.0",
+        "editdistance<=0.5.2",
         "wandb",
         "tensorboard>=1.14",
     ],
@@ -59,7 +61,7 @@ requirements = {
         "espnet_model_zoo",
         "gdown",
         "resampy",
-        "pysptk>=0.1.17",
+        "pysptk>=0.2.1",
         "morfessor",  # for zeroth-korean
         "youtube_dl",  # for laborotv
         "nnmnkwii",
@@ -99,7 +101,6 @@ requirements = {
         "flake8-docstrings>=1.3.1",
         "black",
         "isort",
-        "music21",
     ],
     "doc": [
         "Jinja2<3.1",
