@@ -32,6 +32,8 @@ asr_align.py
     [nltk_data]   Unzipping taggers/averaged_perceptron_tagger.zip.
     [nltk_data] Downloading package cmudict to /home/runner/nltk_data...
     [nltk_data]   Unzipping corpora/cmudict.zip.
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
     usage: asr_align.py [-h] [--config CONFIG]
                         [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                         [--ngpu NGPU] [--dtype {float16,float32,float64}]
@@ -132,6 +134,8 @@ asr_inference_streaming.py
 
 .. code-block:: none
 
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
     usage: asr_inference_streaming.py [-h] [--config CONFIG]
                                       [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                                       --output_dir OUTPUT_DIR [--ngpu NGPU]
@@ -287,6 +291,7 @@ asr_train.py
                         [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                         [--fold_length FOLD_LENGTH]
                         [--sort_in_batch {descending,ascending}]
+                        [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                         [--sort_batch {descending,ascending}]
                         [--multiple_iterator MULTIPLE_ITERATOR]
                         [--chunk_length CHUNK_LENGTH]
@@ -303,7 +308,7 @@ asr_train.py
                         [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                         [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                         [--optim_conf OPTIM_CONF]
-                        [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                        [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                         [--scheduler_conf SCHEDULER_CONF]
                         [--token_list TOKEN_LIST]
                         [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
@@ -538,6 +543,8 @@ asr_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -689,7 +696,7 @@ asr_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -768,6 +775,8 @@ asr_train.py
                             The preprocessor type (default: default)
       --preprocessor_conf PREPROCESSOR_CONF
                             The keyword arguments for preprocessor (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _asr_transducer_inference.py:
 
 asr_transducer_inference.py
@@ -775,6 +784,8 @@ asr_transducer_inference.py
 
 .. code-block:: none
 
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
     usage: asr_transducer_inference.py [-h] [--config CONFIG]
                                        [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                                        --output_dir OUTPUT_DIR [--ngpu NGPU]
@@ -799,10 +810,9 @@ asr_transducer_inference.py
                                        [--quantize_modules [QUANTIZE_MODULES [QUANTIZE_MODULES ...]]]
                                        [--quantize_dtype {float16,qint8}]
                                        [--streaming STREAMING]
-                                       [--chunk_size CHUNK_SIZE]
+                                       [--decoding_window DECODING_WINDOW]
                                        [--left_context LEFT_CONTEXT]
-                                       [--right_context RIGHT_CONTEXT]
-                                       [--display_partial_hypotheses DISPLAY_PARTIAL_HYPOTHESES]
+                                       [--display_hypotheses DISPLAY_HYPOTHESES]
     
     ASR Transducer Decoding
     
@@ -832,18 +842,17 @@ asr_transducer_inference.py
       --streaming STREAMING
                             Whether to perform chunk-by-chunk inference. (default:
                             False)
-      --chunk_size CHUNK_SIZE
-                            Number of frames in chunk AFTER subsampling. (default:
-                            16)
+      --decoding_window DECODING_WINDOW
+                            Audio length (in milliseconds) to process during
+                            decoding. (default: 640)
       --left_context LEFT_CONTEXT
-                            Number of frames in left context of the chunk AFTER
-                            subsampling. (default: 32)
-      --right_context RIGHT_CONTEXT
-                            Number of frames in right context of the chunk AFTER
-                            subsampling. (default: 0)
-      --display_partial_hypotheses DISPLAY_PARTIAL_HYPOTHESES
-                            Whether to display partial hypotheses during chunk-by-
-                            chunk inference. (default: False)
+                            Number of previous frames (AFTER subsamplingà the
+                            attention module can see in current chunk (used by
+                            Conformer and Branchformer block). (default: 32)
+      --display_hypotheses DISPLAY_HYPOTHESES
+                            Whether to display hypotheses during inference. If
+                            streaming=True, partial hypotheses will also be shown.
+                            (default: False)
     
     Input data related:
       --data_path_and_name_and_type DATA_PATH_AND_NAME_AND_TYPE
@@ -951,6 +960,7 @@ asr_transducer_train.py
                                    [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                                    [--fold_length FOLD_LENGTH]
                                    [--sort_in_batch {descending,ascending}]
+                                   [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                                    [--sort_batch {descending,ascending}]
                                    [--multiple_iterator MULTIPLE_ITERATOR]
                                    [--chunk_length CHUNK_LENGTH]
@@ -967,7 +977,7 @@ asr_transducer_train.py
                                    [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                                    [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                                    [--optim_conf OPTIM_CONF]
-                                   [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                                   [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                                    [--scheduler_conf SCHEDULER_CONF]
                                    [--token_list TOKEN_LIST]
                                    [--input_size INPUT_SIZE] [--init INIT]
@@ -992,7 +1002,7 @@ asr_transducer_train.py
                                    [--specaug_conf SPECAUG_CONF]
                                    [--normalize {global_mvn,utterance_mvn,None}]
                                    [--normalize_conf NORMALIZE_CONF]
-                                   [--decoder {rnn,stateless}]
+                                   [--decoder {mega,rnn,rwkv,stateless}]
                                    [--decoder_conf DECODER_CONF]
     
     base parser
@@ -1191,6 +1201,8 @@ asr_transducer_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -1342,7 +1354,7 @@ asr_transducer_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -1355,7 +1367,7 @@ asr_transducer_train.py
                             The number of dimensions for input features. (default: None)
       --init INIT           Type of model initialization to use. (default: None)
       --model_conf MODEL_CONF
-                            The keyword arguments for the model class. (default: {'transducer_weight': 1.0, 'fastemit_lambda': 0.0, 'auxiliary_ctc_weight': 0.0, 'auxiliary_ctc_dropout_rate': 0.0, 'auxiliary_lm_loss_weight': 0.0, 'auxiliary_lm_loss_smoothing': 0.05, 'ignore_id': -1, 'sym_space': '<space>', 'sym_blank': '<blank>', 'report_cer': False, 'report_wer': False, 'extract_feats_in_collect_stats': True})
+                            The keyword arguments for the model class. (default: {'transducer_weight': 1.0, 'use_k2_pruned_loss': False, 'k2_pruned_loss_args': {}, 'warmup_steps': 25000, 'validation_nstep': 2, 'fastemit_lambda': 0.0, 'auxiliary_ctc_weight': 0.0, 'auxiliary_ctc_dropout_rate': 0.0, 'auxiliary_lm_loss_weight': 0.0, 'auxiliary_lm_loss_smoothing': 0.05, 'ignore_id': -1, 'sym_space': '<space>', 'sym_blank': '<blank>', 'report_cer': False, 'report_wer': False, 'extract_feats_in_collect_stats': True})
       --encoder_conf ENCODER_CONF
                             The keyword arguments for the encoder class. (default: {})
       --joint_network_conf JOINT_NETWORK_CONF
@@ -1397,10 +1409,12 @@ asr_transducer_train.py
                             The normalize type (default: utterance_mvn)
       --normalize_conf NORMALIZE_CONF
                             The keyword arguments for normalize (default: {})
-      --decoder {rnn,stateless}
+      --decoder {mega,rnn,rwkv,stateless}
                             The decoder type (default: rnn)
       --decoder_conf DECODER_CONF
                             The keyword arguments for decoder (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _diar_inference.py:
 
 diar_inference.py
@@ -1408,6 +1422,8 @@ diar_inference.py
 
 .. code-block:: none
 
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
     usage: diar_inference.py [-h] [--config CONFIG]
                              [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                              --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
@@ -1547,6 +1563,7 @@ diar_train.py
                          [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                          [--fold_length FOLD_LENGTH]
                          [--sort_in_batch {descending,ascending}]
+                         [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                          [--sort_batch {descending,ascending}]
                          [--multiple_iterator MULTIPLE_ITERATOR]
                          [--chunk_length CHUNK_LENGTH]
@@ -1563,7 +1580,7 @@ diar_train.py
                          [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                          [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                          [--optim_conf OPTIM_CONF]
-                         [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                         [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                          [--scheduler_conf SCHEDULER_CONF] [--num_spk NUM_SPK]
                          [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
                          [--input_size INPUT_SIZE] [--model_conf MODEL_CONF]
@@ -1777,6 +1794,8 @@ diar_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -1928,7 +1947,7 @@ diar_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -1974,6 +1993,8 @@ diar_train.py
                             The attractor type (default: None)
       --attractor_conf ATTRACTOR_CONF
                             The keyword arguments for attractor (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _enh_inference.py:
 
 enh_inference.py
@@ -1981,6 +2002,8 @@ enh_inference.py
 
 .. code-block:: none
 
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
     usage: enh_inference.py [-h] [--config CONFIG]
                             [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                             --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
@@ -2052,11 +2075,82 @@ enh_inference.py
                             enhancement/separation (default: None)
       --normalize_segment_scale NORMALIZE_SEGMENT_SCALE
                             Whether to normalize the energy of the separated
-                            streams in each segment (default: False)
+                            streams in each segment (default: True)
       --show_progressbar SHOW_PROGRESSBAR
                             Whether to show a progress bar when performing
                             segment-wise speech enhancement/separation (default:
                             False)
+      --ref_channel REF_CHANNEL
+                            If not None, this will overwrite the ref_channel
+                            defined in the separator module (for multi-channel
+                            speech processing) (default: None)
+.. _enh_inference_streaming.py:
+
+enh_inference_streaming.py
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: none
+
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
+    usage: enh_inference_streaming.py [-h] [--config CONFIG]
+                                      [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
+                                      --output_dir OUTPUT_DIR [--ngpu NGPU]
+                                      [--seed SEED]
+                                      [--dtype {float16,float32,float64}]
+                                      [--fs FS] [--num_workers NUM_WORKERS]
+                                      --data_path_and_name_and_type
+                                      DATA_PATH_AND_NAME_AND_TYPE
+                                      [--key_file KEY_FILE]
+                                      [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
+                                      [--train_config TRAIN_CONFIG]
+                                      [--model_file MODEL_FILE]
+                                      [--model_tag MODEL_TAG]
+                                      [--inference_config INFERENCE_CONFIG]
+                                      [--enh_s2t_task ENH_S2T_TASK]
+                                      [--batch_size BATCH_SIZE]
+                                      [--ref_channel REF_CHANNEL]
+    
+    Frontend inference
+    
+    optional arguments:
+      --config CONFIG       Give config file in yaml format (default: None)
+      --log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}
+                            The verbose level of logging (default: INFO)
+      --output_dir OUTPUT_DIR
+      --ngpu NGPU           The number of gpus. 0 indicates CPU mode (default: 0)
+      --seed SEED           Random seed (default: 0)
+      --dtype {float16,float32,float64}
+                            Data type (default: float32)
+      --fs FS               Sampling rate (default: 8000)
+      --num_workers NUM_WORKERS
+                            The number of workers used for DataLoader (default: 1)
+    
+    Input data related:
+      --data_path_and_name_and_type DATA_PATH_AND_NAME_AND_TYPE
+      --key_file KEY_FILE
+      --allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS
+    
+    The model configuration related:
+      --train_config TRAIN_CONFIG
+                            Training configuration file (default: None)
+      --model_file MODEL_FILE
+                            Model parameter file (default: None)
+      --model_tag MODEL_TAG
+                            Pretrained model tag. If specify this option,
+                            train_config and model_file will be overwritten
+                            (default: None)
+      --inference_config INFERENCE_CONFIG
+                            Optional configuration file for overwriting enh model
+                            attributes during inference (default: None)
+      --enh_s2t_task ENH_S2T_TASK
+                            enhancement and asr joint model (default: False)
+    
+    Data loading related:
+      --batch_size BATCH_SIZE
+                            The batch size for inference (default: 1)
+    
+    SeparateSpeech related:
       --ref_channel REF_CHANNEL
                             If not None, this will overwrite the ref_channel
                             defined in the separator module (for multi-channel
@@ -2126,6 +2220,7 @@ enh_s2t_train.py
                             [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                             [--fold_length FOLD_LENGTH]
                             [--sort_in_batch {descending,ascending}]
+                            [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                             [--sort_batch {descending,ascending}]
                             [--multiple_iterator MULTIPLE_ITERATOR]
                             [--chunk_length CHUNK_LENGTH]
@@ -2142,7 +2237,7 @@ enh_s2t_train.py
                             [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                             [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                             [--optim_conf OPTIM_CONF]
-                            [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                            [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                             [--scheduler_conf SCHEDULER_CONF]
                             [--token_list TOKEN_LIST]
                             [--src_token_list SRC_TOKEN_LIST]
@@ -2411,6 +2506,8 @@ enh_s2t_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -2562,7 +2659,7 @@ enh_s2t_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -2585,11 +2682,11 @@ enh_s2t_train.py
       --diar_input_size DIAR_INPUT_SIZE
                             The number of input dimension of the feature (default: None)
       --enh_model_conf ENH_MODEL_CONF
-                            The keyword arguments for enh submodel class. (default: {'stft_consistency': False, 'loss_type': 'mask_mse', 'mask_type': None})
+                            The keyword arguments for enh submodel class. (default: {'stft_consistency': False, 'loss_type': 'mask_mse', 'mask_type': None, 'extract_feats_in_collect_stats': False})
       --asr_model_conf ASR_MODEL_CONF
                             The keyword arguments for asr submodel class. (default: {'aux_ctc': None, 'ctc_weight': 0.5, 'interctc_weight': 0.0, 'ignore_id': -1, 'lsm_weight': 0.0, 'length_normalized_loss': False, 'report_cer': True, 'report_wer': True, 'sym_space': '<space>', 'sym_blank': '<blank>', 'transducer_multi_blank_durations': [], 'transducer_multi_blank_sigma': 0.05, 'sym_sos': '<sos/eos>', 'sym_eos': '<sos/eos>', 'extract_feats_in_collect_stats': True, 'lang_token_id': -1})
       --st_model_conf ST_MODEL_CONF
-                            The keyword arguments for st submodel class. (default: {'stft_consistency': False, 'loss_type': 'mask_mse', 'mask_type': None})
+                            The keyword arguments for st submodel class. (default: {'stft_consistency': False, 'loss_type': 'mask_mse', 'mask_type': None, 'extract_feats_in_collect_stats': False})
       --diar_model_conf DIAR_MODEL_CONF
                             The keyword arguments for diar submodel class. (default: {'diar_weight': 1.0, 'attractor_weight': 1.0})
       --subtask_series {enh,asr,st,diar} [{enh,asr,st,diar} ...]
@@ -2712,6 +2809,8 @@ enh_s2t_train.py
                             The diar_attractor type (default: None)
       --diar_attractor_conf DIAR_ATTRACTOR_CONF
                             The keyword arguments for diar_attractor (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _enh_scoring.py:
 
 enh_scoring.py
@@ -2725,7 +2824,12 @@ enh_scoring.py
                           [--dtype {float16,float32,float64}] --ref_scp REF_SCP
                           --inf_scp INF_SCP [--key_file KEY_FILE]
                           [--ref_channel REF_CHANNEL]
-                          [--flexible_numspk FLEXIBLE_NUMSPK]
+                          [--flexible_numspk FLEXIBLE_NUMSPK] [--is_tse IS_TSE]
+                          [--use_dnsmos USE_DNSMOS] [--dnsmos_mode {local,web}]
+                          [--dnsmos_auth_key DNSMOS_AUTH_KEY]
+                          [--dnsmos_primary_model DNSMOS_PRIMARY_MODEL]
+                          [--dnsmos_p808_model DNSMOS_P808_MODEL]
+                          [--use_pesq USE_PESQ]
     
     Frontend inference
     
@@ -2743,6 +2847,28 @@ enh_scoring.py
       --key_file KEY_FILE
       --ref_channel REF_CHANNEL
       --flexible_numspk FLEXIBLE_NUMSPK
+      --is_tse IS_TSE
+    
+    DNSMOS related:
+      --use_dnsmos USE_DNSMOS
+      --dnsmos_mode {local,web}
+                            Use local DNSMOS model or web API for DNSMOS
+                            calculation (default: local)
+      --dnsmos_auth_key DNSMOS_AUTH_KEY
+                            Required if dnsmsos_mode='web' (default: )
+      --dnsmos_primary_model DNSMOS_PRIMARY_MODEL
+                            Path to the primary DNSMOS model. Required if
+                            dnsmsos_mode='local' (default:
+                            ./DNSMOS/sig_bak_ovr.onnx)
+      --dnsmos_p808_model DNSMOS_P808_MODEL
+                            Path to the p808 model. Required if
+                            dnsmsos_mode='local' (default: ./DNSMOS/model_v8.onnx)
+    
+    PESQ related:
+      --use_pesq USE_PESQ   Bebore setting this to True, please make sure that you
+                            or your institution have the license (check
+                            https://www.itu.int/rec/T-REC-P.862-200511-I!Amd2/en)
+                            to report PESQ (default: False)
 .. _enh_train.py:
 
 enh_train.py
@@ -2805,6 +2931,7 @@ enh_train.py
                         [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                         [--fold_length FOLD_LENGTH]
                         [--sort_in_batch {descending,ascending}]
+                        [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                         [--sort_batch {descending,ascending}]
                         [--multiple_iterator MULTIPLE_ITERATOR]
                         [--chunk_length CHUNK_LENGTH]
@@ -2821,7 +2948,7 @@ enh_train.py
                         [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                         [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                         [--optim_conf OPTIM_CONF]
-                        [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                        [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                         [--scheduler_conf SCHEDULER_CONF]
                         [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
                         [--model_conf MODEL_CONF] [--criterions CRITERIONS]
@@ -2835,6 +2962,8 @@ enh_train.py
                         [--num_spk NUM_SPK] [--num_noise_type NUM_NOISE_TYPE]
                         [--sample_rate SAMPLE_RATE]
                         [--force_single_channel FORCE_SINGLE_CHANNEL]
+                        [--channel_reordering CHANNEL_REORDERING]
+                        [--categories CATEGORIES [CATEGORIES ...]]
                         [--dynamic_mixing DYNAMIC_MIXING] [--utt2spk UTT2SPK]
                         [--dynamic_mixing_gain_db DYNAMIC_MIXING_GAIN_DB]
                         [--encoder {stft,conv,same}] [--encoder_conf ENCODER_CONF]
@@ -3042,6 +3171,8 @@ enh_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -3193,7 +3324,7 @@ enh_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -3203,7 +3334,7 @@ enh_train.py
       --init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}
                             The initialization method (default: None)
       --model_conf MODEL_CONF
-                            The keyword arguments for model class. (default: {'stft_consistency': False, 'loss_type': 'mask_mse', 'mask_type': None})
+                            The keyword arguments for model class. (default: {'stft_consistency': False, 'loss_type': 'mask_mse', 'mask_type': None, 'extract_feats_in_collect_stats': False})
       --criterions CRITERIONS
                             The criterions binded with the loss wrappers. (default: [{'name': 'si_snr', 'conf': {}, 'wrapper': 'fixed_order', 'wrapper_conf': {}}])
     
@@ -3232,6 +3363,10 @@ enh_train.py
                             Sampling rate of the data (in Hz). (default: 8000)
       --force_single_channel FORCE_SINGLE_CHANNEL
                             Whether to force all data to be single-channel. (default: False)
+      --channel_reordering CHANNEL_REORDERING
+                            Whether to randomly reorder the channels of the multi-channel signals. (default: False)
+      --categories CATEGORIES [CATEGORIES ...]
+                            The set of all possible categories in the dataset. Used to add the category information to each sample (default: [])
       --dynamic_mixing DYNAMIC_MIXING
                             Apply dynamic mixing (default: False)
       --utt2spk UTT2SPK     The file path of utt2spk file. Only used in dynamic_mixing mode. (default: None)
@@ -3257,6 +3392,8 @@ enh_train.py
                             The preprocessor type (default: None)
       --preprocessor_conf PREPROCESSOR_CONF
                             The keyword arguments for preprocessor (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _enh_tse_inference.py:
 
 enh_tse_inference.py
@@ -3264,6 +3401,8 @@ enh_tse_inference.py
 
 .. code-block:: none
 
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
     usage: enh_tse_inference.py [-h] [--config CONFIG]
                                 [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                                 --output_dir OUTPUT_DIR [--ngpu NGPU]
@@ -3407,6 +3546,7 @@ enh_tse_train.py
                             [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                             [--fold_length FOLD_LENGTH]
                             [--sort_in_batch {descending,ascending}]
+                            [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                             [--sort_batch {descending,ascending}]
                             [--multiple_iterator MULTIPLE_ITERATOR]
                             [--chunk_length CHUNK_LENGTH]
@@ -3423,7 +3563,7 @@ enh_tse_train.py
                             [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                             [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                             [--optim_conf OPTIM_CONF]
-                            [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                            [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                             [--scheduler_conf SCHEDULER_CONF]
                             [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
                             [--model_conf MODEL_CONF] [--criterions CRITERIONS]
@@ -3441,6 +3581,8 @@ enh_tse_train.py
                             [--num_spk NUM_SPK] [--num_noise_type NUM_NOISE_TYPE]
                             [--sample_rate SAMPLE_RATE]
                             [--force_single_channel FORCE_SINGLE_CHANNEL]
+                            [--channel_reordering CHANNEL_REORDERING]
+                            [--categories CATEGORIES [CATEGORIES ...]]
                             [--encoder {stft,conv,same}]
                             [--encoder_conf ENCODER_CONF]
                             [--extractor {td_speakerbeam}]
@@ -3645,6 +3787,8 @@ enh_tse_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -3796,7 +3940,7 @@ enh_tse_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -3806,7 +3950,7 @@ enh_tse_train.py
       --init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}
                             The initialization method (default: None)
       --model_conf MODEL_CONF
-                            The keyword arguments for model class. (default: {'num_spk': 1, 'share_encoder': True})
+                            The keyword arguments for model class. (default: {'num_spk': 1, 'share_encoder': True, 'extract_feats_in_collect_stats': False})
       --criterions CRITERIONS
                             The criterions binded with the loss wrappers. (default: [{'name': 'si_snr', 'conf': {}, 'wrapper': 'fixed_order', 'wrapper_conf': {}}])
     
@@ -3844,6 +3988,10 @@ enh_tse_train.py
                             Sampling rate of the data (in Hz). (default: 8000)
       --force_single_channel FORCE_SINGLE_CHANNEL
                             Whether to force all data to be single-channel. (default: False)
+      --channel_reordering CHANNEL_REORDERING
+                            Whether to randomly reorder the channels of the multi-channel signals. (default: False)
+      --categories CATEGORIES [CATEGORIES ...]
+                            The set of all possible categories in the dataset. Used to add the category information to each sample (default: [])
       --encoder {stft,conv,same}
                             The encoder type (default: stft)
       --encoder_conf ENCODER_CONF
@@ -3859,6 +4007,8 @@ enh_tse_train.py
       --preprocessor {tse}  The preprocessor type (default: tse)
       --preprocessor_conf PREPROCESSOR_CONF
                             The keyword arguments for preprocessor (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _gan_svs_train.py:
 
 gan_svs_train.py
@@ -3924,6 +4074,7 @@ gan_svs_train.py
                             [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                             [--fold_length FOLD_LENGTH]
                             [--sort_in_batch {descending,ascending}]
+                            [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                             [--sort_batch {descending,ascending}]
                             [--multiple_iterator MULTIPLE_ITERATOR]
                             [--chunk_length CHUNK_LENGTH]
@@ -3940,11 +4091,11 @@ gan_svs_train.py
                             [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                             [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                             [--optim_conf OPTIM_CONF]
-                            [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                            [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                             [--scheduler_conf SCHEDULER_CONF]
                             [--optim2 {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                             [--optim2_conf OPTIM2_CONF]
-                            [--scheduler2 {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                            [--scheduler2 {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                             [--scheduler2_conf SCHEDULER2_CONF]
                             [--generator_first GENERATOR_FIRST]
                             [--token_list TOKEN_LIST] [--odim ODIM]
@@ -3967,6 +4118,8 @@ gan_svs_train.py
                             [--pitch_extract_conf PITCH_EXTRACT_CONF]
                             [--pitch_normalize {global_mvn,utterance_mvn,None}]
                             [--pitch_normalize_conf PITCH_NORMALIZE_CONF]
+                            [--ying_extract {ying,None}]
+                            [--ying_extract_conf YING_EXTRACT_CONF]
                             [--energy_extract {energy,None}]
                             [--energy_extract_conf ENERGY_EXTRACT_CONF]
                             [--energy_normalize {global_mvn,utterance_mvn,None}]
@@ -4177,6 +4330,8 @@ gan_svs_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -4328,7 +4483,7 @@ gan_svs_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -4336,7 +4491,7 @@ gan_svs_train.py
                             The optimizer type (default: adadelta)
       --optim2_conf OPTIM2_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler2 {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler2 {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler2_conf SCHEDULER2_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -4379,6 +4534,10 @@ gan_svs_train.py
                             The pitch_normalize type (default: None)
       --pitch_normalize_conf PITCH_NORMALIZE_CONF
                             The keyword arguments for pitch_normalize (default: {})
+      --ying_extract {ying,None}
+                            The ying_extract type (default: None)
+      --ying_extract_conf YING_EXTRACT_CONF
+                            The keyword arguments for ying_extract (default: {})
       --energy_extract {energy,None}
                             The energy_extract type (default: None)
       --energy_extract_conf ENERGY_EXTRACT_CONF
@@ -4387,6 +4546,8 @@ gan_svs_train.py
                             The energy_normalize type (default: None)
       --energy_normalize_conf ENERGY_NORMALIZE_CONF
                             The keyword arguments for energy_normalize (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _gan_tts_train.py:
 
 gan_tts_train.py
@@ -4452,6 +4613,7 @@ gan_tts_train.py
                             [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                             [--fold_length FOLD_LENGTH]
                             [--sort_in_batch {descending,ascending}]
+                            [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                             [--sort_batch {descending,ascending}]
                             [--multiple_iterator MULTIPLE_ITERATOR]
                             [--chunk_length CHUNK_LENGTH]
@@ -4468,11 +4630,11 @@ gan_tts_train.py
                             [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                             [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                             [--optim_conf OPTIM_CONF]
-                            [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                            [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                             [--scheduler_conf SCHEDULER_CONF]
                             [--optim2 {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                             [--optim2_conf OPTIM2_CONF]
-                            [--scheduler2 {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                            [--scheduler2 {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                             [--scheduler2_conf SCHEDULER2_CONF]
                             [--generator_first GENERATOR_FIRST]
                             [--token_list TOKEN_LIST] [--odim ODIM]
@@ -4701,6 +4863,8 @@ gan_tts_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -4852,7 +5016,7 @@ gan_tts_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -4860,7 +5024,7 @@ gan_tts_train.py
                             The optimizer type (default: adadelta)
       --optim2_conf OPTIM2_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler2 {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler2 {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler2_conf SCHEDULER2_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -4907,6 +5071,8 @@ gan_tts_train.py
                             The energy_normalize type (default: None)
       --energy_normalize_conf ENERGY_NORMALIZE_CONF
                             The keyword arguments for energy_normalize (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _hubert_train.py:
 
 hubert_train.py
@@ -4971,6 +5137,7 @@ hubert_train.py
                            [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                            [--fold_length FOLD_LENGTH]
                            [--sort_in_batch {descending,ascending}]
+                           [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                            [--sort_batch {descending,ascending}]
                            [--multiple_iterator MULTIPLE_ITERATOR]
                            [--chunk_length CHUNK_LENGTH]
@@ -4987,7 +5154,7 @@ hubert_train.py
                            [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                            [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                            [--optim_conf OPTIM_CONF]
-                           [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                           [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                            [--scheduler_conf SCHEDULER_CONF]
                            [--token_list TOKEN_LIST]
                            [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
@@ -5222,6 +5389,8 @@ hubert_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -5373,7 +5542,7 @@ hubert_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -5439,6 +5608,8 @@ hubert_train.py
                             The model type (default: fairseq)
       --model_conf MODEL_CONF
                             The keyword arguments for model (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _hugging_face_export_vocabulary.py:
 
 hugging_face_export_vocabulary.py
@@ -5525,6 +5696,8 @@ lm_calc_perplexity.py
 
 .. code-block:: none
 
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
     usage: lm_calc_perplexity.py [-h] [--config CONFIG]
                                  [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                                  --output_dir OUTPUT_DIR [--ngpu NGPU]
@@ -5624,6 +5797,7 @@ lm_train.py
                        [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                        [--fold_length FOLD_LENGTH]
                        [--sort_in_batch {descending,ascending}]
+                       [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                        [--sort_batch {descending,ascending}]
                        [--multiple_iterator MULTIPLE_ITERATOR]
                        [--chunk_length CHUNK_LENGTH]
@@ -5640,7 +5814,7 @@ lm_train.py
                        [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                        [--optim_conf OPTIM_CONF]
-                       [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                       [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                        [--scheduler_conf SCHEDULER_CONF] [--token_list TOKEN_LIST]
                        [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
                        [--model_conf MODEL_CONF]
@@ -5853,6 +6027,8 @@ lm_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -6004,7 +6180,7 @@ lm_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -6027,6 +6203,8 @@ lm_train.py
       --lm {seq_rnn,transformer}
                             The lm type (default: seq_rnn)
       --lm_conf LM_CONF     The keyword arguments for lm (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _mt_inference.py:
 
 mt_inference.py
@@ -6034,6 +6212,8 @@ mt_inference.py
 
 .. code-block:: none
 
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
     usage: mt_inference.py [-h] [--config CONFIG]
                            [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                            --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
@@ -6050,8 +6230,8 @@ mt_inference.py
                            [--model_tag MODEL_TAG] [--batch_size BATCH_SIZE]
                            [--nbest NBEST] [--beam_size BEAM_SIZE]
                            [--penalty PENALTY] [--maxlenratio MAXLENRATIO]
-                           [--minlenratio MINLENRATIO] [--lm_weight LM_WEIGHT]
-                           [--ngram_weight NGRAM_WEIGHT]
+                           [--minlenratio MINLENRATIO] [--ctc_weight CTC_WEIGHT]
+                           [--lm_weight LM_WEIGHT] [--ngram_weight NGRAM_WEIGHT]
                            [--token_type {char,bpe,None}] [--bpemodel BPEMODEL]
     
     MT Decoding
@@ -6109,6 +6289,8 @@ mt_inference.py
       --minlenratio MINLENRATIO
                             Input length ratio to obtain min output length
                             (default: 0.0)
+      --ctc_weight CTC_WEIGHT
+                            CTC weight in joint decoding (default: 0.0)
       --lm_weight LM_WEIGHT
                             RNNLM weight (default: 1.0)
       --ngram_weight NGRAM_WEIGHT
@@ -6181,6 +6363,7 @@ mt_train.py
                        [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                        [--fold_length FOLD_LENGTH]
                        [--sort_in_batch {descending,ascending}]
+                       [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                        [--sort_batch {descending,ascending}]
                        [--multiple_iterator MULTIPLE_ITERATOR]
                        [--chunk_length CHUNK_LENGTH]
@@ -6197,11 +6380,11 @@ mt_train.py
                        [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                        [--optim_conf OPTIM_CONF]
-                       [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                       [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                        [--scheduler_conf SCHEDULER_CONF] [--token_list TOKEN_LIST]
                        [--src_token_list SRC_TOKEN_LIST]
                        [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
-                       [--input_size INPUT_SIZE] [--model_conf MODEL_CONF]
+                       [--input_size INPUT_SIZE] [--ctc_conf CTC_CONF]
                        [--use_preprocessor USE_PREPROCESSOR]
                        [--token_type {bpe,char,word,phn}]
                        [--src_token_type {bpe,char,word,phn}]
@@ -6209,15 +6392,19 @@ mt_train.py
                        [--non_linguistic_symbols NON_LINGUISTIC_SYMBOLS]
                        [--cleaner {None,tacotron,jaconv,vietnamese}]
                        [--g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,pypinyin_g2p_phone_without_prosody,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,espeak_ng_italian,espeak_ng_ukrainian,espeak_ng_polish,g2pk,g2pk_no_space,g2pk_explicit_space,korean_jaso,korean_jaso_no_space,g2p_is}]
+                       [--tokenizer_encode_conf TOKENIZER_ENCODE_CONF]
+                       [--src_tokenizer_encode_conf SRC_TOKENIZER_ENCODE_CONF]
                        [--frontend {embed}] [--frontend_conf FRONTEND_CONF]
+                       [--specaug {specaug,None}] [--specaug_conf SPECAUG_CONF]
                        [--preencoder {sinc,linear,None}]
                        [--preencoder_conf PREENCODER_CONF]
-                       [--encoder {conformer,transformer,contextual_block_transformer,vgg_rnn,rnn,branchformer}]
+                       [--encoder {conformer,transformer,contextual_block_transformer,vgg_rnn,rnn,branchformer,e_branchformer}]
                        [--encoder_conf ENCODER_CONF]
                        [--postencoder {hugging_face_transformers,None}]
                        [--postencoder_conf POSTENCODER_CONF]
                        [--decoder {transformer,lightweight_conv,lightweight_conv2d,dynamic_conv,dynamic_conv2d,rnn}]
-                       [--decoder_conf DECODER_CONF]
+                       [--decoder_conf DECODER_CONF] [--model {mt,discrete_asr}]
+                       [--model_conf MODEL_CONF]
     
     base parser
     
@@ -6229,6 +6416,10 @@ mt_train.py
                             Apply text cleaning (default: None)
       --g2p {None,g2p_en,g2p_en_no_space,pyopenjtalk,pyopenjtalk_kana,pyopenjtalk_accent,pyopenjtalk_accent_with_pause,pyopenjtalk_prosody,pypinyin_g2p,pypinyin_g2p_phone,pypinyin_g2p_phone_without_prosody,espeak_ng_arabic,espeak_ng_german,espeak_ng_french,espeak_ng_spanish,espeak_ng_russian,espeak_ng_greek,espeak_ng_finnish,espeak_ng_hungarian,espeak_ng_dutch,espeak_ng_english_us_vits,espeak_ng_hindi,espeak_ng_italian,espeak_ng_ukrainian,espeak_ng_polish,g2pk,g2pk_no_space,g2pk_explicit_space,korean_jaso,korean_jaso_no_space,g2p_is}
                             Specify g2p method if --token_type=phn (default: None)
+      --tokenizer_encode_conf TOKENIZER_ENCODE_CONF
+                            Tokenization encoder conf, e.g. BPE dropout: enable_sampling=True, alpha=0.1, nbest_size=-1 (default: None)
+      --src_tokenizer_encode_conf SRC_TOKENIZER_ENCODE_CONF
+                            Src tokenization encoder conf, e.g. BPE dropout: enable_sampling=True, alpha=0.1, nbest_size=-1 (default: None)
     
     Common configuration:
       --print_config        Print the config file and exit (default: False)
@@ -6421,6 +6612,8 @@ mt_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -6572,7 +6765,7 @@ mt_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -6587,8 +6780,7 @@ mt_train.py
                             The initialization method (default: None)
       --input_size INPUT_SIZE
                             The number of input dimension of the feature (default: None)
-      --model_conf MODEL_CONF
-                            The keyword arguments for model class. (default: {'src_vocab_size': 0, 'src_token_list': [], 'ignore_id': -1, 'lsm_weight': 0.0, 'length_normalized_loss': False, 'report_bleu': True, 'sym_space': '<space>', 'sym_blank': '<blank>', 'extract_feats_in_collect_stats': True, 'share_decoder_input_output_embed': False, 'share_encoder_decoder_input_embed': False})
+      --ctc_conf CTC_CONF   The keyword arguments for CTC class. (default: {'dropout_rate': 0.0, 'ctc_type': 'builtin', 'reduce': True, 'ignore_nan_grad': None, 'zero_infinity': True})
     
       Preprocess related
     
@@ -6604,11 +6796,15 @@ mt_train.py
       --frontend {embed}    The frontend type (default: embed)
       --frontend_conf FRONTEND_CONF
                             The keyword arguments for frontend (default: {})
+      --specaug {specaug,None}
+                            The specaug type (default: None)
+      --specaug_conf SPECAUG_CONF
+                            The keyword arguments for specaug (default: {})
       --preencoder {sinc,linear,None}
                             The preencoder type (default: None)
       --preencoder_conf PREENCODER_CONF
                             The keyword arguments for preencoder (default: {})
-      --encoder {conformer,transformer,contextual_block_transformer,vgg_rnn,rnn,branchformer}
+      --encoder {conformer,transformer,contextual_block_transformer,vgg_rnn,rnn,branchformer,e_branchformer}
                             The encoder type (default: rnn)
       --encoder_conf ENCODER_CONF
                             The keyword arguments for encoder (default: {})
@@ -6620,6 +6816,12 @@ mt_train.py
                             The decoder type (default: rnn)
       --decoder_conf DECODER_CONF
                             The keyword arguments for decoder (default: {})
+      --model {mt,discrete_asr}
+                            The model type (default: mt)
+      --model_conf MODEL_CONF
+                            The keyword arguments for model (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _pack.py:
 
 pack.py
@@ -6635,6 +6837,508 @@ pack.py
       {asr,st,tts,enh,diar,svs,enh_s2t,ssl}
     
     optional arguments:
+.. _spk_train.py:
+
+spk_train.py
+~~~~~~~~~~~~
+
+.. code-block:: none
+
+    usage: spk_train.py [-h] [--config CONFIG] [--print_config]
+                        [--log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}]
+                        [--dry_run DRY_RUN]
+                        [--iterator_type {sequence,chunk,task,none}]
+                        [--output_dir OUTPUT_DIR] [--ngpu NGPU] [--seed SEED]
+                        [--num_workers NUM_WORKERS] [--num_att_plot NUM_ATT_PLOT]
+                        [--dist_backend DIST_BACKEND]
+                        [--dist_init_method DIST_INIT_METHOD]
+                        [--dist_world_size DIST_WORLD_SIZE]
+                        [--dist_rank DIST_RANK] [--local_rank LOCAL_RANK]
+                        [--dist_master_addr DIST_MASTER_ADDR]
+                        [--dist_master_port DIST_MASTER_PORT]
+                        [--dist_launcher {slurm,mpi,None}]
+                        [--multiprocessing_distributed MULTIPROCESSING_DISTRIBUTED]
+                        [--unused_parameters UNUSED_PARAMETERS]
+                        [--sharded_ddp SHARDED_DDP]
+                        [--cudnn_enabled CUDNN_ENABLED]
+                        [--cudnn_benchmark CUDNN_BENCHMARK]
+                        [--cudnn_deterministic CUDNN_DETERMINISTIC]
+                        [--collect_stats COLLECT_STATS]
+                        [--write_collected_feats WRITE_COLLECTED_FEATS]
+                        [--max_epoch MAX_EPOCH] [--patience PATIENCE]
+                        [--val_scheduler_criterion VAL_SCHEDULER_CRITERION VAL_SCHEDULER_CRITERION]
+                        [--early_stopping_criterion EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION]
+                        [--best_model_criterion BEST_MODEL_CRITERION [BEST_MODEL_CRITERION ...]]
+                        [--keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]]
+                        [--nbest_averaging_interval NBEST_AVERAGING_INTERVAL]
+                        [--grad_clip GRAD_CLIP] [--grad_clip_type GRAD_CLIP_TYPE]
+                        [--grad_noise GRAD_NOISE] [--accum_grad ACCUM_GRAD]
+                        [--no_forward_run NO_FORWARD_RUN] [--resume RESUME]
+                        [--train_dtype {float16,float32,float64}]
+                        [--use_amp USE_AMP] [--log_interval LOG_INTERVAL]
+                        [--use_matplotlib USE_MATPLOTLIB]
+                        [--use_tensorboard USE_TENSORBOARD]
+                        [--create_graph_in_tensorboard CREATE_GRAPH_IN_TENSORBOARD]
+                        [--use_wandb USE_WANDB] [--wandb_project WANDB_PROJECT]
+                        [--wandb_id WANDB_ID] [--wandb_entity WANDB_ENTITY]
+                        [--wandb_name WANDB_NAME]
+                        [--wandb_model_log_interval WANDB_MODEL_LOG_INTERVAL]
+                        [--detect_anomaly DETECT_ANOMALY]
+                        [--pretrain_path PRETRAIN_PATH]
+                        [--init_param [INIT_PARAM [INIT_PARAM ...]]]
+                        [--ignore_init_mismatch IGNORE_INIT_MISMATCH]
+                        [--freeze_param [FREEZE_PARAM [FREEZE_PARAM ...]]]
+                        [--num_iters_per_epoch NUM_ITERS_PER_EPOCH]
+                        [--batch_size BATCH_SIZE]
+                        [--valid_batch_size VALID_BATCH_SIZE]
+                        [--batch_bins BATCH_BINS]
+                        [--valid_batch_bins VALID_BATCH_BINS]
+                        [--train_shape_file TRAIN_SHAPE_FILE]
+                        [--valid_shape_file VALID_SHAPE_FILE]
+                        [--batch_type {unsorted,sorted,folded,length,numel}]
+                        [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
+                        [--fold_length FOLD_LENGTH]
+                        [--sort_in_batch {descending,ascending}]
+                        [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
+                        [--sort_batch {descending,ascending}]
+                        [--multiple_iterator MULTIPLE_ITERATOR]
+                        [--chunk_length CHUNK_LENGTH]
+                        [--chunk_shift_ratio CHUNK_SHIFT_RATIO]
+                        [--num_cache_chunks NUM_CACHE_CHUNKS]
+                        [--chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]]
+                        [--train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE]
+                        [--valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE]
+                        [--allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS]
+                        [--max_cache_size MAX_CACHE_SIZE]
+                        [--max_cache_fd MAX_CACHE_FD]
+                        [--valid_max_cache_size VALID_MAX_CACHE_SIZE]
+                        [--exclude_weight_decay EXCLUDE_WEIGHT_DECAY]
+                        [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
+                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
+                        [--optim_conf OPTIM_CONF]
+                        [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
+                        [--scheduler_conf SCHEDULER_CONF]
+                        [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
+                        [--use_preprocessor USE_PREPROCESSOR]
+                        [--input_size INPUT_SIZE]
+                        [--target_duration TARGET_DURATION] [--spk2utt SPK2UTT]
+                        [--sample_rate SAMPLE_RATE] [--num_eval NUM_EVAL]
+                        [--rir_scp RIR_SCP] [--model_conf MODEL_CONF]
+                        [--frontend {default,sliding_window,raw,None}]
+                        [--frontend_conf FRONTEND_CONF] [--specaug {specaug,None}]
+                        [--specaug_conf SPECAUG_CONF]
+                        [--normalize {global_mvn,utterance_mvn,None}]
+                        [--normalize_conf NORMALIZE_CONF] [--encoder {rawnet3}]
+                        [--encoder_conf ENCODER_CONF] [--pooling {chn_attn_stat}]
+                        [--pooling_conf POOLING_CONF] [--projector {rawnet3}]
+                        [--projector_conf PROJECTOR_CONF]
+                        [--preprocessor {common,spk}]
+                        [--preprocessor_conf PREPROCESSOR_CONF]
+                        [--loss {aamsoftmax}] [--loss_conf LOSS_CONF]
+    
+    base parser
+    
+    optional arguments:
+      --config CONFIG       Give config file in yaml format (default: None)
+    
+    Common configuration:
+      --print_config        Print the config file and exit (default: False)
+      --log_level {ERROR,WARNING,INFO,DEBUG,NOTSET}
+                            The verbose level of logging (default: INFO)
+      --dry_run DRY_RUN     Perform process without training (default: False)
+      --iterator_type {sequence,chunk,task,none}
+                            Specify iterator type (default: sequence)
+      --output_dir OUTPUT_DIR
+      --ngpu NGPU           The number of gpus. 0 indicates CPU mode (default: 0)
+      --seed SEED           Random seed (default: 0)
+      --num_workers NUM_WORKERS
+                            The number of workers used for DataLoader (default: 1)
+      --num_att_plot NUM_ATT_PLOT
+                            The number images to plot the outputs from attention. This option makes sense only when attention-based model. We can also disable the attention plot by setting it 0 (default: 3)
+    
+    distributed training related:
+      --dist_backend DIST_BACKEND
+                            distributed backend (default: nccl)
+      --dist_init_method DIST_INIT_METHOD
+                            if init_method="env://", env values of "MASTER_PORT", "MASTER_ADDR", "WORLD_SIZE", and "RANK" are referred. (default: env://)
+      --dist_world_size DIST_WORLD_SIZE
+                            number of nodes for distributed training (default: None)
+      --dist_rank DIST_RANK
+                            node rank for distributed training (default: None)
+      --local_rank LOCAL_RANK
+                            local rank for distributed training. This option is used if --multiprocessing_distributed=false (default: None)
+      --dist_master_addr DIST_MASTER_ADDR
+                            The master address for distributed training. This value is used when dist_init_method == 'env://' (default: None)
+      --dist_master_port DIST_MASTER_PORT
+                            The master port for distributed trainingThis value is used when dist_init_method == 'env://' (default: None)
+      --dist_launcher {slurm,mpi,None}
+                            The launcher type for distributed training (default: None)
+      --multiprocessing_distributed MULTIPROCESSING_DISTRIBUTED
+                            Use multi-processing distributed training to launch N processes per node, which has N GPUs. This is the fastest way to use PyTorch for either single node or multi node data parallel training (default: False)
+      --unused_parameters UNUSED_PARAMETERS
+                            Whether to use the find_unused_parameters in torch.nn.parallel.DistributedDataParallel  (default: False)
+      --sharded_ddp SHARDED_DDP
+                            Enable sharded training provided by fairscale (default: False)
+    
+    cudnn mode related:
+      --cudnn_enabled CUDNN_ENABLED
+                            Enable CUDNN (default: True)
+      --cudnn_benchmark CUDNN_BENCHMARK
+                            Enable cudnn-benchmark mode (default: False)
+      --cudnn_deterministic CUDNN_DETERMINISTIC
+                            Enable cudnn-deterministic mode (default: True)
+    
+    collect stats mode related:
+      --collect_stats COLLECT_STATS
+                            Perform on "collect stats" mode (default: False)
+      --write_collected_feats WRITE_COLLECTED_FEATS
+                            Write the output features from the model when "collect stats" mode (default: False)
+    
+    Trainer related:
+      --max_epoch MAX_EPOCH
+                            The maximum number epoch to train (default: 40)
+      --patience PATIENCE   Number of epochs to wait without improvement before stopping the training (default: None)
+      --val_scheduler_criterion VAL_SCHEDULER_CRITERION VAL_SCHEDULER_CRITERION
+                            The criterion used for the value given to the lr scheduler. Give a pair referring the phase, "train" or "valid",and the criterion name. The mode specifying "min" or "max" can be changed by --scheduler_conf (default: ('valid', 'loss'))
+      --early_stopping_criterion EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION EARLY_STOPPING_CRITERION
+                            The criterion used for judging of early stopping. Give a pair referring the phase, "train" or "valid",the criterion name and the mode, "min" or "max", e.g. "acc,max". (default: ('valid', 'loss', 'min'))
+      --best_model_criterion BEST_MODEL_CRITERION [BEST_MODEL_CRITERION ...]
+                            The criterion used for judging of the best model. Give a pair referring the phase, "train" or "valid",the criterion name, and the mode, "min" or "max", e.g. "acc,max". (default: [('train', 'loss', 'min'), ('valid', 'loss', 'min'), ('train', 'acc', 'max'), ('valid', 'acc', 'max')])
+      --keep_nbest_models KEEP_NBEST_MODELS [KEEP_NBEST_MODELS ...]
+                            Remove previous snapshots excluding the n-best scored epochs (default: [10])
+      --nbest_averaging_interval NBEST_AVERAGING_INTERVAL
+                            The epoch interval to apply model averaging and save nbest models (default: 0)
+      --grad_clip GRAD_CLIP
+                            Gradient norm threshold to clip (default: 5.0)
+      --grad_clip_type GRAD_CLIP_TYPE
+                            The type of the used p-norm for gradient clip. Can be inf (default: 2.0)
+      --grad_noise GRAD_NOISE
+                            The flag to switch to use noise injection to gradients during training (default: False)
+      --accum_grad ACCUM_GRAD
+                            The number of gradient accumulation (default: 1)
+      --no_forward_run NO_FORWARD_RUN
+                            Just only iterating data loading without model forwarding and training (default: False)
+      --resume RESUME       Enable resuming if checkpoint is existing (default: False)
+      --train_dtype {float16,float32,float64}
+                            Data type for training. (default: float32)
+      --use_amp USE_AMP     Enable Automatic Mixed Precision. This feature requires pytorch>=1.6 (default: False)
+      --log_interval LOG_INTERVAL
+                            Show the logs every the number iterations in each epochs at the training phase. If None is given, it is decided according the number of training samples automatically . (default: None)
+      --use_matplotlib USE_MATPLOTLIB
+                            Enable matplotlib logging (default: True)
+      --use_tensorboard USE_TENSORBOARD
+                            Enable tensorboard logging (default: True)
+      --create_graph_in_tensorboard CREATE_GRAPH_IN_TENSORBOARD
+                            Whether to create graph in tensorboard (default: False)
+      --use_wandb USE_WANDB
+                            Enable wandb logging (default: False)
+      --wandb_project WANDB_PROJECT
+                            Specify wandb project (default: None)
+      --wandb_id WANDB_ID   Specify wandb id (default: None)
+      --wandb_entity WANDB_ENTITY
+                            Specify wandb entity (default: None)
+      --wandb_name WANDB_NAME
+                            Specify wandb run name (default: None)
+      --wandb_model_log_interval WANDB_MODEL_LOG_INTERVAL
+                            Set the model log period (default: -1)
+      --detect_anomaly DETECT_ANOMALY
+                            Set torch.autograd.set_detect_anomaly (default: False)
+    
+    Pretraining model related:
+      --pretrain_path PRETRAIN_PATH
+                            This option is obsoleted (default: None)
+      --init_param [INIT_PARAM [INIT_PARAM ...]]
+                            Specify the file path used for initialization of parameters. The format is '<file_path>:<src_key>:<dst_key>:<exclude_keys>', where file_path is the model file path, src_key specifies the key of model states to be used in the model file, dst_key specifies the attribute of the model to be initialized, and exclude_keys excludes keys of model states for the initialization.e.g.
+                              # Load all parameters  --init_param some/where/model.pth
+                              # Load only decoder parameters  --init_param some/where/model.pth:decoder:decoder
+                              # Load only decoder parameters excluding decoder.embed  --init_param some/where/model.pth:decoder:decoder:decoder.embed
+                              --init_param some/where/model.pth:decoder:decoder:decoder.embed
+                             (default: [])
+      --ignore_init_mismatch IGNORE_INIT_MISMATCH
+                            Ignore size mismatch when loading pre-trained model (default: False)
+      --freeze_param [FREEZE_PARAM [FREEZE_PARAM ...]]
+                            Freeze parameters (default: [])
+    
+    BatchSampler related:
+      --num_iters_per_epoch NUM_ITERS_PER_EPOCH
+                            Restrict the number of iterations for training per epoch (default: None)
+      --batch_size BATCH_SIZE
+                            The mini-batch size used for training. Used if batch_type='unsorted', 'sorted', or 'folded'. (default: 20)
+      --valid_batch_size VALID_BATCH_SIZE
+                            If not given, the value of --batch_size is used (default: None)
+      --batch_bins BATCH_BINS
+                            The number of batch bins. Used if batch_type='length' or 'numel' (default: 1000000)
+      --valid_batch_bins VALID_BATCH_BINS
+                            If not given, the value of --batch_bins is used (default: None)
+      --train_shape_file TRAIN_SHAPE_FILE
+      --valid_shape_file VALID_SHAPE_FILE
+    
+    Sequence iterator related:
+      --batch_type {unsorted,sorted,folded,length,numel}
+                            "unsorted":
+                            UnsortedBatchSampler has nothing in particular feature and just creates mini-batches which has constant batch_size. This sampler doesn't require any length information for each feature. 'key_file' is just a text file which describes each sample name.
+                            
+                                utterance_id_a
+                                utterance_id_b
+                                utterance_id_c
+                            
+                            The fist column is referred, so 'shape file' can be used, too.
+                            
+                                utterance_id_a 100,80
+                                utterance_id_b 400,80
+                                utterance_id_c 512,80
+                            
+                            "sorted":
+                            SortedBatchSampler sorts samples by the length of the first input  in order to make each sample in a mini-batch has close length. This sampler requires a text file which describes the length for each sample 
+                            
+                                utterance_id_a 1000
+                                utterance_id_b 1453
+                                utterance_id_c 1241
+                            
+                            The first element of feature dimensions is referred, so 'shape_file' can be also used.
+                            
+                                utterance_id_a 1000,80
+                                utterance_id_b 1453,80
+                                utterance_id_c 1241,80
+                            
+                            "folded":
+                            FoldedBatchSampler supports variable batch_size. The batch_size is decided by
+                                batch_size = base_batch_size // (L // fold_length)
+                            L is referred to the largest length of samples in the mini-batch. This samples requires length information as same as SortedBatchSampler
+                            
+                            "length":
+                            LengthBatchSampler supports variable batch_size. This sampler makes mini-batches which have same number of 'bins' as possible counting by the total lengths of each feature in the mini-batch. This sampler requires a text file which describes the length for each sample. 
+                            
+                                utterance_id_a 1000
+                                utterance_id_b 1453
+                                utterance_id_c 1241
+                            
+                            The first element of feature dimensions is referred, so 'shape_file' can be also used.
+                            
+                                utterance_id_a 1000,80
+                                utterance_id_b 1453,80
+                                utterance_id_c 1241,80
+                            
+                            "numel":
+                            NumElementsBatchSampler supports variable batch_size. Just like LengthBatchSampler, this sampler makes mini-batches which have same number of 'bins' as possible counting by the total number of elements of each feature instead of the length. Thus this sampler requires the full information of the dimension of the features. 
+                            
+                                utterance_id_a 1000,80
+                                utterance_id_b 1453,80
+                                utterance_id_c 1241,80
+                            
+                             (default: folded)
+      --valid_batch_type {unsorted,sorted,folded,length,numel,None}
+                            If not given, the value of --batch_type is used (default: None)
+      --fold_length FOLD_LENGTH
+      --sort_in_batch {descending,ascending}
+                            Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
+      --sort_batch {descending,ascending}
+                            Sort mini-batches by the sample lengths (default: descending)
+      --multiple_iterator MULTIPLE_ITERATOR
+                            Use multiple iterator mode (default: False)
+    
+    Chunk iterator related:
+      --chunk_length CHUNK_LENGTH
+                            Specify chunk length. e.g. '300', '300,400,500', or '300-400'.If multiple numbers separated by command are given, one of them is selected randomly for each samples. If two numbers are given with '-', it indicates the range of the choices. Note that if the sequence length is shorter than the all chunk_lengths, the sample is discarded.  (default: 500)
+      --chunk_shift_ratio CHUNK_SHIFT_RATIO
+                            Specify the shift width of chunks. If it's less than 1, allows the overlapping and if bigger than 1, there are some gaps between each chunk. (default: 0.5)
+      --num_cache_chunks NUM_CACHE_CHUNKS
+                            Shuffle in the specified number of chunks and generate mini-batches More larger this value, more randomness can be obtained. (default: 1024)
+      --chunk_excluded_key_prefixes CHUNK_EXCLUDED_KEY_PREFIXES [CHUNK_EXCLUDED_KEY_PREFIXES ...]
+                            List of key prefixes. Keys that satisfy either condition below will be excluded from the length consistency check in ChunkIterFactory:
+                              - exactly match one of the prefixes in `chunk_excluded_key_prefixes`
+                              - have one of the prefixes in `chunk_excluded_key_prefixes` and end with numbers (default: [])
+    
+    Dataset related:
+      --train_data_path_and_name_and_type TRAIN_DATA_PATH_AND_NAME_AND_TYPE
+                            Give three words splitted by comma. It's used for the training data. e.g. '--train_data_path_and_name_and_type some/path/a.scp,foo,sound'. The first value, some/path/a.scp, indicates the file path, and the second, foo, is the key name used for the mini-batch data, and the last, sound, decides the file type. This option is repeatable, so you can input any number of features for your task. Supported file types are as follows:
+                            
+                            "sound":
+                            Audio format types which supported by sndfile wav, flac, etc.
+                            
+                               utterance_id_a a.wav
+                               utterance_id_b b.wav
+                               ...
+                            
+                            "multi_columns_sound":
+                            Enable multi columns wav.scp. The following text file can be loaded as multi channels audio data
+                            
+                               utterance_id_a a.wav a2.wav
+                               utterance_id_b b.wav b2.wav
+                               ...
+                            
+                            "score":
+                            Return text as is. The text contains tempo and note info.
+                            For each note, 'start' 'end' 'syllabel' 'midi' and 'phones' are included. 
+                            
+                               utterance_id_A tempo_a start_1 end_1 syllable_1 midi_1 phones_1 ...
+                               utterance_id_B tempo_b start_1 end_1 syllable_1 midi_1 phones_1 ...
+                               ...
+                            
+                            "duration":
+                            Return text as is. The text must be converted to ndarray by 'preprocess'.
+                            
+                               utterance_id_A start_1 end_1 phone_1 start_2 end_2 phone_2 ...
+                               utterance_id_B start_1 end_1 phone_1 start_2 end_2 phone_2 ...
+                               ...
+                            
+                            "kaldi_ark":
+                            Kaldi-ark file type.
+                            
+                               utterance_id_A /some/where/a.ark:123
+                               utterance_id_B /some/where/a.ark:456
+                               ...
+                            
+                            "npy":
+                            Npy file format.
+                            
+                               utterance_id_A /some/where/a.npy
+                               utterance_id_B /some/where/b.npy
+                               ...
+                            
+                            "text_int":
+                            A text file in which is written a sequence of interger numbers separated by space.
+                            
+                               utterance_id_A 12 0 1 3
+                               utterance_id_B 3 3 1
+                               ...
+                            
+                            "csv_int":
+                            A text file in which is written a sequence of interger numbers separated by comma.
+                            
+                               utterance_id_A 100,80
+                               utterance_id_B 143,80
+                               ...
+                            
+                            "text_float":
+                            A text file in which is written a sequence of float numbers separated by space.
+                            
+                               utterance_id_A 12. 3.1 3.4 4.4
+                               utterance_id_B 3. 3.12 1.1
+                               ...
+                            
+                            "csv_float":
+                            A text file in which is written a sequence of float numbers separated by comma.
+                            
+                               utterance_id_A 12.,3.1,3.4,4.4
+                               utterance_id_B 3.,3.12,1.1
+                               ...
+                            
+                            "text":
+                            Return text as is. The text must be converted to ndarray by 'preprocess'.
+                            
+                               utterance_id_A hello world
+                               utterance_id_B foo bar
+                               ...
+                            
+                            "random_text":
+                            Return text as is. The text must be converted to ndarray by 'preprocess'.
+                            
+                               hello world
+                               foo bar
+                               ...
+                            
+                            "hdf5":
+                            A HDF5 file which contains arrays at the first level or the second level.   >>> f = h5py.File('file.h5')
+                               >>> array1 = f['utterance_id_A']
+                               >>> array2 = f['utterance_id_B']
+                            
+                            
+                            "rand_float":
+                            Generate random float-ndarray which has the given shapes in the file.
+                            
+                               utterance_id_A 3,4
+                               utterance_id_B 10,4
+                               ...
+                            
+                            "rand_int_\d+_\d+":
+                            e.g. 'rand_int_0_10'. Generate random int-ndarray which has the given shapes in the path. Give the lower and upper value by the file type. e.g. rand_int_0_10 -> Generate integers from 0 to 10.
+                            
+                               utterance_id_A 3,4
+                               utterance_id_B 10,4
+                               ...
+                            
+                            "rttm":
+                            rttm file loader, currently support for speaker diarization
+                            
+                                SPEAKER file1 1 0 1023 <NA> <NA> spk1 <NA>    SPEAKER file1 2 4000 3023 <NA> <NA> spk2 <NA>    SPEAKER file1 3 500 4023 <NA> <NA> spk1 <NA>    END     file1 <NA> 4023 <NA> <NA> <NA> <NA>   ...
+                            
+                             (default: [])
+      --valid_data_path_and_name_and_type VALID_DATA_PATH_AND_NAME_AND_TYPE
+      --allow_variable_data_keys ALLOW_VARIABLE_DATA_KEYS
+                            Allow the arbitrary keys for mini-batch with ignoring the task requirements (default: False)
+      --max_cache_size MAX_CACHE_SIZE
+                            The maximum cache size for data loader. e.g. 10MB, 20GB. (default: 0.0)
+      --max_cache_fd MAX_CACHE_FD
+                            The maximum number of file descriptors to be kept as opened for ark files. This feature is only valid when data type is 'kaldi_ark'. (default: 32)
+      --valid_max_cache_size VALID_MAX_CACHE_SIZE
+                            The maximum cache size for validation data loader. e.g. 10MB, 20GB. If None, the 5 percent size of --max_cache_size (default: None)
+    
+    Optimizer related:
+      --exclude_weight_decay EXCLUDE_WEIGHT_DECAY
+                            Exclude weight decay in optimizer for model bias, normalization, or other special parameters (default: False)
+      --exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF
+                            The keyword arguments for configuring weight decay in optimizer. e.g., 'bias_weight_decay': False will set zero weight decay for bias params. See also espnet2.optimizers.optim_groups.configure_optimizer. (default: {})
+      --optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}
+                            The optimizer type (default: adadelta)
+      --optim_conf OPTIM_CONF
+                            The keyword arguments for optimizer (default: {})
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
+                            The lr scheduler type (default: None)
+      --scheduler_conf SCHEDULER_CONF
+                            The keyword arguments for lr scheduler (default: {})
+    
+      Task related
+    
+      --init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}
+                            The initialization method (default: None)
+      --use_preprocessor USE_PREPROCESSOR
+                            Apply preprocessing to data or not (default: True)
+      --input_size INPUT_SIZE
+                            The number of input dimension of the feature (default: None)
+      --target_duration TARGET_DURATION
+                            Duration (in seconds) of samples in a minibatch (default: 3.0)
+      --spk2utt SPK2UTT     Directory of spk2utt file to be used in label mapping (default: )
+      --sample_rate SAMPLE_RATE
+                            Sampling rate (default: 16000)
+      --num_eval NUM_EVAL   Number of segments to make from one utterance in the inference phase (default: 10)
+      --rir_scp RIR_SCP     Directory of the rir data to be augmented (default: )
+      --model_conf MODEL_CONF
+                            The keyword arguments for model class. (default: {})
+      --frontend {default,sliding_window,raw,None}
+                            The frontend type (default: default)
+      --frontend_conf FRONTEND_CONF
+                            The keyword arguments for frontend (default: {})
+      --specaug {specaug,None}
+                            The specaug type (default: None)
+      --specaug_conf SPECAUG_CONF
+                            The keyword arguments for specaug (default: {})
+      --normalize {global_mvn,utterance_mvn,None}
+                            The normalize type (default: None)
+      --normalize_conf NORMALIZE_CONF
+                            The keyword arguments for normalize (default: {})
+      --encoder {rawnet3}   The encoder type (default: rawnet3)
+      --encoder_conf ENCODER_CONF
+                            The keyword arguments for encoder (default: {})
+      --pooling {chn_attn_stat}
+                            The pooling type (default: chn_attn_stat)
+      --pooling_conf POOLING_CONF
+                            The keyword arguments for pooling (default: {})
+      --projector {rawnet3}
+                            The projector type (default: rawnet3)
+      --projector_conf PROJECTOR_CONF
+                            The keyword arguments for projector (default: {})
+      --preprocessor {common,spk}
+                            The preprocessor type (default: spk)
+      --preprocessor_conf PREPROCESSOR_CONF
+                            The keyword arguments for preprocessor (default: {})
+      --loss {aamsoftmax}   The loss type (default: aam)
+      --loss_conf LOSS_CONF
+                            The keyword arguments for loss (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _split_scps.py:
 
 split_scps.py
@@ -6667,6 +7371,8 @@ st_inference.py
 
 .. code-block:: none
 
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
     usage: st_inference.py [-h] [--config CONFIG]
                            [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                            --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
@@ -6816,6 +7522,7 @@ st_train.py
                        [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                        [--fold_length FOLD_LENGTH]
                        [--sort_in_batch {descending,ascending}]
+                       [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                        [--sort_batch {descending,ascending}]
                        [--multiple_iterator MULTIPLE_ITERATOR]
                        [--chunk_length CHUNK_LENGTH]
@@ -6832,7 +7539,7 @@ st_train.py
                        [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                        [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                        [--optim_conf OPTIM_CONF]
-                       [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                       [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                        [--scheduler_conf SCHEDULER_CONF] [--token_list TOKEN_LIST]
                        [--src_token_list SRC_TOKEN_LIST]
                        [--init {chainer,xavier_uniform,xavier_normal,kaiming_uniform,kaiming_normal,None}]
@@ -7065,6 +7772,8 @@ st_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -7216,7 +7925,7 @@ st_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -7301,6 +8010,8 @@ st_train.py
                             The extra_mt_decoder type (default: rnn)
       --extra_mt_decoder_conf EXTRA_MT_DECODER_CONF
                             The keyword arguments for extra_mt_decoder (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
 .. _tts_inference.py:
 
 tts_inference.py
@@ -7308,6 +8019,8 @@ tts_inference.py
 
 .. code-block:: none
 
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
     usage: tts_inference.py [-h] [--config CONFIG]
                             [--log_level {CRITICAL,ERROR,WARNING,INFO,DEBUG,NOTSET}]
                             --output_dir OUTPUT_DIR [--ngpu NGPU] [--seed SEED]
@@ -7464,6 +8177,7 @@ tts_train.py
                         [--valid_batch_type {unsorted,sorted,folded,length,numel,None}]
                         [--fold_length FOLD_LENGTH]
                         [--sort_in_batch {descending,ascending}]
+                        [--shuffle_within_batch SHUFFLE_WITHIN_BATCH]
                         [--sort_batch {descending,ascending}]
                         [--multiple_iterator MULTIPLE_ITERATOR]
                         [--chunk_length CHUNK_LENGTH]
@@ -7480,7 +8194,7 @@ tts_train.py
                         [--exclude_weight_decay_conf EXCLUDE_WEIGHT_DECAY_CONF]
                         [--optim {adam,adamw,sgd,adadelta,adagrad,adamax,asgd,lbfgs,rmsprop,rprop,radam,accagd,adabound,adamod,diffgrad,lamb,novograd,pid,qhm,sgdw,yogi}]
                         [--optim_conf OPTIM_CONF]
-                        [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}]
+                        [--scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}]
                         [--scheduler_conf SCHEDULER_CONF]
                         [--token_list TOKEN_LIST] [--odim ODIM]
                         [--model_conf MODEL_CONF]
@@ -7705,6 +8419,8 @@ tts_train.py
       --fold_length FOLD_LENGTH
       --sort_in_batch {descending,ascending}
                             Sort the samples in each mini-batches by the sample lengths. To enable this, "shape_file" must have the length information. (default: descending)
+      --shuffle_within_batch SHUFFLE_WITHIN_BATCH
+                            Shuffles wholes batches in sample-wise. Required forClassification tasks normally. (default: False)
       --sort_batch {descending,ascending}
                             Sort mini-batches by the sample lengths (default: descending)
       --multiple_iterator MULTIPLE_ITERATOR
@@ -7856,7 +8572,7 @@ tts_train.py
                             The optimizer type (default: adadelta)
       --optim_conf OPTIM_CONF
                             The keyword arguments for optimizer (default: {})
-      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmupsteplr,warmuplr,cycliclr,onecyclelr,cosineannealingwarmrestarts,None}
+      --scheduler {reducelronplateau,lambdalr,steplr,multisteplr,exponentiallr,cosineannealinglr,noamlr,warmuplr,warmupsteplr,warmupreducelronplateau,cycliclr,onecyclelr,cosineannealingwarmrestarts,cosineannealingwarmuprestarts,None}
                             The lr scheduler type (default: None)
       --scheduler_conf SCHEDULER_CONF
                             The keyword arguments for lr scheduler (default: {})
@@ -7903,3 +8619,5 @@ tts_train.py
                             The energy_normalize type (default: None)
       --energy_normalize_conf ENERGY_NORMALIZE_CONF
                             The keyword arguments for energy_normalize (default: {})
+    /home/runner/work/espnet/espnet/tools/venv/lib/python3.8/site-packages/whisper/timing.py:57: NumbaDeprecationWarning: [1mThe 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.[0m
+      def backtrace(trace: np.ndarray):
